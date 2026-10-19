@@ -1,0 +1,54 @@
+{
+  "status": "analyst_prepared_examples_not_blinded_benchmark",
+  "checked_on": "2026-10-18",
+  "sources": [
+    {"id":"E01","url":"https://github.com/Tendo33/IdeaGo/blob/5070f3bdecda2ed559858141b8d010f6350082fb/README.md","locator":"Current product contract; How It Works","independence_group":"ideago_first_party","summary":"作者描述决策建议、痛点、机会缺口、证据与置信度。固定提交内容已本地留档。","evidence_kind":"author_claim"},
+    {"id":"E02","url":"https://github.com/crshdn/mission-control/blob/24d286350f5acee359bde1f3992080c3b9570666/README.md","locator":"Product Autopilot; Quick Start","independence_group":"autensa_first_party","summary":"作者描述研究至 PR 的循环，运行依赖外部 Gateway。固定提交内容已本地留档。","evidence_kind":"author_claim"},
+    {"id":"E18","url":"https://code.visualstudio.com/docs/remote/troubleshooting#_reporting-issues","locator":"Reporting issues; Remote-SSH: Show Log","independence_group":"microsoft_docs","summary":"官方说明可查看 Remote SSH 日志，并建议比较外部终端 SSH 是否正常。只核文档，未连接开发板。","evidence_kind":"official_documentation"},
+    {"id":"E19","url":"https://curl.se/docs/manpage.html#-C","locator":"-C, --continue-at","independence_group":"curl_docs","summary":"官方提供继续传输选项；具体协议和服务端限制需按文档核对。未测试实际下载。","evidence_kind":"official_documentation"},
+    {"id":"E20","url":"https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-checksum","locator":"--checksum; --continue","independence_group":"aria2_docs","summary":"aria2 文档包含校验和与继续下载选项。未实测服务器兼容性或完整性恢复。","evidence_kind":"official_documentation"}
+  ],
+  "cases": [
+    {
+      "id":"C01","title":"Project Compass：开发前的证据决策","origin":"synthetic_challenge",
+      "question":"是否值得为个人开源开发者建立独立的创意评估产品？",
+      "claims":[
+        {"id":"C01-F1","kind":"source_statement","text":"IdeaGo 作者已描述与 Compass 候选报告重合的多项能力。","source_ids":["E01"]},
+        {"id":"C01-I1","kind":"inference","text":"仅增加证据化报告不足以证明差异化。","source_ids":["E01","E02"]},
+        {"id":"C01-H1","kind":"hypothesis","text":"可更正证据和保留改判原因能减少用户复查成本。","source_ids":[]}
+      ],
+      "alternatives":["通用 AI 配结构化提示词与文件","已有工具的导出适配","独立轻量决策流程"],
+      "unknowns":["目标用户是否有足够频繁的真实选题任务","IdeaGo 实际报告质量","修订记录是否值得额外操作"],
+      "revisions":[
+        {"id":"C01-r1","supersedes":null,"status":"reconstructed_demonstration","decision":"进一步调查证据化报告是否足够形成差异化。","reason":"演示用的初始假设，不冒充早先的用户决定。","new_source_ids":[],"next_action":"核查直接竞品的当前输出契约。"},
+        {"id":"C01-r2","supersedes":"C01-r1","status":"analyst_recommendation","decision":"暂不建设完整平台；先验证修订记录相对强基线的增量价值。","reason":"新核查的竞品说明已覆盖决策报告主体，需要更具体的使用收益证据。","new_source_ids":["E01","E02"],"next_action":"冻结三案例证据包和提示词，安排隔离生成与盲评。"}
+      ],"score":null,"confidence":"未校准；需求与增量价值尚未知"
+    },
+    {
+      "id":"C02","title":"ARM Linux / VS Code Remote SSH 中文诊断","origin":"synthetic_challenge",
+      "question":"是否需要一个只读诊断报告工具？",
+      "claims":[
+        {"id":"C02-F1","kind":"source_statement","text":"VS Code 已有 Remote SSH 日志查看与故障报告指引。","source_ids":["E18"]},
+        {"id":"C02-I1","kind":"inference","text":"新工具需证明比现有日志和指引更快定位具体问题。","source_ids":["E18"]},
+        {"id":"C02-H1","kind":"hypothesis","text":"中文解释和开发板场景可减少新手排障时间。","source_ids":[]}
+      ],
+      "alternatives":["官方 Remote SSH 日志与排障文档","将脱敏日志交给通用 AI","只读规则报告或向现有文档贡献改进"],
+      "unknowns":["真实错误样本及授权","最常见失败原因","现有指引未解决的具体步骤"],
+      "revisions":[{"id":"C02-r1","supersedes":null,"status":"analyst_recommendation","decision":"先取得真实失败日志验证解释缺口，不因中文或 ARM 标签直接开发。","reason":"已存在基础诊断能力，尚无目标用户受阻证据。","new_source_ids":["E18"],"next_action":"在用户许可下收集三种脱敏故障案例，比较官方步骤和一页诊断的耗时与误导。"}],
+      "score":null,"confidence":"未校准；细分需求尚未知"
+    },
+    {
+      "id":"C03","title":"断点续传与校验和 CLI","origin":"synthetic_challenge",
+      "question":"为了独立用户产品，是否需要重新开发通用下载器？",
+      "claims":[
+        {"id":"C03-F1","kind":"source_statement","text":"curl 文档提供继续传输选项。","source_ids":["E19"]},
+        {"id":"C03-F2","kind":"source_statement","text":"aria2 文档提供继续下载及校验和选项。","source_ids":["E20"]},
+        {"id":"C03-I1","kind":"inference","text":"单靠续传与校验和两项功能，尚不能形成独立产品理由。","source_ids":["E19","E20"]}
+      ],
+      "alternatives":["直接使用现成 CLI","补充易用封装或贡献可复现问题修复","作为课程/学习实现，明确不宣称市场创新"],
+      "unknowns":["是否存在成熟工具无法满足的协议或资源限制","用户是否重视不同的交互或可观测性"],
+      "revisions":[{"id":"C03-r1","supersedes":null,"status":"analyst_recommendation","decision":"产品路线优先验证现成工具；如是学习目的可保留实现，但不以创新或 Star 预期证明价值。","reason":"核心能力已有明确文档证据；学习价值和用户产品价值应分开。","new_source_ids":["E19","E20"],"next_action":"列出一个现成工具无法满足的具体约束；若没有，采用现成工具或改进其使用说明。"}],
+      "score":null,"confidence":"核心功能重合有文档支持；使用收益尚未知"
+    }
+  ]
+}

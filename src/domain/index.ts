@@ -1,0 +1,13 @@
+export { validateReportContent } from './report.js';
+export type { SourceSnapshot, Claim } from './report.js';
+export { validateReportRevision } from './revisions.js';
+export type { RevisionContext } from './revisions.js';
+export { diffReports } from './diff.js';
+export type { ReportDiff, ValueDiff, CollectionDiff, EntryDiff } from './diff.js';
+export { scoreRange, DIMENSIONS, WEIGHTS } from './scoring.js';
+export type { Dimension, ScoreRange } from './scoring.js';
+export { canonicalJson, hashCanonical, sha256Text } from './canonical.js';
+export { createReportViewModel } from './view-model.js';
+export type { ReportViewModel } from './view-model.js';
+export type { DomainResult, DomainCode } from './result.js';
+export type { ReportRevision, HumanDecision } from './contracts/index.js';

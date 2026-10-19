@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "idea_fixture",
+  "revision_id": "rev_01",
+  "parent_revision_id": null,
+  "created_at": "2026-10-18T08:00:00.000Z",
+  "provenance": {
+    "kind": "fixture",
+    "producer": "Compass synthetic architecture fixture",
+    "run_id": null,
+    "model": null,
+    "prompt_sha256": null,
+    "input_sha256": "353902081d1bac789567219bce525eb977321a26b66b9c3f18cfdb23227bba2a"
+  },
+  "idea": {
+    "original_text": "合成练习：是否开发一个报告工具？",
+    "target_user": "合成用户群",
+    "problem": "练习来源更正与建议修订，不证明用户需求。",
+    "constraints": [
+      "离线",
+      "无模型费用"
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "source_01",
+      "url": "https://example.com/compass-fixture",
+      "title": "合成资料，不是竞品证据",
+      "locator": "fixture paragraph 1",
+      "collected_at": "2026-10-18T08:00:00.000Z",
+      "source_type": "author_claim",
+      "independence_group": "synthetic_author",
+      "capture_status": "captured",
+      "content_scope": "excerpt",
+      "content_text": "合成测试资料：模拟工具提供 Markdown 导出。",
+      "content_sha256": "544e02f6b725beaca2c65ac8dd1381226e348e79cbec94801de13538307352d3",
+      "retrieval_note": "测试内构造，没有访问网页。"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "claim_01",
+      "kind": "source_statement",
+      "text": "合成资料声称模拟工具已经提供 Markdown 导出。",
+      "evidence": [
+        {
+          "source_id": "source_01",
+          "relation": "support"
+        }
+      ],
+      "review_status": "unreviewed",
+      "review_note": "仅供测试，未做语义审核。"
+    }
+  ],
+  "alternatives": [
+    {
+      "alternative_id": "alternative_01",
+      "title": "先验证需求",
+      "change": "暂不开发完整平台",
+      "tradeoffs": [
+        "会推迟实现"
+      ],
+      "assumptions": [
+        "也许现成流程足够"
+      ],
+      "validation_action": "比较一条真实使用流程。"
+    }
+  ],
+  "assessment": {
+    "recommendation": "investigate",
+    "reason": "合成案例不能证明需求。",
+    "claim_ids": [
+      "claim_01"
+    ],
+    "alternative_id": "alternative_01",
+    "unknowns": [
+      "真实使用收益"
+    ],
+    "conditions": [
+      {
+        "key": "demand",
+        "state": "unknown",
+        "reason": "尚未验证",
+        "claim_ids": []
+      },
+      {
+        "key": "feasibility",
+        "state": "unknown",
+        "reason": "尚未验证",
+        "claim_ids": []
+      }
+    ],
+    "next_action": "先取得真实案例，再决定是否实现。"
+  },
+  "scorecard": null,
+  "change": {
+    "kind": "initial",
+    "reason": "合成初始输入。",
+    "changed_claim_ids": [
+      "claim_01"
+    ],
+    "changed_source_ids": [
+      "source_01"
+    ]
+  }
+}

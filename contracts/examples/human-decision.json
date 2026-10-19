@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "idea_id": "idea_fixture",
+  "decision_id": "decision_01",
+  "report_revision_id": "rev_02",
+  "supersedes_decision_id": null,
+  "decided_at": "2026-10-18T08:00:00.000Z",
+  "actor": {
+    "kind": "human",
+    "id": "synthetic_test_actor"
+  },
+  "choice": "pause",
+  "reason": "纯测试决定，不代表用户实际选择。"
+}

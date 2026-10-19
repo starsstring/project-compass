@@ -1,0 +1,101 @@
+import { GitHubSearch } from '../adapters/github/search.js';
+import { DiscoveryError, type Candidate, type DiscoveryReport, type Repository, type SearchPlan } from './model.js';
+import { analyzeCandidate, extractProse } from './evidence.js';
+import { buildDirections, relevantCapabilities } from './directions.js';
+
+function matches(repo: Repository, terms: string[]): string[] {
+  const haystack = `${repo.full_name} ${repo.description ?? ''} ${repo.topics.join(' ')}`.toLowerCase();
+  return terms.filter(term => haystack.includes(term === 'notes' ? 'note' : term === 'resume' ? 'resum' : term));
+}
+
+export function readmeExcerpt(content: string, terms: string[]): string | null {
+  const lines = extractProse(content, 'https://github.com/').map(item => item.text);
+  const line = lines.find(item => terms.some(term => item.toLowerCase().includes(term === 'notes' ? 'note' : term))) ?? lines[0];
+  if (!line) return null;
+  return line.split(/\s+/u).slice(0, 22).join(' ').slice(0, 180);
+}
+
+export async function discover(plan: SearchPlan, client: GitHubSearch, limit = 5): Promise<DiscoveryReport> {
+  if (!Number.isInteger(limit) || limit < 1 || limit > 5) throw new DiscoveryError('INVALID_INPUT', '--limit 必须为 1–5。');
+  const warnings = [...plan.warnings];
+  const searches: DiscoveryReport['searches'] = [];
+  const found = new Map<number, Repository>();
+  let partial = false;
+  let lastSearchError: DiscoveryError | undefined;
+  for (const query of plan.queries) {
+    try {
+      const result = await client.search(query);
+      searches.push({ query, total_count: result.total, incomplete: result.incomplete, error: null });
+      if (result.incomplete) { partial = true; warnings.push(`GitHub 标记检索结果不完整：${query}`); }
+      for (const repo of result.items) {
+        const existing = found.get(repo.id);
+        if (existing) existing.matched_queries.push(query);
+        else found.set(repo.id, repo);
+      }
+    } catch (error) {
+      if (!(error instanceof DiscoveryError)) throw error;
+      lastSearchError = error;
+      searches.push({ query, total_count: null, incomplete: true, error: `${error.code}: ${error.message}` });
+      partial = true;
+      if (error.code === 'RATE_LIMIT') break;
+    }
+  }
+  if (searches.every(search => search.error !== null)) {
+    throw new DiscoveryError(lastSearchError?.code ?? 'NETWORK', searches.map(search => search.error).join('；'));
+  }
+  const excluded: DiscoveryReport['excluded'] = [];
+  const eligible = [...found.values()].filter(repo => {
+    let reason: string | null = null;
+    if (!repo.license || repo.license === 'NOASSERTION') reason = 'GitHub 未识别许可证；不据此认定可开源复用，留待人工读取 LICENSE。';
+    else if (/\b(?:lecture notes|course notes|raw markdown notes|curated list|awesome list|personal .*vault template)\b/iu.test(repo.description ?? '')) {
+      reason = '描述显示为课程资料、资源清单或个人模板；本轮不作为直接工具候选。';
+    }
+    if (reason) { excluded.push({ name: repo.full_name, url: repo.url, reason }); return false; }
+    return true;
+  });
+  const normalize = (value: string) => value.toLowerCase().replace(/[-_]/gu, ' ');
+  const ordered = eligible.map((repo, index) => {
+    const metadata = normalize(`${repo.full_name} ${repo.description ?? ''} ${repo.topics.join(' ')}`);
+    const phrases = plan.queries.filter(query => metadata.includes(normalize(query)));
+    return { repo, index, matched: matches(repo, plan.terms), phrases };
+  })
+    .sort((a, b) => b.phrases.length - a.phrases.length || b.matched.length - a.matched.length || b.repo.matched_queries.length - a.repo.matched_queries.length || a.index - b.index)
+    .slice(0, limit);
+  const candidates: Candidate[] = [];
+  for (const { repo, matched, phrases } of ordered) {
+    let readme: Candidate['readme'];
+    let material: { content: string; url: string } | null = null;
+    try {
+      const result = await client.readme(repo);
+      material = result;
+      readme = { status: 'captured', url: result.url, blob_sha: result.blob_sha, content_sha256: result.sha256,
+        author_excerpt: readmeExcerpt(result.content, plan.terms), note: '作者 README 摘选；仅静态读取，不证明功能可用。完整响应见本地 captures.json。' };
+    } catch (error) {
+      if (!(error instanceof DiscoveryError)) throw error;
+      partial = true;
+      readme = { status: 'unavailable', url: null, blob_sha: null, content_sha256: null, author_excerpt: null,
+        note: `${error.code}: ${error.message}` };
+    }
+    const analysis = analyzeCandidate(repo, material);
+    const relevant = relevantCapabilities(plan);
+    if (relevant) {
+      analysis.capabilities = analysis.capabilities.filter(capability => relevant.includes(capability.key));
+      const mentioned = analysis.capabilities.filter(capability => capability.state === 'author_mentioned');
+      analysis.summary = `${analysis.role}。${mentioned.length ? `作者材料描述的能力：${mentioned.map(item => item.label).join('、')}。` : '本次正文中尚未确认与目标任务对应的能力。'}`;
+      const referenced = new Set([...analysis.capabilities.flatMap(item => item.evidence_ids), ...analysis.limitations.map(item => item.evidence_id)]);
+      analysis.evidence = analysis.evidence.filter(item => referenced.has(item.id));
+    }
+    candidates.push({ ...repo, readme, analysis, relevance: {
+      level: matched.length === 0 ? '待人工核查' : phrases.length > 0 ? '较强文本关联' : '部分文本关联',
+      matched_terms: matched,
+      reason: matched.length ? `名称/简介/topics 出现：${matched.join('、')}；完整检索短语匹配：${phrases.join(' / ') || '无'}；GitHub 检索式：${repo.matched_queries.join(' / ')}。未验证任务、平台与受众适配。`
+        : 'GitHub 返回了该仓库，但名称/简介/topics 未命中规划词；可能只命中 README，也可能不相关，需人工排除。',
+    }, unknowns: ['功能是否稳定可用、是否符合原创意的全部约束尚未实测。', '没有读取完整 Issue/用户反馈，不能据此确认功能不足、需求规模或维护响应。',
+      repo.license && repo.license !== 'NOASSERTION' ? '许可证为 GitHub 元数据；复用代码前仍需读取实际 LICENSE 和依赖条款。' : '未获得可识别的开源许可证；只能列为公开候选，不能认定允许复用。'] });
+  }
+  if (!candidates.length) warnings.push('本次有限检索没有符合筛选条件的候选；不代表没有竞品。请更换 --query 或扩大人工检索范围。');
+  const directions = buildDirections(plan, candidates);
+  return { format: 'compass-discovery-v1.1', mode: client.mode, created_at: new Date().toISOString(), plan,
+    status: partial ? 'partial' : 'complete', searches, candidates, excluded, directions, warnings,
+    requests: client.captures.map(({ body: _body, ...capture }) => capture) };
+}

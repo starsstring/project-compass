@@ -1,0 +1,30 @@
+{
+  "name": "project-compass",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.19.0 <25"
+  },
+  "packageManager": "npm@12.2.0",
+  "scripts": {
+    "compass": "node dist/src/cli.js",
+    "validate:live": "node scripts/validate-v1-live.mjs",
+    "generate:types": "node scripts/generate-contract-types.mjs",
+    "check:types": "node scripts/generate-contract-types.mjs --check",
+    "build": "npm run check:types && tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/tests/unit/**/*.test.js dist/tests/integration/*.test.js experiments/score-audit.test.mjs experiments/decision-card.test.mjs tests/architecture/storage-contract.test.mjs",
+    "check:contracts": "npm run build && node scripts/check-contracts.mjs"
+  },
+  "dependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "marked": "18.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "json-schema-to-typescript": "16.0.0",
+    "typescript": "5.9.3"
+  },
+  "license": "MIT"
+}

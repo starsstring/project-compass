@@ -1,4 +1,8 @@
-# 合成输出示例
+# Synthetic output example / 合成输出示例
+
+[English README](../README.md) · [中文说明](../README.zh-CN.md)
+
+This report uses original synthetic test fixtures with no network requests. The repository and capabilities are fictional. The body below is the application’s current Chinese output; a live-search mode label inside this fixture is not evidence of a real online search.
 
 本页使用项目自写测试夹具，无网络请求，仓库和能力均为虚构；只演示报告结构。sample/markdown-notes 不是经核实的项目。
 

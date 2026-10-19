@@ -1,60 +1,83 @@
 # Project Compass
 
-输入项目创意，找到真实 GitHub 仓库，生成带来源的功能摘要、能力比较和 1–3 个待验证的改进方向。
+English | [简体中文](README.zh-CN.md)
 
-V1 是本地命令行工具，输出 Markdown 和 JSON。无需模型 Key、GitHub Token 或付费服务，支持中文关键词和显式英文检索词。
+Find GitHub alternatives before building your idea. Project Compass searches real repositories, compares capabilities described in their materials, and saves a report with sources and 1–3 directions to investigate.
 
-## 快速开始
+V1 is a local command-line tool. It needs no GitHub token, model API key, or paid service. **English idea input is supported; CLI help, diagnostics, and generated report text currently use Chinese.** This release provides documentation in both languages.
 
-需要 Node.js 24.19.x（含 npm）。克隆后运行：
+## Quick start
 
-```powershell
+Use Node.js 24.19.x with npm. Then run:
+
+```sh
 git clone https://github.com/starsstring/project-compass.git
 cd project-compass
 npm ci
 npm run build
-npm run compass -- "我想做一个本地 Markdown 笔记工具"
+npm run compass -- "A local Markdown notes tool"
 ```
 
-结果保存在终端提示的 `.compass/discovery/<运行号>/`：
+The terminal prints the output directory, usually `.compass/discovery/<run-id>/`:
 
-- `report.md`：可阅读的报告、来源与建议。
-- `report.json`：结构化结果。
-- `captures.json`：本次 API 原始响应，便于离线复查。
+| File | Contents |
+|---|---|
+| `report.md` | A readable report with repository links, capabilities, sources, and proposed investigations |
+| `report.json` | Structured results for your own scripts |
+| `captures.json` | Original API responses, timestamps, and hashes for offline review |
 
-`--out` 必须使用新目录，已有结果不会覆盖。更多参数和退出码见 [使用说明](docs/USAGE.md)。
+Each run creates a new directory. Existing output is never overwritten. See the [usage guide](docs/USAGE.md) for options, replay, and exit codes.
 
-## 示例
+## What V1 does
 
-```powershell
-npm run compass -- "开发一个量化软件"
-npm run compass -- "面向开发板的串口调试工具"
-npm run compass -- "支持断点续传的下载工具"
-npm run compass -- "校园宠物领养互助系统" --query "pet adoption"
+1. Accepts an idea and derives up to two searches using a limited Chinese/English vocabulary. You can supply your own queries.
+2. Retrieves up to five GitHub candidates, with links, descriptions, language, license metadata, update time, and reasons for text relevance.
+3. Extracts prose from descriptions and READMEs, summarizes supported capability statements, and shows a comparison table with source references.
+4. Separates author statements, rule-based inferences, limitations, and unknowns. Missing documentation is not treated as a missing feature.
+5. When the materials support it, proposes 1–3 investigations with existing capability evidence, a small proposed change, a validation action, and a condition for reusing an existing tool or stopping. No candidates can mean no directions.
+6. Saves reports and raw responses locally, and can analyze saved responses again without network requests.
+
+## When to use it
+
+| Your task | What Compass helps you do |
+|---|---|
+| Explore a personal open-source idea | Find related projects before starting another implementation |
+| Start a quantitative research tool | Find backtesting/trading frameworks and inspect documented capabilities to decide what to try |
+| Build a board debugging utility | Compare serial monitor/terminal projects as possible components or alternatives |
+| Explore a notes or download tool | Compare stated features and choose one small difference to validate |
+| Revisit an earlier investigation | Reanalyze saved responses and inspect sources without spending another API request |
+
+```sh
+npm run compass -- "A backtesting tool"
+npm run compass -- "A serial monitor for development boards"
+npm run compass -- "A download manager with resume support"
+npm run compass -- "A campus pet adoption service" --query "pet adoption"
 ```
 
-量化输入会检索回测相关仓库，不会创建量化软件。复杂主题请用 `--query` 明确搜索范围。[合成报告示例](examples/synthetic-report.md) 展示输出格式，不代表真实搜索或产品能力。
+Backtesting input searches for relevant tools; it does not run strategies or create trading software. For unfamiliar or complex topics, use `--query` to control the search. Capability analysis is most specific for the supported notes, serial, download, and backtesting topics.
 
-## 能力与限制
+The [synthetic report](examples/synthetic-report.md) shows the current Chinese output format. Its repository and capabilities are fictional test data, not live search results.
 
-- 每次最多两次 GitHub 搜索和五次 README 请求，匿名只读；不安装或执行候选仓库代码。
-- 报告区分 API 信息、作者声称、推断与未知；能力与建议附材料引用。材料未提及不等于软件没有该功能。
-- 使用有限中英关键词及能力规则和 Marked 正文解析，不调用语言模型；复杂否定、表格、用途和平台约束可能漏判或误判。
-- 未识别许可证的结果会列为排除项，可能漏掉真实可复用项目。实际复用前仍需检查 LICENSE 与依赖条款。
-- 不计算项目成功概率，不证明需求或盈利，也不代替安装实测。
-- 运行结果默认忽略于 Git。检索词会发往 GitHub，请勿将私密信息写入检索词。
+## Scope and limitations
 
-## 开发与验证
+- Each run makes at most two GitHub Search requests and five README requests, anonymously and read-only. It reads only the first ten results per query; this is not an exhaustive competitor search.
+- Archived repositories, forks, obvious course/resource lists, and results with unrecognized license metadata are excluded and explained. License filtering can omit useful projects; check actual LICENSE and dependency terms before reuse.
+- Search uses text matching, and analysis uses disclosed rules and the Marked lexer. Complex negation, tables, platform constraints, and unfamiliar topics may be missed or misread. No language model is called.
+- Capabilities are statements from repository materials, not installation tests. Text relevance does not establish task fit, user demand, or a market gap.
+- V1 has no graphical interface, repository-URL audit, full Issue/user-feedback analysis, automatic code generation, success probability, or continuous monitoring.
+- Only search queries are sent to GitHub. Keep private information out of queries. Generated reports and captures are ignored by Git by default.
 
-```powershell
+## Development and checks
+
+```sh
 npm test
 npm run check:contracts
-# 可选联网检查：最多 21 次 API 请求与 6 次网页 GET
+# Optional live check: up to 21 API requests and 6 repository page GETs
 npm run validate:live
 ```
 
-代码结构与已知限制见 [开发说明](docs/DEVELOPMENT.md)。依赖及引用说明见 [第三方说明](THIRD_PARTY_NOTICES.md)。
+See [development notes](docs/DEVELOPMENT.md) and [third-party notices](THIRD_PARTY_NOTICES.md).
 
-## 许可证
+## License
 
-采用 [MIT License](LICENSE)。第三方依赖各自的许可证继续适用。
+[MIT License](LICENSE). Third-party dependencies retain their own license terms.

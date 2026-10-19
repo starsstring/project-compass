@@ -1,37 +1,60 @@
-# 使用说明
+# Usage
 
-先执行 `npm ci` 和 `npm run build`。正常使用不需要数据库、Token 或模型服务。
+English | [简体中文](USAGE.zh-CN.md) · [Home](../README.md)
 
-```powershell
-npm run compass -- "本地 Markdown 笔记工具" --limit 3 --out ".compass/first-run"
-npm run compass -- "校园宠物领养互助系统" --query "animal adoption" --query "pet adoption"
-node dist/src/cli.js "本地笔记工具" --query "markdown notes" --json
+Install with `npm ci` and build with `npm run build` first. Normal discovery needs no database, GitHub token, or model service. English input works; generated prose, diagnostics, and help currently use Chinese.
+
+## Run a search
+
+```sh
+npm run compass -- "A local Markdown notes tool" --limit 3 --out ".compass/first-run"
+npm run compass -- "A campus pet adoption service" --query "animal adoption" --query "pet adoption"
+node dist/src/cli.js "A local notes tool" --query "markdown notes" --json
 node dist/src/cli.js --help
 ```
 
-参数：`--query` 最多两条；`--limit` 为 1–5；`--out` 必须是新目录；`--json` 输出 JSON。直接调用 node 可以避免 npm 提示文字混入机器读取的 JSON。
+| Option | Behavior |
+|---|---|
+| `--query "terms"` | Supply up to two searches; repeat the option for the second query |
+| `--limit 3` | Show 1–5 candidates; default is 5 |
+| `--out "directory"` | Save to a new directory; an existing directory is rejected |
+| `--json` | Print structured JSON instead of Markdown to stdout |
+| `--replay "captures.json"` | Analyze saved responses without network requests |
+| `--help` | Show the current Chinese CLI help |
 
-## 离线复查
+Use `node dist/src/cli.js` directly when piping JSON to another program, so npm's own banners do not enter stdout. JSON uses English field names; explanatory string values may be Chinese. Unknown Chinese topics need explicit queries. An arbitrary English phrase can produce search terms, but matching terms do not guarantee relevant results.
 
-```powershell
-node dist/src/cli.js "原来的创意" --replay ".compass/discovery/原运行号/captures.json" --out ".compass/replay-1"
+## Replay saved responses
+
+After the first example above has saved its responses:
+
+```sh
+node dist/src/cli.js "A local Markdown notes tool" --replay ".compass/first-run/captures.json" --out ".compass/replay-1"
 ```
 
-原运行如果指定过 `--query`，重放时也需给出相同检索词。重放检查文件结构和响应哈希，不会联网补齐；报告保留原采集时间并明确标为重放。文件上限 16 MiB、最多七份响应，旧报告不会被覆盖。
+Reuse the original idea and any explicit `--query` options. Replay validates structure, response hashes, and bounded input size (16 MiB, at most seven responses). It never fetches missing responses. Reports preserve capture times and clearly identify replay; the new report is not a fresh online check. Always choose a new output directory.
 
-## 结果解读
+## Read the results
 
-候选最多五项；相关性表示文本匹配，不保证适合你的平台和任务。功能表的“作者提及”“存在限制/冲突”“材料未确认”须分别理解。建议包含已有能力证据、最小改动、验证方法及停止条件；它们是候选验证方向，不是已证实的市场空缺。
+The capability table uses these labels:
 
-每条检索只读取 GitHub 前十项，并过滤归档、Fork、明确的课程/资源清单及未识别许可项。排序不按 Star 数。链接和默认分支可以变化；本地响应、时间、blob 标识及哈希用于复查，不代表整个仓库固定于同一提交。
-
-## 错误处理
-
-| 退出码 | 含义与下一步 |
+| Report label | Meaning |
 |---|---|
-| 0 | 有限检索完成，可能零候选；阅读筛选原因 |
-| 2 | 输入/参数有误；未知中文主题可指定英文 query |
-| 4 | 输出目录已存在或写入失败；选择新目录 |
-| 5 | 网络、限流或部分完成；保留现有结果，稍后换新目录重试 |
+| 作者提及 | The author mentions the capability in the captured materials |
+| 存在限制/冲突 | The materials contain a limitation or conflicting statement |
+| 材料未确认 | The captured prose does not establish the capability; it does not mean the feature is absent |
 
-匿名 API 配额较小。遇到限流不会无限重试；网络失败不会被写成“没有竞品”。失败时尽量保存 `failure.json` 和已有响应。不要为了重试删除原报告。
+Directions include source evidence, existing capabilities, a small proposed change, a validation action, and a condition for reusing an existing tool or stopping. They are investigations to consider, not confirmed unmet demand.
+
+Only the first ten GitHub results per query are read, with up to five candidates shown. Archived projects, forks, obvious course/resource lists, and unrecognized licenses are filtered. Stars do not determine ranking. Platform, audience, and actual runtime quality still need manual checking. Branch links can change; timestamps, response hashes, and Git blob identifiers help review the captured material, but do not pin the entire repository to one commit.
+
+## Errors and exit codes
+
+| Code | Meaning and next action |
+|---|---|
+| 0 | The bounded search completed, possibly with zero candidates; inspect exclusion reasons |
+| 2 | Invalid input/options; use explicit queries for an unrecognized topic |
+| 4 | Output already exists or cannot be written; choose a new writable directory |
+| 5 | Network/rate-limit failure or partial results; keep captured evidence and try a new directory later |
+
+Anonymous GitHub API limits may interrupt a run. The program does not retry indefinitely or report a network failure as “no competitors.” On failure it attempts to save `failure.json` and any available responses. Keep earlier output for review and use another directory when retrying.

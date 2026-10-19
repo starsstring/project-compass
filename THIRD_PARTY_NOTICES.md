@@ -1,7 +1,9 @@
-# 第三方说明
+# Third-party notices
 
-Project Compass 通过 npm 使用 Ajv 8.20.0、ajv-formats 3.0.1、Marked 18.1.1（均标注 MIT），并使用 TypeScript 等开发依赖。精确版本、传递依赖和许可证元数据见 package-lock.json；安装包中的 LICENSE、NOTICE 与版权声明继续适用。
+English | [简体中文](THIRD_PARTY_NOTICES.zh-CN.md)
 
-不打包 node_modules，不复制候选仓库源码或整份 README。GitHub API 返回的仓库信息与 README 属于各自作者；运行时捕获默认只存本地，输出引用用于复查，不表示获得任意再分发许可。
+Project Compass uses Ajv 8.20.0, ajv-formats 3.0.1, and Marked 18.1.1 through npm (each declares MIT), plus development dependencies such as TypeScript. See package-lock.json for exact versions, transitive dependencies, and license metadata. LICENSE, NOTICE, and copyright statements included in installed packages continue to apply.
 
-research/decision-cases.json 是本项目自写的历史分析摘要与合成案例，包含第一方来源链接；不是原仓库源码、README 副本或独立需求调查。
+The source snapshot does not bundle node_modules, candidate repository source code, or complete candidate READMEs. GitHub metadata and README content remain attributable to their authors. Runtime captures stay local by default; source references support review and do not grant unrestricted redistribution rights.
+
+research/decision-cases.json contains this project's original analysis summaries and synthetic cases with links to first-party sources. It is not a copy of upstream source code or READMEs, or an independent user-demand survey.

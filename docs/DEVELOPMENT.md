@@ -8,7 +8,7 @@
 
 ## 保留的技术资产
 
-`src/domain`、`src/contracts`、`src/application`、SQLite 适配器、`contracts` 和 `storage` 是保留的领域/存储模块；当前 discovery CLI 不需要初始化它们。`experiments` 与 `research/decision-cases.json` 保留历史规则实验及测试用例，不参与 V1 搜索和建议生成，也不代表真实用户或需求验证。
+`src/domain`（含 `src/domain/contracts`）、`src/application`、SQLite 适配器、`contracts` 和 `storage` 是保留的领域/存储模块；当前 discovery CLI 不需要初始化它们。`experiments` 与 `research/decision-cases.json` 保留历史规则实验及测试用例，不参与 V1 搜索和建议生成，也不代表真实用户或需求验证。
 
 ## 验证
 

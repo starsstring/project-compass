@@ -23,7 +23,7 @@ export const qualifiers = [
   { key: 'translation', label: '自然语言翻译', pattern: /翻译|\btranslat\w*/iu, terms: ['translation', 'translate', '翻译'], role: 'task' },
   { key: 'evaluation', label: '评测', pattern: /评测|评估|\bevaluat\w*|\bbenchmark\w*/iu, terms: ['evaluation', 'benchmark', '评测', '评估'], role: 'task' },
   { key: 'recognition', label: '识别', pattern: /识别|\brecognition\b|\bdetection\b/iu, terms: ['recognition', 'detection', '识别'], role: 'task' },
-  { key: 'offline', label: '离线', pattern: /离线|\boffline\b/iu, terms: ['offline', '离线'], role: 'constraint' },
+  { key: 'offline', label: '离线', pattern: /(?:不需要|不需|不用|无需)(?:连接)?(?:互联网|网络|联网)|离线|\boffline\b/iu, terms: ['offline', '离线'], role: 'constraint' },
   { key: 'encryption', label: '加密', pattern: /加密|\bencrypt\w*/iu, terms: ['encryption', 'encrypted', 'encrypt', '加密'], role: 'constraint' },
   { key: 'windows', label: 'Windows', pattern: /\bwindows\b|视窗/iu, terms: ['windows'], role: 'constraint' },
   { key: 'macos', label: 'macOS', pattern: /\bmacos\b|\bmac os\b/iu, terms: ['macos', 'mac os'], role: 'constraint' },

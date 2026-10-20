@@ -70,3 +70,14 @@ test('offline replay keeps attempted candidates instead of selecting an uncaptur
   const report=JSON.parse(readFileSync(join(output,'report.json'),'utf8'));
   assert.deepEqual(report.candidates.map((item:{full_name:string})=>item.full_name),['sample/captured']);
 });
+
+test('taskless or overlong fallback requests clarify before creating files or accessing GitHub', async t => {
+  const base = workspace(t);
+  const ideas = ['想找一个支持 macOS 的工具', '我现在还不确定做什么项目', '我想做一个' + '无人值守设备状态监控'.repeat(25)];
+  for (const [index, idea] of ideas.entries()) {
+    const output = join(base, String(index)); let calls = 0, stdout = '';
+    const exit = await runCli([idea, '--json', '--out', output], {...silent, stdout: text => { stdout += text; }, fetcher: async () => { calls++; throw Error('network forbidden'); }});
+    assert.equal(exit, 2, idea); assert.equal(calls, 0); assert.equal(existsSync(output), false);
+    assert.equal(JSON.parse(stdout).status, 'needs_clarification');
+  }
+});

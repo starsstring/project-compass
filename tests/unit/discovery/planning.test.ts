@@ -173,3 +173,57 @@ test('a main-task phrase still outranks a scattering of the same words',async()=
   const report=await discover(planSearch('我想做一个 Linux 密码工具'),new GitHubSearch(fake.fetcher));
   assert.equal(report.candidates[0]!.full_name,'sample/manager');
 });
+
+test('unknown Chinese tasks survive English qualifiers and single-character segmentation', () => {
+  for (const platform of ['macOS', 'Linux', 'Windows']) {
+    const idea = `想找一个能在 ${platform} 上运行的音频降噪工具`;
+    const plan = planSearch(idea);
+    assert.equal(plan.idea, idea);
+    assert.ok(plan.queries.length);
+    assert.ok(plan.queries.every(query => query.includes('音频降噪')));
+    assert.ok(plan.queries[0]!.includes(platform.toLowerCase()));
+    assert.ok(plan.understanding?.unmapped_terms.includes('音频降噪'));
+    assert.match(plan.warnings.join(' '), /不保证覆盖英文/u);
+  }
+});
+
+test('platforms and generic words alone require a concrete task', () => {
+  for (const idea of ['想找一个支持 Windows 的工具', 'Find an offline Linux tool', 'macOS software']) {
+    const plan = planSearch(idea);
+    assert.deepEqual(plan.queries, [], idea);
+    assert.ok(plan.understanding?.clarification);
+    assert.ok(plan.understanding?.requirements.length);
+  }
+  assert.match(planSearch('Find a Linux waveform analyzer').queries[0]!, /waveform analyzer/u);
+  assert.match(planSearch('OCR 翻译工具').queries[0]!, /ocr.*translation/u);
+});
+
+test('no-network phrasing is a required offline condition, not an excluded feature', () => {
+  for (const phrase of ['不需要联网', '无需网络', '不用连接互联网', '不需联网']) {
+    const plan = planSearch(`我想开发一个${phrase}的家庭药品到期提醒工具`);
+    const offline = plan.understanding?.requirements.find(item => item.key === 'offline');
+    assert.equal(offline?.polarity, 'required', phrase);
+    assert.equal(offline?.source, phrase);
+    assert.match(plan.queries[0]!, /offline/u);
+    assert.ok(plan.queries.every(query => query.includes('家庭药品到期提醒')));
+  }
+  assert.equal(planSearch('不需要离线的笔记工具').understanding?.requirements.find(item => item.key === 'offline')?.polarity, 'excluded');
+});
+
+test('fallback retains the task tail and clarifies instead of silently truncating long queries', () => {
+  const plan = planSearch('我想开发一个家庭药品分类存储数量统计到期提醒工具');
+  assert.ok(plan.queries.every(query => query.includes('到期提醒')));
+  assert.ok(plan.queries.length);
+  const long = planSearch('我想开发一个' + '家庭药品分类存储数量统计'.repeat(20) + '到期提醒工具');
+  assert.deepEqual(long.queries, []);
+  assert.match(long.understanding?.clarification ?? '', /缩短/u);
+  assert.ok(long.idea.endsWith('到期提醒工具'));
+});
+
+test('explicit lack of direction clarifies while a concrete uncertain choice can still search', () => {
+  for (const idea of ['我现在还不确定做什么项目', '不知道开发什么工具', '还没想好做什么项目', 'I do not know what to build']) {
+    assert.deepEqual(planSearch(idea).queries, [], idea);
+  }
+  assert.ok(planSearch('我不确定选择什么笔记工具').queries.length);
+  assert.deepEqual(planSearch('我现在还不确定做什么项目', ['custom topic']).queries, ['custom topic']);
+});

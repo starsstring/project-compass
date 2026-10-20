@@ -1,11 +1,23 @@
 import { DiscoveryError, type SearchPlan, type InputUnderstanding, type SearchRequirement } from './model.js';
 import { concepts, qualifiers } from './vocabulary.js';
 
-const stopwords = new Set('i a an the want would like to build create make develop tool app application software for with and or of on my me that can using simple local project open source github help users user is it this find looking remember learn study without exclude not no need needs require required support supports'.split(' '));
-const chineseStopwords = new Set('我 想 做 一个 一种 可以 能 的 地 得 用于 面向 支持 开发 软件 工具 应用 平台 项目 创意 方向 全新 尚未 未 识别 未知 了解 非常 厉害 强大 功能 好用 有趣 有用 大家 用户 需要 实现 帮助'.split(' '));
+const stopwords = new Set('i a an the want would like to build create make develop tool tools app apps application applications software for with and or of on my me that can using simple local project projects open source github help users user is it this find looking remember learn study without exclude not no need needs require required support supports how run running works'.split(' '));
+const chineseStopwords = new Set('我 我想 想 找 做 一个 一种 可以 能 的 地 得 用于 面向 支持 开发 软件 工具 应用 平台 项目 创意 方向 全新 尚未 未 识别 未知 了解 非常 厉害 强大 功能 好用 有趣 有用 大家 用户 需要 实现 帮助 记得 有个 想要 准备 创建 学习 寻找 查找 有没有 接近 代码 如何 怎么 在 上 运行'.split(' '));
 const unique = (terms: string[]) => [...new Set(terms)];
 const words = (input: string) => (input.toLowerCase().match(/[a-z][a-z0-9+#.-]*/gu) ?? []).filter(term => !stopwords.has(term));
 const inReadme = ' in:name,description,readme';
+
+// Keep adjacent Chinese pieces together: ICU may split an unfamiliar task into
+// single characters. Dropping those pieces would silently erase the task.
+function chineseTerms(input: string): string[] {
+  const terms: string[] = []; let phrase = '';
+  const flush = () => { if (phrase) terms.push(phrase); phrase = ''; };
+  for (const item of new Intl.Segmenter('zh', { granularity: 'word' }).segment(input)) {
+    if (item.isWordLike && /^\p{Script=Han}+$/u.test(item.segment) && !chineseStopwords.has(item.segment)) phrase += item.segment;
+    else flush();
+  }
+  flush(); return unique(terms);
+}
 
 export function intentLabel(intent: InputUnderstanding['intent']): string {
   return { find_project: '寻找已有项目', develop: '开发创意', learn: '学习探索', unclear: '意图未明确' }[intent];
@@ -60,18 +72,22 @@ export function planSearch(ideaInput: string, explicitQueries: string[] = []): S
   const legacy = positive.filter(item => qualifiers.find(row => row.key === item.key)?.role === 'legacy').map(item => item.terms[0]!);
   const advanced = positive.filter(item => qualifiers.find(row => row.key === item.key)?.role !== 'legacy');
   const english = unique(words(idea));
-  const chinese = [...new Intl.Segmenter('zh', { granularity: 'word' }).segment(idea)]
-    .filter(item => item.isWordLike && /\p{Script=Han}/u.test(item.segment) && item.segment.length >= 2 && !chineseStopwords.has(item.segment))
-    .map(item => item.segment);
+  // Platform/format words cannot stand in for an unknown main task. Retain both
+  // languages in the fallback instead of letting one English qualifier win.
+  let taskText = idea;
+  for (const item of qualifiers) taskText = taskText.replace(new RegExp(item.pattern.source, 'giu'), ' ');
+  const fallback = unique([...words(taskText), ...chineseTerms(taskText)]);
   let unmapped = idea;
   for (const item of [...concepts, ...qualifiers]) unmapped = unmapped.replace(new RegExp(item.pattern.source, 'giu'), ' ');
   unmapped = unmapped.replace(/我记得|有个|我想|想要|准备|创建|学习|寻找|查找|有没有|需要|接近|代码/gu, ' ');
-  understanding.unmapped_terms = unique([...new Intl.Segmenter('zh', { granularity: 'word' }).segment(unmapped)]
-    .filter(item => item.isWordLike && /\p{Script=Han}/u.test(item.segment) && item.segment.length >= 2 && !chineseStopwords.has(item.segment)).map(item => item.segment)).slice(0, 12);
+  understanding.unmapped_terms = chineseTerms(unmapped).slice(0, 12);
   const warnings = ['规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。'];
-  const ambiguous = /一切|万能|\b(?:everything|anything)\b|(?:很|非常|特别)?(?:厉害|强大|好用)的(?:软件|工具|项目)/iu.test(idea);
+  const ambiguous = /一切|万能|\b(?:everything|anything)\b|(?:很|非常|特别)?(?:厉害|强大|好用)的(?:软件|工具|项目)/iu.test(idea)
+    || (!matches.length && /不(?:知道|确定|清楚).{0,6}(?:做|开发|找)(?:点|些)?什么|(?:还没|没有|没)想好.{0,6}(?:做|开发)什么|(?:don't|do not) know what to (?:build|make|develop)/iu.test(idea));
+  const task = advanced.filter(item => qualifiers.find(row => row.key === item.key)?.role === 'task');
+  const standaloneTask = task.filter(item => ['ocr', 'translation'].includes(item.key));
   let queries: string[];
-  if (ambiguous || (!matches.length && !english.length && !chinese.length)) {
+  if (ambiguous || (!matches.length && !fallback.length && !standaloneTask.length)) {
     understanding.clarification = /逆向/iu.test(idea)
       ? '你是在找某个已有项目，还是想学习或开发逆向工具？请补充对象，例如程序、APK、硬件或协议。'
       : '你想找现成工具、开发软件还是学习？请补充一个要解决的具体问题或输入输出。';
@@ -79,20 +95,23 @@ export function planSearch(ideaInput: string, explicitQueries: string[] = []): S
   }
   let core: string[];
   if (matches.length) core = matches.length === 1 ? [matches[0]!.alternatives[0]!] : unique(matches.flatMap(item => [...item.terms]));
-  else core = english.length ? english.slice(0, 4) : unique(chinese).slice(0, 4);
+  else core = fallback.length ? fallback : standaloneTask.map(item => item.terms[0]!);
   // Retain unmapped English nouns (APK/Java/DNS/etc.) alongside a known topic.
   const mapped = new Set([...matches.flatMap(item => [...item.terms, ...item.alternatives]), ...understanding.requirements.flatMap(item => item.terms)].flatMap(item => words(item)));
-  const extraEnglish = matches.length ? english.filter(term => !mapped.has(term)).slice(0, 3) : [];
-  const task = advanced.filter(item => qualifiers.find(row => row.key === item.key)?.role === 'task');
+  const extraEnglish = matches.length ? english.filter(term => !mapped.has(term)) : [];
   if (advanced.length || extraEnglish.length) {
     const focused = unique([...legacy, ...core, ...task.map(item => item.terms[0]!), ...advanced.filter(item => !task.includes(item)).map(item => item.terms[0]!), ...extraEnglish]);
     const broadTask = task.find(item => ['ocr', 'evaluation'].includes(item.key));
     const broadCore = matches.length === 1 && matches[0]!.alternatives.length > 1 ? [matches[0]!.alternatives[1]!] : core;
     const broad = unique([...legacy, ...broadCore, ...(broadTask ? [broadTask.terms[0]!] : [])]);
-    queries = [focused.join(' ').slice(0, 170) + inReadme, broad.join(' ').slice(0, 190)];
+    queries = [focused.join(' ') + inReadme, broad.join(' ')];
   } else if (matches.length === 1) queries = matches[0]!.alternatives.slice(0, 2).map(query => [...legacy, query].join(' '));
-  else queries = [unique([...legacy, ...core]).join(' ').slice(0, 170) + (!matches.length && !english.length ? inReadme : '')];
-  if (!matches.length && !english.length) warnings.push('未识别英文主题：保留中文分词检索，不保证覆盖英文 README；查询为空或不相关时请补充用途。');
+  else queries = [unique([...legacy, ...core]).join(' ') + (!matches.length && core.some(term => /\p{Script=Han}/u.test(term)) ? inReadme : '')];
+  if (queries.some(query => query.length > 200)) {
+    understanding.clarification = '需求超过单次检索可保留的长度，请缩短为一个核心任务和最重要的条件；本次未截断任务或联网。';
+    return { idea, queries: [], terms: [], method: 'keyword_rules', understanding, warnings };
+  }
+  if (!matches.length && core.some(term => /\p{Script=Han}/u.test(term))) warnings.push('未识别英文主题：保留中文分词检索和相邻短语，不保证覆盖英文 README；查询为空或不相关时请补充用途。');
   if (understanding.unmapped_terms.length) warnings.push(`尚未映射的中文要点：${understanding.unmapped_terms.join('、')}；原文保留，不保证这些条件已进入查询。`);
   if (understanding.requirements.some(item => item.polarity === 'excluded')) warnings.push('否定条件已保留，但不生成 GitHub 排除词，避免误删只是在文档中提及该词的候选；需要逐项核对。');
   if (/量化|回测|\bbacktest|algorithmic trading/iu.test(idea)) warnings.push('本次量化主题主要检索策略研究/回测和交易框架，未覆盖所有行情数据、风控、券商接口或成品终端；未指定市场，不默认限定 A 股或实盘。');

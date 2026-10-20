@@ -86,6 +86,7 @@ The [synthetic report](examples/synthetic-report.md) shows the current Chinese o
 npm test
 npm run check:contracts
 # Optional live check: up to 21 API requests and 6 repository page GETs
+# Also checks clarification with no requests or report directory
 npm run validate:live
 ```
 

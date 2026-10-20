@@ -86,6 +86,7 @@ npm run compass -- "校园宠物领养互助系统" --query "pet adoption"
 npm test
 npm run check:contracts
 # 可选联网检查：最多 21 次 API 请求与 6 次候选网页 GET
+# 另检查澄清案例：不联网、不创建报告目录
 npm run validate:live
 ```
 

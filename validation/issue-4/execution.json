@@ -1,0 +1,55 @@
+{
+  "node": "v24.19.0",
+  "npm": "12.2.0",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "records": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/workspace/project-compass",
+      "started_at": "2026-10-20T18:23:23.794873+00:00",
+      "completed_at": "2026-10-20T18:23:29.065951+00:00",
+      "exit_code": 0,
+      "log": "build.txt",
+      "sha256": "372cba14f3877f9433664af52cfb83064caa64a01bee48b1f8b3eef43c0a0109",
+      "counts": {}
+    },
+    {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "cwd": "/workspace/project-compass",
+      "started_at": "2026-10-20T18:23:29.173606+00:00",
+      "completed_at": "2026-10-20T18:23:44.144521+00:00",
+      "exit_code": 0,
+      "log": "tests.txt",
+      "sha256": "ef02d58095b7258b93f50217d01c2b4885ce2c43706c28f768a966ddcde42f77",
+      "counts": {
+        "tests": 311,
+        "pass": 311,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "check:contracts"
+      ],
+      "cwd": "/workspace/project-compass",
+      "started_at": "2026-10-20T18:23:44.259218+00:00",
+      "completed_at": "2026-10-20T18:23:50.452889+00:00",
+      "exit_code": 0,
+      "log": "contracts.txt",
+      "sha256": "6dc7a9c8d30bd530ba082f1713b99c2c0f959c6c844e125288e0f365d9af24d0",
+      "counts": {}
+    }
+  ]
+}

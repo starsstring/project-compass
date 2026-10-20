@@ -1,0 +1,14 @@
+✔ post-freeze V01: long_tail_forced_empty_then_fallback (synthetic transport) (92.191848ms)
+✔ post-freeze V02: language_conversion_primary_nonempty (synthetic transport) (10.413601ms)
+✔ post-freeze V03: privacy_readme404 (synthetic transport) (10.056959ms)
+✔ post-freeze V04: learning_course_kept (synthetic transport) (6.759492ms)
+✔ post-freeze V05: negative_conditions_no_deletion (synthetic transport) (4.290583ms)
+✔ post-freeze V06: clarification_no_network (synthetic transport) (18.208938ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 397.443163

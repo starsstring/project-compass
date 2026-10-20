@@ -1,5 +1,8 @@
 # 0.2.0 input planning / 输入规划
 
+This page documents the unchanged default rule path. For the opt-in external JSON
+prototype, see [external semantic plans](SEMANTIC_PLAN.md) / [外部语义计划](SEMANTIC_PLAN.zh-CN.md).
+
 The CLI uses finite vocabulary, intent rules, and Node's built-in `Intl.Segmenter`. No translation service, model API, keys, new dependencies, or agent framework is involved. This improves some requests; it is not general language understanding.
 
 CLI 使用有限词表、意图规则与 Node 自带中文分词。它不接翻译服务、模型 API、Key 或多代理框架，也不保证理解全部输入。

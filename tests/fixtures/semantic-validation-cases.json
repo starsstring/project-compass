@@ -1,0 +1,188 @@
+{
+  "created_at": "2026-10-20T18:20:00.428329+00:00",
+  "design_freeze_commit": "7d960e5",
+  "implementation_freeze_commit": "d73d7f1ffe670a857e2a3ef60ca346b16daea605",
+  "status": "Codex-created after implementation freeze; first-use validation inputs, not independent human blind tests. Queries are supplied external plans, not automatic translation. Synthetic transports test software behavior only. Do not tune production code to these cases; record any later fix and reclassify affected cases as known regressions.",
+  "cases": [
+    {
+      "id": "V01",
+      "coverage": "long_tail_forced_empty_then_fallback",
+      "plan": {
+        "version": 1,
+        "idea": "想找能检查 CityGML 建筑模型几何是否闭合、并定位无效面的工具",
+        "intent": "find_project",
+        "core": {
+          "object": "citygml",
+          "action": "validator"
+        },
+        "alternative": {
+          "object": "building geometry",
+          "action": "validation"
+        },
+        "required_conditions": [
+          "CityGML 输入",
+          "闭合性检查",
+          "定位无效面"
+        ],
+        "excluded_conditions": [],
+        "unknowns": [
+          "支持的 CityGML 版本未指定"
+        ],
+        "clarification": null
+      },
+      "expected_queries": [
+        "citygml validator",
+        "building geometry validation"
+      ]
+    },
+    {
+      "id": "V02",
+      "coverage": "language_conversion_primary_nonempty",
+      "plan": {
+        "version": 1,
+        "idea": "把 OpenAPI 接口说明转换成中文文档，但保留参数名和代码示例原文",
+        "intent": "unclear",
+        "core": {
+          "object": "openapi documentation",
+          "action": "translator"
+        },
+        "alternative": {
+          "object": "api documentation",
+          "action": "translation"
+        },
+        "required_conditions": [
+          "中文说明输出",
+          "保留参数名",
+          "保留代码示例原文"
+        ],
+        "excluded_conditions": [
+          "改写参数名和代码示例"
+        ],
+        "unknowns": [
+          "翻译质量与文档格式未指定"
+        ],
+        "clarification": null
+      },
+      "expected_queries": [
+        "openapi documentation translator"
+      ]
+    },
+    {
+      "id": "V03",
+      "coverage": "privacy_readme404",
+      "plan": {
+        "version": 1,
+        "idea": "需要一个本地整理医疗 DICOM 影像元数据的命令行工具，去除身份信息且不上传文件",
+        "intent": "find_project",
+        "core": {
+          "object": "dicom",
+          "action": "anonymizer"
+        },
+        "alternative": {
+          "object": "dicom",
+          "action": "deidentification"
+        },
+        "required_conditions": [
+          "本地命令行",
+          "DICOM 元数据身份信息去除"
+        ],
+        "excluded_conditions": [
+          "上传影像或元数据"
+        ],
+        "unknowns": [
+          "去标识规则与标准版本未指定"
+        ],
+        "clarification": null
+      },
+      "expected_queries": [
+        "dicom anonymizer"
+      ]
+    },
+    {
+      "id": "V04",
+      "coverage": "learning_course_kept",
+      "plan": {
+        "version": 1,
+        "idea": "我想学习用 TLA+ 检查分布式锁的互斥性质，不准备开发锁服务",
+        "intent": "learn",
+        "core": {
+          "object": "distributed lock",
+          "action": "model checking"
+        },
+        "alternative": {
+          "object": "tla",
+          "action": "tutorial"
+        },
+        "required_conditions": [
+          "学习资料",
+          "TLA+",
+          "分布式锁互斥性质"
+        ],
+        "excluded_conditions": [
+          "开发新锁服务"
+        ],
+        "unknowns": [
+          "现有形式化基础未指定"
+        ],
+        "clarification": null
+      },
+      "expected_queries": [
+        "distributed lock model checking"
+      ]
+    },
+    {
+      "id": "V05",
+      "coverage": "negative_conditions_no_deletion",
+      "plan": {
+        "version": 1,
+        "idea": "找能把 MIDI 演奏量化成 MusicXML 乐谱的工具，不要音频转录或付费云服务",
+        "intent": "find_project",
+        "core": {
+          "object": "midi musicxml",
+          "action": "converter"
+        },
+        "alternative": {
+          "object": "midi notation",
+          "action": "converter"
+        },
+        "required_conditions": [
+          "MIDI 输入",
+          "量化为乐谱",
+          "MusicXML 输出"
+        ],
+        "excluded_conditions": [
+          "音频转录",
+          "付费云服务"
+        ],
+        "unknowns": [
+          "量化节奏与声部要求未指定"
+        ],
+        "clarification": null
+      },
+      "expected_queries": [
+        "midi musicxml converter"
+      ]
+    },
+    {
+      "id": "V06",
+      "coverage": "clarification_no_network",
+      "plan": {
+        "version": 1,
+        "idea": "想给自家果园做点数字化，但目前还没想清楚要解决哪个日常环节",
+        "intent": "unclear",
+        "core": null,
+        "alternative": null,
+        "required_conditions": [
+          "果园场景"
+        ],
+        "excluded_conditions": [],
+        "unknowns": [
+          "具体日常任务未确定",
+          "目标平台与输入输出未知"
+        ],
+        "clarification": "你希望先解决果园的哪个日常问题？请举一个具体任务和输入输出。"
+      },
+      "expected_queries": []
+    }
+  ]
+}

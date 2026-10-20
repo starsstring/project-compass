@@ -57,6 +57,23 @@ test('navigation link titles do not establish data migration or live trading sup
   assert.equal(state(content, 'transfer'), 'not_established');
   assert.equal(state(content, 'live'), 'not_established');
 });
+
+test('source directory descriptions do not establish product integrity or resume capabilities', () => {
+  const content = '# Project layout\n\n- `Sources/Utility`: checksum and resume-data utilities\n- src/downloader: download and checksum helpers\n';
+  assert.equal(state(content, 'integrity'), 'not_established');
+  assert.equal(state(content, 'resume'), 'not_established');
+  assert.equal(state(content, 'download'), 'not_established');
+  assert.equal(state('The download manager verifies checksums of downloaded files.', 'integrity'), 'author_mentioned');
+});
+
+test('generic collaboration evidence is labeled without claiming real-time editing', () => {
+  const analysis = analyzeCandidate(repo, readme('- **Collaboration**: Invite other users to access your vaults'));
+  const capability = analysis.capabilities.find(item => item.key === 'collaborate')!;
+  assert.equal(capability.state, 'author_mentioned');
+  assert.equal(capability.label, '协作');
+  assert.doesNotMatch(analysis.summary, /实时/u);
+  assert.equal(state('This application supports real-time collaborative editing.', 'collaborate'), 'author_mentioned');
+});
 test('license boilerplate and installation text do not become functional limitations', () => {
   const result = analyzeCandidate(repo, readme('# Installation\n\nOnly install the data dependencies.\n\n# License\n\nTHE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY, INCLUDING BUT NOT LIMITED TO MERCHANTABILITY.'));
   assert.equal(result.limitations.length, 0);

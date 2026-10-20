@@ -30,7 +30,7 @@ This report uses original synthetic test fixtures with no network requests. The 
 | Markdown 文本处理 | 作者提及 [E1](https://github.com/sample/markdown-notes) |
 | 本地文件存储 | 作者提及 [E2](https://github.com/sample/markdown-notes/blob/main/README.md#L1-L1) |
 | 同步 | 材料未确认 |
-| 实时协作 | 材料未确认 |
+| 协作 | 材料未确认 |
 | 笔记链接或附件 | 材料未确认 |
 | 数据导入或导出 | 材料未确认 |
 

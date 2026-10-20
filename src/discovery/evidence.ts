@@ -62,6 +62,9 @@ export function extractProse(content: string, url: string): Prose[] {
           (item.type === 'text' && 'text' in item && !/[\p{L}\p{N}]/u.test(String(item.text))))) continue;
         const text = inlineText(tokens).replace(/\s+/gu, ' ').trim();
         if (text.length < 15 || /^(?:from \w|import \w|pip |npm |sudo |curl |conda |python |\.\. |[=~_-]+$)/iu.test(text)) continue;
+        // A source-layout entry names implementation files; it does not establish
+        // a user-facing capability merely because its description has a keyword.
+        if (/^(?:src|sources?|tests?|docs?|lib|packages|dist)\/[\w./-]+:\s/iu.test(text)) continue;
         // Separate sentences so a limitation on one feature does not negate all
         // features in a long paragraph. Skip headings, code, tables and images.
         for (const sentence of text.split(/(?<=[。！？;；])\s*|(?<=[.!?])\s+(?=[A-Z])/u)) {
@@ -87,7 +90,7 @@ const features = [
   ['markdown', 'Markdown 文本处理', /\bmarkdown\b|Markdown笔记/iu],
   ['files', '本地文件存储', /\b(?:local files?|plain.text files?|file.based|local.first)\b|本地文件|本地优先/iu],
   ['sync', '同步', /\bsync(?:hroni[sz](?:ation|e))?\b|同步/iu],
-  ['collaborate', '实时协作', /\bcollaborat(?:ion|ive|e)\b|实时协作/iu],
+  ['collaborate', '协作', /\bcollaborat(?:ion|ive|e)\b|实时协作/iu],
   ['links', '笔记链接或附件', /\b(?:backlinks?|wiki.links?|attachments?)\b|双链|附件/iu],
   ['transfer', '数据导入或导出', /\b(?:export(?:ing)?|import(?:ing)?|migrat(?:e|ion))\b|导入|导出|迁移/iu],
   ['serial', '串口数据收发', /\b(?:serial (?:port|terminal|monitor|device|API)|UART|serialport)\b|串口/iu],

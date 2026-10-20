@@ -1,0 +1,98 @@
+{
+  "kind": "isolated_existing_script_execution_with_synthetic_fetch_not_live_GitHub",
+  "started_at": "2026-10-20T12:40:12.861Z",
+  "completed_at": "2026-10-20T12:40:13.556Z",
+  "execution": "node --import <fixture-preload> scripts/validate-v1-live.mjs",
+  "external_network_requests": 0,
+  "source_script": "scripts/validate-v1-live.mjs",
+  "source_unchanged": true,
+  "script_exit": 1,
+  "error": null,
+  "first_three_cases": [
+    {
+      "name": "markdown-notes",
+      "exit": 0,
+      "candidates": 1,
+      "link_statuses": [
+        200
+      ]
+    },
+    {
+      "name": "serial-debugger",
+      "exit": 0,
+      "candidates": 1,
+      "link_statuses": [
+        200
+      ]
+    },
+    {
+      "name": "resumable-download",
+      "exit": 0,
+      "candidates": 1,
+      "link_statuses": [
+        200
+      ]
+    }
+  ],
+  "legacy_failure_case": {
+    "input": "面向校园宠物领养的互助系统",
+    "actual_cli_exit": 0,
+    "script_required_exit": 2,
+    "actual_plan": {
+      "idea": "面向校园宠物领养的互助系统",
+      "queries": [
+        "pet adoption campus community in:name,description,readme",
+        "pet adoption"
+      ],
+      "terms": [
+        "pet",
+        "adoption",
+        "campus",
+        "community"
+      ],
+      "topic_terms": [
+        "pet",
+        "adoption"
+      ],
+      "method": "keyword_rules",
+      "understanding": {
+        "intent": "unclear",
+        "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+        "requirements": [
+          {
+            "key": "campus",
+            "label": "校园",
+            "source": "校园",
+            "terms": [
+              "campus",
+              "校园"
+            ],
+            "polarity": "required"
+          },
+          {
+            "key": "community",
+            "label": "互助 / 社区",
+            "source": "互助",
+            "terms": [
+              "community",
+              "互助",
+              "社区"
+            ],
+            "polarity": "required"
+          }
+        ],
+        "unmapped_terms": [
+          "系统"
+        ],
+        "clarification": null
+      },
+      "warnings": [
+        "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+        "尚未映射的中文要点：系统；原文保留，不保证这些条件已进入查询。"
+      ]
+    }
+  },
+  "initial_harness_attempt": "An initial Windows --import path used a drive-letter path instead of a file URL and failed before the source script executed. Corrected only the harness; original diagnostic retained privately.",
+  "conclusion": "The first three cases complete with fixture responses. The supported pet-adoption input exits 0, so the unchanged V1 script exits 1 solely because it still requires 2. This is a validation-script defect, not a failed real GitHub or product task test.",
+  "minimum_proposed_change": "Replace only the obsolete unsupported-input fixture with an actually ambiguous request whose clarification is tested; keep exit 2 and no-network behavior. No planner/ranking/model changes. Recheck script and clarify API-request budget."
+}

@@ -21,6 +21,8 @@ npm run check:contracts
 
 Tests build the project, verify generated types, and run offline unit, CLI, SQLite, and earlier rule checks. Contract checks compile strict schemas and validate synthetic examples. After changing contracts, run `npm run generate:types`, inspect the generated diff, and run the related checks. Storage changes need compatibility or a recoverable migration.
 
+GitHub Actions [CI](../.github/workflows/ci.yml) runs on pull requests and pushes to `main`, using a fresh Ubuntu 24.04 runner with Node.js 24.19.0 and npm 12.2.0. It checks out the exact PR head commit and runs `npm ci`, `npm run build`, `npm test`, and `npm run check:contracts` as separate steps that fail the job on error. There is no dependency cache or live discovery/model call; the tests use synthetic responses and local replay. The workflow uses read-only repository permissions and does not publish. Its results establish automated build/test compatibility, not retrieval quality or release approval.
+
 Before the first code upload, 172 local tests passed. Four sets of historical real responses were replayed with the final V1 implementation; another live backtesting-themed run retrieved five candidates and five READMEs. Earlier page checks included timeouts, which were not counted as successes. A development agent reviewed selected sources. These observations are not independent blind evaluation, installation testing of candidate software, or market validation.
 
 ## Documentation languages

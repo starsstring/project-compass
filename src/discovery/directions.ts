@@ -41,6 +41,18 @@ export function buildDirections(plan: SearchPlan, candidates: Candidate[]): Dire
       hypothesis: '这是由本次材料支持的候选验证任务；尚未证实用户需求或竞品功能缺口。', validation, stop_if: stop });
   };
   const topic = topicOf(plan);
+  if (plan.understanding && plan.understanding.intent !== 'develop') {
+    const repo = candidates[0]!, source = repo.analysis.evidence[0];
+    if (!source) return [];
+    const intent = plan.understanding.intent;
+    add(intent === 'find_project' ? '按原始线索核对候选身份' : intent === 'learn' ? '先核对学习材料与适用基础' : '先明确用途，再筛选候选',
+      [{ repository: repo.full_name, evidence_id: source.id, url: source.url, capability: '已取得作者材料，身份与任务适配待核实' }],
+      '本次有真实 GitHub 候选和作者材料；文字关联不能证明它就是用户记忆中的项目或适合完成原任务。',
+      intent === 'learn' ? '先读安装前提、入门文档与示例，记录需要的基础；不据学习意图建议新建产品。' : '逐项核对原文中的机构、输入输出、平台及限制；不凭相似名字认定唯一目标，也不先安排开发。',
+      intent === 'learn' ? '选一份有来源的入门材料，说明一个示例的输入输出和前置知识；是否实际运行另行记录。' : '对照 README 与真实仓库来源，记录哪些线索支持、冲突或仍未知；必要时向用户询问一个关键差异。',
+      '没有足够支持时保留多个候选或先澄清；现有项目满足任务时优先使用。');
+    return directions;
+  }
   if (topic === 'quant') {
     const backtests = basisFor(candidates, ['backtest']);
     const names = [...new Set(backtests.map(item => item.repository))];

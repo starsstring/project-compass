@@ -4,7 +4,9 @@ English | [简体中文](README.zh-CN.md)
 
 Find GitHub alternatives before building your idea. Project Compass searches real repositories, compares capabilities described in their materials, and saves a report with sources and 1–3 directions to investigate.
 
-V1 is a local command-line tool. It needs no GitHub token, model API key, or paid service. **English idea input is supported; CLI help, diagnostics, and generated report text currently use Chinese.** This release provides documentation in both languages.
+Project Compass is a local command-line tool. It needs no GitHub token, model API key, or paid service. **Chinese and English input are supported; CLI help, diagnostics, and generated report text currently use Chinese.** Documentation is available in both languages.
+
+0.2.0 adds limited intent/requirement rules and Chinese word segmentation, with focused and broader searches when appropriate. Vague requests ask for clarification without accessing GitHub. Reports retain the original request and show requirement text clues as unverified; this is not general semantic understanding. [Planning behavior and limits](docs/INPUT_PLANNING.md).
 
 ## Quick start
 
@@ -39,9 +41,9 @@ npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".co
 
 The package includes captured full READMEs. Review it before sharing it with any service, and treat repository text as untrusted data. See the [AI review guide](docs/AI_REVIEW.md) ([简体中文](docs/AI_REVIEW.zh-CN.md)) for the separate assistant step, offline export, and validation limits.
 
-## What V1 does
+## What it does
 
-1. Accepts an idea and derives up to two searches using a limited Chinese/English vocabulary. You can supply your own queries.
+1. Accepts a request, infers a possible find/build/learn intent, preserves requirements, and derives up to two searches using finite rules. Unmapped Chinese words remain visible; explicit queries still take precedence.
 2. Retrieves up to five GitHub candidates, with links, descriptions, language, license metadata, update time, and reasons for text relevance.
 3. Extracts prose from descriptions and READMEs, summarizes supported capability statements, and shows a comparison table with source references.
 4. Separates author statements, rule-based inferences, limitations, and unknowns. Missing documentation is not treated as a missing feature.

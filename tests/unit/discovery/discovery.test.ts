@@ -10,7 +10,7 @@ import { repository, fakeGitHub } from './fixtures.js';
 
 test('Chinese ideas produce inspectable queries in three different topics', () => {
   assert.deepEqual(planSearch('我想做一个本地 Markdown 笔记工具').queries, ['markdown notes', 'markdown note-taking']);
-  assert.deepEqual(planSearch('面向开发板的串口调试工具').queries, ['serial monitor', 'serial terminal']);
+  assert.ok(planSearch('面向开发板的串口调试工具').queries.some(query => query.includes('serial monitor')));
   assert.deepEqual(planSearch('支持断点续传的下载工具').queries, ['download manager', 'download resume']);
 });
 test('English free text and explicit queries do not require a model or repository fixtures', () => {
@@ -18,8 +18,8 @@ test('English free text and explicit queries do not require a model or repositor
   assert.deepEqual(planSearch('一种尚未识别的全新方向', ['aquarium controller']).queries, ['aquarium controller']);
   assert.deepEqual(planSearch('I want to build a DNS debugger').queries, ['dns debugger']);
 });
-test('unknown Chinese input, blank query and oversized input fail visibly', () => {
-  for (const action of [() => planSearch(''), () => planSearch('一种尚未识别的全新方向'), () => planSearch('a'.repeat(2001)),
+test('blank input, blank query and oversized input fail visibly', () => {
+  for (const action of [() => planSearch(''), () => planSearch('a'.repeat(2001)),
     () => planSearch('a valid idea', ['']), () => planSearch('a valid idea', ['a', 'b', 'c'])]) assert.throws(action, DiscoveryError);
 });
 test('deduplicates repositories across queries and does not rank by stars', async () => {

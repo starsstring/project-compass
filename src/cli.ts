@@ -5,24 +5,24 @@ import { pathToFileURL } from 'node:url';
 import { randomUUID } from 'node:crypto';
 import { GitHubSearch } from './adapters/github/search.js';
 import { loadReplay } from './adapters/github/replay.js';
-import { planSearch } from './discovery/query.js';
+import { planSearch, intentLabel } from './discovery/query.js';
 import { discover } from './discovery/analyze.js';
 import { DiscoveryError } from './discovery/model.js';
 import { renderDiscovery } from './discovery/markdown.js';
 import { createAiInput, aiInstructions, renderAiSources, aiReviewSchemaJson, readBoundedJson, validateAiInput, serializeAiInput, AI_INPUT_MAX_BYTES, AI_REVIEW_MAX_BYTES } from './advice/input.js';
 import { createReviewResult, renderAiReview } from './advice/review.js';
 
-const help = `Project Compass V1 — GitHub 竞品初查（匿名只读，无模型 Key）
+const help = `Project Compass 0.2.0 — GitHub 项目初查（匿名只读，无模型 Key）
 
 用法：npm run compass -- "项目创意" [--query "检索词"] [--limit 5] [--out "新目录"] [--json] [--replay "captures.json"] [--prepare-ai]
 导入：npm run compass -- --import-ai "分析.json" --ai-input "ai-input.json" [--out "新目录"] [--json]
 示例：npm run compass -- "我想做一个本地 Markdown 笔记工具"
       npm run compass -- "面向开发板的串口调试工具" --query "serial monitor"
 
---query 可重复，最多两条；省略时用有限中英关键词规则。
+--query 可重复，最多两条；省略时用有限词表、条件规则与中文分词规划。
 --out 必须为尚不存在的目录；默认 .compass/discovery/<唯一运行号>。
 --limit 1–5；--json 输出结构化报告；--help 显示帮助。
---replay 使用已有响应重新分析，不联网；检索词须与原运行一致。
+--replay 使用已有响应重新分析，不联网；未指定 --query 时自动使用留档检索词。
 --prepare-ai 额外导出资料、编号来源、AI 任务说明和返回格式；不调用模型。
 --import-ai 与 --ai-input 离线导入分析；结构/引用通过不代表语义正确或生成者已验证。
 只把生成/指定的检索式发送给 GitHub。最多 2 次搜索 + 5 次 README 请求。
@@ -72,10 +72,24 @@ export async function runCli(args: string[], io: CliIO = {}): Promise<number> {
     }
     if (parsed.values['ai-input'] !== undefined) throw new DiscoveryError('INVALID_INPUT', '--ai-input 只与 --import-ai 一起使用。');
     if (parsed.positionals.length !== 1) throw new DiscoveryError('INVALID_INPUT', '请用引号传入一段项目创意；用 --help 查看示例。');
-    const plan = planSearch(parsed.positionals[0]!, parsed.values.query);
     const limit = parsed.values.limit === undefined ? 5 : Number(parsed.values.limit);
     if (!Number.isInteger(limit) || limit < 1 || limit > 5) throw new DiscoveryError('INVALID_INPUT', '--limit 必须为 1–5。');
-    const client = parsed.values.replay !== undefined ? await loadReplay(parsed.values.replay) : new GitHubSearch(io.fetcher);
+    const replay = parsed.values.replay !== undefined ? await loadReplay(parsed.values.replay) : undefined;
+    if (replay && !replay.savedQueries?.length) throw new DiscoveryError('INVALID_INPUT', '重放文件没有检索记录；未联网。');
+    const plan = planSearch(parsed.positionals[0]!, parsed.values.query ?? replay?.savedQueries);
+    if (replay && parsed.values.query === undefined) {
+      plan.method = 'replay_queries';
+      const automatic = planSearch(parsed.positionals[0]!);
+      plan.warnings = [...automatic.warnings];
+      if (JSON.stringify(automatic.queries) !== JSON.stringify(plan.queries)) plan.warnings.push('使用留档中的原始查询；当前规划不同，重放不替换历史查询或重新联网。');
+    }
+    if (!plan.queries.length) {
+      const clarification = { status: 'needs_clarification', plan };
+      stdout(parsed.values.json ? JSON.stringify(clarification, null, 2) + '\n' : `需要澄清：${plan.understanding?.clarification}\n未联网；补充后可直接重新运行，无需英文检索词。\n`);
+      return 2;
+    }
+    stderr(`意图（规则推断）：${intentLabel(plan.understanding!.intent)}；${plan.understanding!.reason}\n`);
+    const client = replay ?? new GitHubSearch(io.fetcher);
     const output = await reserveOutput(parsed.values.out, 'discovery');
     try {
       stderr(`${client.mode === 'replay' ? '历史响应离线重放' : 'GitHub 只读检索'}：${plan.queries.join(' / ')}\n`);

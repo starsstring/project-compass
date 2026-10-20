@@ -2,6 +2,7 @@ import { GitHubSearch } from '../adapters/github/search.js';
 import { DiscoveryError, type Candidate, type DiscoveryReport, type Repository, type SearchPlan } from './model.js';
 import { analyzeCandidate, extractProse } from './evidence.js';
 import { buildDirections, relevantCapabilities } from './directions.js';
+import { intentLabel, mentionsRequirement } from './query.js';
 
 function matches(repo: Repository, terms: string[]): string[] {
   const haystack = `${repo.full_name} ${repo.description ?? ''} ${repo.topics.join(' ')}`.toLowerCase();
@@ -16,8 +17,13 @@ export function readmeExcerpt(content: string, terms: string[]): string | null {
 }
 
 export async function discover(plan: SearchPlan, client: GitHubSearch, limit = 5): Promise<DiscoveryReport> {
+  if (!plan.queries.length) throw new DiscoveryError('INVALID_INPUT', '请先澄清需求，再进行检索。');
   if (!Number.isInteger(limit) || limit < 1 || limit > 5) throw new DiscoveryError('INVALID_INPUT', '--limit 必须为 1–5。');
   const warnings = [...plan.warnings];
+  if (plan.understanding) {
+    warnings.push(`意图为规则推断：${intentLabel(plan.understanding.intent)}。`);
+    if (plan.understanding.requirements.length) warnings.push(`原始条件（未验证）：${plan.understanding.requirements.map(item => `${item.polarity === 'excluded' ? '排除 ' : ''}${item.label}`).join('、')}。文字出现不代表条件满足；未出现也不证明不支持。`);
+  }
   const searches: DiscoveryReport['searches'] = [];
   const found = new Map<number, Repository>();
   let partial = false;
@@ -45,8 +51,11 @@ export async function discover(plan: SearchPlan, client: GitHubSearch, limit = 5
   }
   const excluded: DiscoveryReport['excluded'] = [];
   const eligible = [...found.values()].filter(repo => {
+    // Reanalysis keeps the originally attempted candidate set; it cannot fetch
+    // README files for newly ranked search hits from an old offline snapshot.
+    if (client.savedRepositories?.length && !client.savedRepositories.includes(repo.full_name)) return false;
     let reason: string | null = null;
-    if (/\b(?:lecture notes|course notes|raw markdown notes|curated list|awesome list|personal .*vault template)\b/iu.test(repo.description ?? '')) {
+    if (plan.understanding?.intent !== 'learn' && /\b(?:lecture notes|course notes|raw markdown notes|curated list|awesome list|personal .*vault template)\b/iu.test(repo.description ?? '')) {
       reason = '描述显示为课程资料、资源清单或个人模板；本轮不作为直接工具候选。';
     }
     if (reason) { excluded.push({ name: repo.full_name, url: repo.url, reason }); return false; }
@@ -55,10 +64,16 @@ export async function discover(plan: SearchPlan, client: GitHubSearch, limit = 5
   const normalize = (value: string) => value.toLowerCase().replace(/[-_]/gu, ' ');
   const ordered = eligible.map((repo, index) => {
     const metadata = normalize(`${repo.full_name} ${repo.description ?? ''} ${repo.topics.join(' ')}`);
-    const phrases = plan.queries.filter(query => metadata.includes(normalize(query)));
-    return { repo, index, matched: matches(repo, plan.terms), phrases };
+    const phrases = plan.queries.filter(query => metadata.includes(normalize(query.replace(/ in:name,description,readme$/u, ''))));
+    const focused = plan.method === 'keyword_rules' && plan.queries.length === 2 && plan.queries[0]!.endsWith('in:name,description,readme') && repo.matched_queries.includes(plan.queries[0]!);
+    const requirements = plan.understanding?.requirements.filter(item => item.polarity === 'required' && mentionsRequirement(metadata, item)).length ?? 0;
+    return { repo, index, matched: matches(repo, plan.terms), phrases, focused: Number(focused), requirements,
+      topic: Number(matches(repo, plan.topic_terms ?? []).length > 0),
+      topicPhrases: matches(repo, (plan.topic_terms ?? []).filter(term => term.includes(' '))).length };
   })
-    .sort((a, b) => b.phrases.length - a.phrases.length || b.matched.length - a.matched.length || b.repo.matched_queries.length - a.repo.matched_queries.length || a.index - b.index)
+    .sort((a, b) => client.savedRepositories?.length
+      ? client.savedRepositories.indexOf(a.repo.full_name) - client.savedRepositories.indexOf(b.repo.full_name)
+      : b.topic - a.topic || b.topicPhrases - a.topicPhrases || b.requirements - a.requirements || b.focused - a.focused || b.phrases.length - a.phrases.length || b.matched.length - a.matched.length || b.repo.matched_queries.length - a.repo.matched_queries.length || a.index - b.index)
     .slice(0, limit);
   const candidates: Candidate[] = [];
   for (const { repo, matched, phrases } of ordered) {
@@ -84,7 +99,10 @@ export async function discover(plan: SearchPlan, client: GitHubSearch, limit = 5
       const referenced = new Set([...analysis.capabilities.flatMap(item => item.evidence_ids), ...analysis.limitations.map(item => item.evidence_id)]);
       analysis.evidence = analysis.evidence.filter(item => referenced.has(item.id));
     }
-    candidates.push({ ...repo, readme, analysis, relevance: {
+    const metadata = `${repo.full_name} ${repo.description ?? ''} ${repo.topics.join(' ')}`;
+    const requirement_clues = plan.understanding?.requirements.map(item => ({ label: item.label, polarity: item.polarity,
+      source: mentionsRequirement(metadata, item) ? 'metadata' as const : material && mentionsRequirement(material.content, item) ? 'readme' as const : null }));
+    candidates.push({ ...repo, ...(requirement_clues ? { requirement_clues } : {}), readme, analysis, relevance: {
       level: matched.length === 0 ? '待人工核查' : phrases.length > 0 ? '较强文本关联' : '部分文本关联',
       matched_terms: matched,
       reason: matched.length ? `名称/简介/topics 出现：${matched.join('、')}；完整检索短语匹配：${phrases.join(' / ') || '无'}；GitHub 检索式：${repo.matched_queries.join(' / ')}。未验证任务、平台与受众适配。`

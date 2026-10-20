@@ -72,7 +72,7 @@ export class GitHubSearch {
     if (!record(data) || !Array.isArray(data.items) || !Number.isInteger(data.total_count) || typeof data.incomplete_results !== 'boolean') {
       throw new DiscoveryError('BAD_RESPONSE', 'GitHub 搜索响应结构错误。');
     }
-    const items = data.items.map((item: unknown): Repository => {
+    const items = data.items.slice(0, 10).map((item: unknown): Repository => {
       if (!record(item) || !Number.isSafeInteger(item.id) || !text(item.full_name) ||
           !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(item.full_name) ||
           item.html_url !== `https://github.com/${item.full_name}` || !nullableText(item.description) ||

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "idea": "我只知道想做一款给老人用的软件，功能还没想好",
+  "intent": "unclear",
+  "core": null,
+  "required_conditions": ["面向老人"],
+  "excluded_conditions": [],
+  "unknowns": ["要解决的具体任务未确定"],
+  "clarification": "这款软件要帮老年用户解决什么具体问题？请举一个使用场景。"
+}

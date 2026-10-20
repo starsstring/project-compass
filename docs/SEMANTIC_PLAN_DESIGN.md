@@ -45,8 +45,8 @@ and initial regression checks; they are not independent human blind tests.
 ## Replay and compatibility
 
 - Keep `compass-discovery-v1.1` and the captures array/body hashes unchanged.
-  Add optional semantic provenance/condition/execution fields and a new plan
-  method; do not modify persisted report/SQLite or AI v1 contracts.
+  Add optional semantic provenance/condition/execution fields; do not modify
+  persisted report/SQLite or AI v1 contracts.
 - Save the validated external plan as `semantic-plan.json` in the ignored output
   directory. Replay with that snapshot preserves its declared intent/conditions.
 - Replay always uses archived query order and captured README order; never run a
@@ -67,3 +67,9 @@ contract checks, then preregister 2–3 bounded live inputs and a request cap.
 Live captures/third-party full text stay ignored. Publish only safe summaries,
 short citations and hashes. Finish with a Draft PR and one Issue #4 delivery
 comment; do not merge, close the Issue, change the package version or release.
+
+Compatibility refinement before the six new inputs: reuse the existing
+`explicit_query` / `replay_queries` method values, identifying the external
+strategy only through optional metadata. This keeps the existing method enum
+usable by v1.1 consumers. An explicit clarification also precedes replay;
+otherwise replay uses the archived queries. No new-input results informed this.

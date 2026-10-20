@@ -12,6 +12,30 @@ export interface InputUnderstanding {
   unmapped_terms: string[];
   clarification: string | null;
 }
+
+export interface SemanticCore { object: string; action: string }
+export interface ExternalSemanticPlan {
+  version: 1;
+  idea: string;
+  intent: InputUnderstanding['intent'];
+  core: SemanticCore | null;
+  alternative?: SemanticCore | null;
+  required_conditions: string[];
+  excluded_conditions: string[];
+  unknowns: string[];
+  clarification: string | null;
+}
+export interface QueryExecution {
+  strategy: 'semantic_short_fallback';
+  planned_queries: string[];
+  attempted_queries: string[];
+  replay: boolean;
+  fallback: {
+    attempted: boolean;
+    reason: 'primary_has_candidates' | 'primary_incomplete' | 'primary_failed' | 'primary_empty'
+      | 'no_alternative' | 'replay_actual_queries';
+  };
+}
 export interface SearchPlan {
   idea: string;
   queries: string[];
@@ -21,6 +45,7 @@ export interface SearchPlan {
   // Optional so existing reports and callers remain readable.
   understanding?: InputUnderstanding;
   topic_terms?: string[];
+  semantic?: { source: 'external'; verification: 'unverified'; sha256: string; input: ExternalSemanticPlan };
 }
 
 export interface Repository {
@@ -48,6 +73,7 @@ export interface ApiCapture {
 }
 
 export interface Candidate extends Repository {
+  external_conditions?: { kind: 'required' | 'excluded'; text: string; status: 'unknown' }[];
   requirement_clues?: { label: string; polarity: SearchRequirement['polarity']; source: 'metadata' | 'readme' | null }[];
   analysis: CandidateAnalysis;
   relevance: { level: '较强文本关联' | '部分文本关联' | '待人工核查'; matched_terms: string[]; reason: string };
@@ -106,10 +132,12 @@ export interface DiscoveryReport {
   directions: Direction[];
   warnings: string[];
   requests: Omit<ApiCapture, 'body'>[];
+  query_execution?: QueryExecution;
 }
 
 export class DiscoveryError extends Error {
-  constructor(readonly code: 'INVALID_INPUT' | 'NETWORK' | 'RATE_LIMIT' | 'GITHUB' | 'BAD_RESPONSE' | 'OUTPUT', message: string) {
+  constructor(readonly code: 'INVALID_INPUT' | 'NETWORK' | 'RATE_LIMIT' | 'GITHUB' | 'BAD_RESPONSE' | 'OUTPUT', message: string,
+    readonly query_execution?: QueryExecution) {
     super(message);
   }
 }

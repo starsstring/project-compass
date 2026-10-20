@@ -1,0 +1,13 @@
+{
+  "kind": "developer_one_shot_unseen_inputs_not_independent_human_blind_test",
+  "frozen_before_execution": true,
+  "policy": "Run each input once against unchanged tested code. No network, query assistance, code fixes, or tuning from these results. Record planning, intent, constraints, and clarification separately; do not compute a task-success score.",
+  "cases": [
+    {"id":"H01","input":"我想找一个支持 Linux 的离线密码管理器","expected_review_points":["寻找已有工具","密码管理主题","Linux 与离线条件"]},
+    {"id":"H02","input":"我想学习如何做语音识别","expected_review_points":["学习而非开发产品","语音识别主题","不把查询生成当作学习路线成功"]},
+    {"id":"H03","input":"我想开发一个不需要联网的家庭药品到期提醒工具","expected_review_points":["开发意图","药品到期提醒主题","不需要联网的约束"]},
+    {"id":"H04","input":"想找一个能在 macOS 上运行的音频降噪工具","expected_review_points":["寻找已有工具","音频降噪为主任务","macOS 不能替代主任务"]},
+    {"id":"H05","input":"做个能同步全部书签的小工具","expected_review_points":["书签同步主题","全部是范围条件，不能无故当作空泛请求","不默认平台"]},
+    {"id":"H06","input":"我现在还不确定做什么项目","expected_review_points":["输入缺少具体任务","应有澄清或明确不确定性","不能仅因生成文字检索词就判成功"]}
+  ]
+}

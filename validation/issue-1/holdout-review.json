@@ -1,0 +1,14 @@
+{
+  "kind": "developer_qualitative_review_not_independent_blind_evaluation",
+  "code_changed_after_results": false,
+  "new_cli_or_github_tests": 0,
+  "results": [
+    {"id":"H01","assessment":"规划层面保留找工具、密码管理、Linux、离线；实际候选相关性没有运行验证。"},
+    {"id":"H02","assessment":"学习意图正确；语音中文词仍在查询中，但夹入我想/学习/如何等非检索要点；不证明学习资源相关性。"},
+    {"id":"H03","assessment":"开发意图保留；不需要联网未提取为离线约束，查询截断后遗漏到期/提醒关键任务；原句和部分未映射词虽保留，查询不足。"},
+    {"id":"H04","assessment":"找工具和 macOS 条件保留，但查询只剩 macos，音频降噪主任务未进入查询，未映射要点也未完整提示。明确缺陷，未修补。"},
+    {"id":"H05","assessment":"书签主题存在，同步只留在原句/未映射词，没有进入查询；没有因为全部而强行澄清是合理的，条件处理仍不足。"},
+    {"id":"H06","assessment":"意图保留不确定，但仍生成现在/确定/什么等查询，没有提出关键澄清。明确的模糊输入处理缺口。"}
+  ],
+  "decision": "Ready for source review only, not approval of a formal 0.2.0 release. Independent unseen evaluation remains outstanding. No aggregate accuracy or success rate is claimed."
+}

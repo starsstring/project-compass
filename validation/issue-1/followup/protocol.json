@@ -1,0 +1,12 @@
+{
+  "kind": "developer_counterexamples_frozen_after_fix_before_execution",
+  "policy": "One production planner pass, no model or manual queries. No code tuning after seeing these results. These inputs are developer-selected, not independent blind testing. B/H cases are already known regressions, N cases are new for this run. Candidate quality requires separate live CLI and manual review.",
+  "cases": [
+    {"id":"N01","input":"想找一个能在 Linux 上使用的天文光变曲线拟合工具","review_points":["main task must survive platform word","unknown Chinese is not translated"]},
+    {"id":"N02","input":"我想做一个无需连接网络的水族箱投喂记录工具","review_points":["offline condition","complete unknown task"]},
+    {"id":"N03","input":"我还没想好开发什么软件","review_points":["clarification before network"]},
+    {"id":"N04","input":"Find a Windows tool","review_points":["platform alone is insufficient","clarification before network"]},
+    {"id":"N05","input":"我想做一个没网也能用的野外采样记录工具","review_points":["unseen offline paraphrase","retain task even if constraint mapping fails"]},
+    {"id":"N06","input":"Find an offline Linux spectral analyzer","review_points":["English task and constraints","do not over-clarify a specific unfamiliar topic"]}
+  ]
+}

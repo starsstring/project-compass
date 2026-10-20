@@ -1,0 +1,1144 @@
+{
+  "source_commit": "536a3ade12181a6d8ee8dfe9721d3e92aa192adb",
+  "node": "v24.19.0",
+  "started_at": "2026-10-20T11:54:59.385Z",
+  "completed_at": "2026-10-20T11:54:59.404Z",
+  "protocol_sha256": "948028a80dffdde1a7840725c4519f0b472ff4e001fc4b95c31a2c7737c54f5a",
+  "network_attempts": 0,
+  "limitation": "One production planner pass, no model or manual queries. No code tuning after seeing these results. These inputs are developer-selected, not independent blind testing. B/H cases are already known regressions, N cases are new for this run. Candidate quality requires separate live CLI and manual review.",
+  "results": [
+    {
+      "id": "B01",
+      "input": "我想逆向一切",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想逆向一切",
+        "queries": [],
+        "terms": [],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [],
+          "unmapped_terms": [
+            "一切"
+          ],
+          "clarification": "你是在找某个已有项目，还是想学习或开发逆向工具？请补充对象，例如程序、APK、硬件或协议。"
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B02",
+      "input": "我记得有个美国国家安全局开发的开源反编译工具",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我记得有个美国国家安全局开发的开源反编译工具",
+        "queries": [
+          "decompiler open source nsa in:name,description,readme",
+          "reverse engineering"
+        ],
+        "terms": [
+          "decompiler",
+          "nsa"
+        ],
+        "topic_terms": [
+          "decompiler",
+          "reverse engineering"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“我记得”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "open_source",
+              "label": "开源要求（许可仍须核查）",
+              "source": "开源",
+              "terms": [
+                "open source",
+                "开源"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "nsa",
+              "label": "机构线索：美国国家安全局",
+              "source": "美国国家安全局",
+              "terms": [
+                "nsa",
+                "national security agency",
+                "美国国家安全局"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B03",
+      "input": "有个工具能把 Android APK 反编译成接近 Java 的代码",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "有个工具能把 Android APK 反编译成接近 Java 的代码",
+        "queries": [
+          "decompiler android apk java in:name,description,readme",
+          "reverse engineering"
+        ],
+        "terms": [
+          "decompiler",
+          "android",
+          "apk",
+          "java"
+        ],
+        "topic_terms": [
+          "decompiler",
+          "reverse engineering"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“有个工具”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "android",
+              "label": "Android",
+              "source": "Android",
+              "terms": [
+                "android",
+                "安卓"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "把",
+            "成"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "尚未映射的中文要点：把、成；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B04",
+      "input": "我想做一个离线加密笔记软件",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想做一个离线加密笔记软件",
+        "queries": [
+          "notes offline encryption in:name,description,readme",
+          "note-taking"
+        ],
+        "terms": [
+          "notes",
+          "offline",
+          "encryption"
+        ],
+        "topic_terms": [
+          "notes",
+          "note-taking"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想做”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "offline",
+              "label": "离线",
+              "source": "离线",
+              "terms": [
+                "offline",
+                "离线"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "encryption",
+              "label": "加密",
+              "source": "加密",
+              "terms": [
+                "encryption",
+                "encrypted",
+                "encrypt",
+                "加密"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B05",
+      "input": "面向开发板的串口调试工具",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "面向开发板的串口调试工具",
+        "queries": [
+          "serial monitor embedded in:name,description,readme",
+          "serial terminal"
+        ],
+        "terms": [
+          "serial",
+          "monitor",
+          "embedded"
+        ],
+        "topic_terms": [
+          "serial",
+          "monitor",
+          "terminal",
+          "serial monitor",
+          "serial terminal"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [
+            {
+              "key": "embedded",
+              "label": "开发板场景",
+              "source": "开发板",
+              "terms": [
+                "embedded",
+                "development board",
+                "开发板"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "调试"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "尚未映射的中文要点：调试；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B06",
+      "input": "支持断点续传的下载工具",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "支持断点续传的下载工具",
+        "queries": [
+          "download manager",
+          "download resume"
+        ],
+        "terms": [
+          "download",
+          "manager"
+        ],
+        "topic_terms": [
+          "download",
+          "resume",
+          "download manager",
+          "download resume"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [],
+          "unmapped_terms": [],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B07",
+      "input": "我想做一个能识别植物病害的手机应用",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想做一个能识别植物病害的手机应用",
+        "queries": [
+          "plant disease recognition mobile in:name,description,readme",
+          "plant disease"
+        ],
+        "terms": [
+          "plant",
+          "disease",
+          "recognition",
+          "mobile"
+        ],
+        "topic_terms": [
+          "plant",
+          "disease"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想做”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "recognition",
+              "label": "识别",
+              "source": "识别",
+              "terms": [
+                "recognition",
+                "detection",
+                "识别"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "mobile",
+              "label": "手机 / 移动端",
+              "source": "手机",
+              "terms": [
+                "mobile",
+                "android",
+                "ios",
+                "手机"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B08",
+      "input": "校园宠物领养互助平台",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "校园宠物领养互助平台",
+        "queries": [
+          "pet adoption campus community in:name,description,readme",
+          "pet adoption"
+        ],
+        "terms": [
+          "pet",
+          "adoption",
+          "campus",
+          "community"
+        ],
+        "topic_terms": [
+          "pet",
+          "adoption"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [
+            {
+              "key": "campus",
+              "label": "校园",
+              "source": "校园",
+              "terms": [
+                "campus",
+                "校园"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "community",
+              "label": "互助 / 社区",
+              "source": "互助",
+              "terms": [
+                "community",
+                "互助",
+                "社区"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B09",
+      "input": "我想开发一个 RAG 应用评测工具",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想开发一个 RAG 应用评测工具",
+        "queries": [
+          "rag evaluation in:name,description,readme",
+          "rag evaluation"
+        ],
+        "terms": [
+          "rag",
+          "evaluation"
+        ],
+        "topic_terms": [
+          "rag"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想开发”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "evaluation",
+              "label": "评测",
+              "source": "评测",
+              "terms": [
+                "evaluation",
+                "benchmark",
+                "评测",
+                "评估"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B10",
+      "input": "Windows 桌面截图 OCR 翻译工具",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "Windows 桌面截图 OCR 翻译工具",
+        "queries": [
+          "screenshot ocr translation windows desktop in:name,description,readme",
+          "screenshot ocr"
+        ],
+        "terms": [
+          "screenshot",
+          "ocr",
+          "translation",
+          "windows",
+          "desktop"
+        ],
+        "topic_terms": [
+          "screenshot"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [
+            {
+              "key": "ocr",
+              "label": "文字识别 / OCR",
+              "source": "OCR",
+              "terms": [
+                "ocr",
+                "文字识别"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "translation",
+              "label": "自然语言翻译",
+              "source": "翻译",
+              "terms": [
+                "translation",
+                "translate",
+                "翻译"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "windows",
+              "label": "Windows",
+              "source": "Windows",
+              "terms": [
+                "windows"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "desktop",
+              "label": "桌面",
+              "source": "桌面",
+              "terms": [
+                "desktop",
+                "桌面"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B11",
+      "input": "我想学习逆向工程",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想学习逆向工程",
+        "queries": [
+          "reverse engineering"
+        ],
+        "terms": [
+          "reverse",
+          "engineering"
+        ],
+        "topic_terms": [
+          "reverse engineering"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "learn",
+          "reason": "根据最先出现的意图表达“学习”推断；复合意图仍需人工核对。",
+          "requirements": [],
+          "unmapped_terms": [
+            "工程"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "尚未映射的中文要点：工程；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "B12",
+      "input": "我想做一个很厉害的软件",
+      "group": "known_baseline",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想做一个很厉害的软件",
+        "queries": [],
+        "terms": [],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想做”推断；复合意图仍需人工核对。",
+          "requirements": [],
+          "unmapped_terms": [
+            "很"
+          ],
+          "clarification": "你想找现成工具、开发软件还是学习？请补充一个要解决的具体问题或输入输出。"
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H01",
+      "input": "我想找一个支持 Linux 的离线密码管理器",
+      "expected_review_points": [
+        "寻找已有工具",
+        "密码管理主题",
+        "Linux 与离线条件"
+      ],
+      "group": "known_regression",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想找一个支持 Linux 的离线密码管理器",
+        "queries": [
+          "password manager offline linux in:name,description,readme",
+          "password manager"
+        ],
+        "terms": [
+          "password",
+          "manager",
+          "offline",
+          "linux"
+        ],
+        "topic_terms": [
+          "password",
+          "password manager"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“想找”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "offline",
+              "label": "离线",
+              "source": "离线",
+              "terms": [
+                "offline",
+                "离线"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "linux",
+              "label": "Linux",
+              "source": "Linux",
+              "terms": [
+                "linux"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "管理器"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "尚未映射的中文要点：管理器；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H02",
+      "input": "我想学习如何做语音识别",
+      "expected_review_points": [
+        "学习而非开发产品",
+        "语音识别主题",
+        "不把查询生成当作学习路线成功"
+      ],
+      "group": "known_regression",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想学习如何做语音识别",
+        "queries": [
+          "语音 recognition in:name,description,readme",
+          "语音"
+        ],
+        "terms": [
+          "语音",
+          "recognition"
+        ],
+        "topic_terms": [
+          "语音"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "learn",
+          "reason": "根据最先出现的意图表达“学习”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "recognition",
+              "label": "识别",
+              "source": "识别",
+              "terms": [
+                "recognition",
+                "detection",
+                "识别"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "语音"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索和相邻短语，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：语音；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H03",
+      "input": "我想开发一个不需要联网的家庭药品到期提醒工具",
+      "expected_review_points": [
+        "开发意图",
+        "药品到期提醒主题",
+        "不需要联网的约束"
+      ],
+      "group": "known_regression",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想开发一个不需要联网的家庭药品到期提醒工具",
+        "queries": [
+          "家庭药品到期提醒 offline in:name,description,readme",
+          "家庭药品到期提醒"
+        ],
+        "terms": [
+          "家庭药品到期提醒",
+          "offline"
+        ],
+        "topic_terms": [
+          "家庭药品到期提醒"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想开发”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "offline",
+              "label": "离线",
+              "source": "不需要联网",
+              "terms": [
+                "offline",
+                "离线"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "家庭药品到期提醒"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索和相邻短语，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：家庭药品到期提醒；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H04",
+      "input": "想找一个能在 macOS 上运行的音频降噪工具",
+      "expected_review_points": [
+        "寻找已有工具",
+        "音频降噪为主任务",
+        "macOS 不能替代主任务"
+      ],
+      "group": "known_regression",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "想找一个能在 macOS 上运行的音频降噪工具",
+        "queries": [
+          "音频降噪 macos in:name,description,readme",
+          "音频降噪"
+        ],
+        "terms": [
+          "音频降噪",
+          "macos"
+        ],
+        "topic_terms": [
+          "音频降噪"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“想找”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "macos",
+              "label": "macOS",
+              "source": "macOS",
+              "terms": [
+                "macos",
+                "mac os"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "音频降噪"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索和相邻短语，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：音频降噪；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H05",
+      "input": "做个能同步全部书签的小工具",
+      "expected_review_points": [
+        "书签同步主题",
+        "全部是范围条件，不能无故当作空泛请求",
+        "不默认平台"
+      ],
+      "group": "known_regression",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "做个能同步全部书签的小工具",
+        "queries": [
+          "bookmark manager"
+        ],
+        "terms": [
+          "bookmark",
+          "manager"
+        ],
+        "topic_terms": [
+          "bookmark",
+          "bookmark manager"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [],
+          "unmapped_terms": [
+            "个",
+            "同步全部",
+            "小"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "尚未映射的中文要点：个、同步全部、小；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H06",
+      "input": "我现在还不确定做什么项目",
+      "expected_review_points": [
+        "输入缺少具体任务",
+        "应有澄清或明确不确定性",
+        "不能仅因生成文字检索词就判成功"
+      ],
+      "group": "known_regression",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我现在还不确定做什么项目",
+        "queries": [],
+        "terms": [],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [],
+          "unmapped_terms": [
+            "现在还不确定",
+            "什么"
+          ],
+          "clarification": "你想找现成工具、开发软件还是学习？请补充一个要解决的具体问题或输入输出。"
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "N01",
+      "input": "想找一个能在 Linux 上使用的天文光变曲线拟合工具",
+      "review_points": [
+        "main task must survive platform word",
+        "unknown Chinese is not translated"
+      ],
+      "group": "new_developer_counterexample",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "想找一个能在 Linux 上使用的天文光变曲线拟合工具",
+        "queries": [
+          "使用 天文光变曲线拟合 linux in:name,description,readme",
+          "使用 天文光变曲线拟合"
+        ],
+        "terms": [
+          "使用",
+          "天文光变曲线拟合",
+          "linux"
+        ],
+        "topic_terms": [
+          "使用",
+          "天文光变曲线拟合"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“想找”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "linux",
+              "label": "Linux",
+              "source": "Linux",
+              "terms": [
+                "linux"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "使用",
+            "天文光变曲线拟合"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索和相邻短语，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：使用、天文光变曲线拟合；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "N02",
+      "input": "我想做一个无需连接网络的水族箱投喂记录工具",
+      "review_points": [
+        "offline condition",
+        "complete unknown task"
+      ],
+      "group": "new_developer_counterexample",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想做一个无需连接网络的水族箱投喂记录工具",
+        "queries": [
+          "水族箱投喂记录 offline in:name,description,readme",
+          "水族箱投喂记录"
+        ],
+        "terms": [
+          "水族箱投喂记录",
+          "offline"
+        ],
+        "topic_terms": [
+          "水族箱投喂记录"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想做”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "offline",
+              "label": "离线",
+              "source": "无需连接网络",
+              "terms": [
+                "offline",
+                "离线"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "水族箱投喂记录"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索和相邻短语，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：水族箱投喂记录；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "N03",
+      "input": "我还没想好开发什么软件",
+      "review_points": [
+        "clarification before network"
+      ],
+      "group": "new_developer_counterexample",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我还没想好开发什么软件",
+        "queries": [],
+        "terms": [],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [],
+          "unmapped_terms": [
+            "我还没想好",
+            "什么"
+          ],
+          "clarification": "你想找现成工具、开发软件还是学习？请补充一个要解决的具体问题或输入输出。"
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "N04",
+      "input": "Find a Windows tool",
+      "review_points": [
+        "platform alone is insufficient",
+        "clarification before network"
+      ],
+      "group": "new_developer_counterexample",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "Find a Windows tool",
+        "queries": [],
+        "terms": [],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“Find”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "windows",
+              "label": "Windows",
+              "source": "Windows",
+              "terms": [
+                "windows"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": "你想找现成工具、开发软件还是学习？请补充一个要解决的具体问题或输入输出。"
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "N05",
+      "input": "我想做一个没网也能用的野外采样记录工具",
+      "review_points": [
+        "unseen offline paraphrase",
+        "retain task even if constraint mapping fails"
+      ],
+      "group": "new_developer_counterexample",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想做一个没网也能用的野外采样记录工具",
+        "queries": [
+          "没网也能用 野外采样记录 in:name,description,readme"
+        ],
+        "terms": [
+          "没网也能用",
+          "野外采样记录"
+        ],
+        "topic_terms": [
+          "没网也能用",
+          "野外采样记录"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想做”推断；复合意图仍需人工核对。",
+          "requirements": [],
+          "unmapped_terms": [
+            "没网也能用",
+            "野外采样记录"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索和相邻短语，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：没网也能用、野外采样记录；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "N06",
+      "input": "Find an offline Linux spectral analyzer",
+      "review_points": [
+        "English task and constraints",
+        "do not over-clarify a specific unfamiliar topic"
+      ],
+      "group": "new_developer_counterexample",
+      "execution": "production_planSearch_not_cli",
+      "plan": {
+        "idea": "Find an offline Linux spectral analyzer",
+        "queries": [
+          "spectral analyzer offline linux in:name,description,readme",
+          "spectral analyzer"
+        ],
+        "terms": [
+          "spectral",
+          "analyzer",
+          "offline",
+          "linux"
+        ],
+        "topic_terms": [
+          "spectral",
+          "analyzer"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“Find”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "offline",
+              "label": "离线",
+              "source": "offline",
+              "terms": [
+                "offline",
+                "离线"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "linux",
+              "label": "Linux",
+              "source": "Linux",
+              "terms": [
+                "linux"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "error": null
+    }
+  ]
+}

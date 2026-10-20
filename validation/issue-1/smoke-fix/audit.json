@@ -1,0 +1,49 @@
+{
+  "kind": "bounded_authorized_smoke_fix_audit",
+  "at": "2026-10-20T13:11:52.112Z",
+  "base": "e273a9b6f28cb3d14b4ef5fc16c1d5673f901333",
+  "tested_local_commit": "5c4c4fd36920320dd480858db9476fd47725f307",
+  "public_code_commit": "dd9868219ea483e55e968abe0b7314ecc86352a2",
+  "identical_complete_tree": "a040831aa8d9b5809a04e40070fce0ef24718d0d",
+  "production_src_contract_config_lock_diff": "",
+  "version": {
+    "package": "0.2.0",
+    "lock": "0.2.0",
+    "root": "0.2.0"
+  },
+  "source_files": [
+    "scripts/validate-v1-live.mjs",
+    "README.md",
+    "README.zh-CN.md",
+    "tests/fixtures/live-validation-preload.mjs",
+    "tests/integration/live-validation-script.test.ts"
+  ],
+  "evidence_files": [
+    {
+      "path": "docs/RELEASE_CHECK_0.2.0.md",
+      "sha256": "b37bb361e49aafd5b16a5058ba39f449e1760002d5dd000a1362bd94036f979d"
+    },
+    {
+      "path": "docs/RELEASE_NOTES_0.2.0_DRAFT.md",
+      "sha256": "9ff20009d7ed5ac2624199110808085fba2b57ec38a8b5043ef196dbe81b2988"
+    },
+    {
+      "path": "docs/RELEASE_CHECK_0.2.0_FIX.md",
+      "sha256": "243235c5391fbefb7205ea0c7b785b0773d9ab4d503d2ac15555e900e56736cc"
+    },
+    {
+      "path": "validation/issue-1/smoke-fix/tests.txt",
+      "sha256": "3677fc3fe6f49e899351c49d8c9ae5b70069a697a4a1a036068b467b95b0904b"
+    },
+    {
+      "path": "validation/issue-1/smoke-fix/contracts.txt",
+      "sha256": "f163ad0f79a8ccfe6815fbeb79cd22f8672696f040b1247a190e76bb57e15bc1"
+    },
+    {
+      "path": "validation/issue-1/smoke-fix/execution.json",
+      "sha256": "289be96ff5a66f1d121ad19d5261229776a821f96839b924a7c7ef453144b8a3"
+    }
+  ],
+  "findings": [],
+  "limitation": "Pattern scan and explicit allowlist, not a comprehensive security audit. Logs are actual unchanged UTF-8 subprocess output. Fixture HTTP responses are not live GitHub responses. No runtime captures/third-party full READMEs are published."
+}

@@ -46,8 +46,7 @@ export async function discover(plan: SearchPlan, client: GitHubSearch, limit = 5
   const excluded: DiscoveryReport['excluded'] = [];
   const eligible = [...found.values()].filter(repo => {
     let reason: string | null = null;
-    if (!repo.license || repo.license === 'NOASSERTION') reason = 'GitHub 未识别许可证；不据此认定可开源复用，留待人工读取 LICENSE。';
-    else if (/\b(?:lecture notes|course notes|raw markdown notes|curated list|awesome list|personal .*vault template)\b/iu.test(repo.description ?? '')) {
+    if (/\b(?:lecture notes|course notes|raw markdown notes|curated list|awesome list|personal .*vault template)\b/iu.test(repo.description ?? '')) {
       reason = '描述显示为课程资料、资源清单或个人模板；本轮不作为直接工具候选。';
     }
     if (reason) { excluded.push({ name: repo.full_name, url: repo.url, reason }); return false; }
@@ -91,7 +90,7 @@ export async function discover(plan: SearchPlan, client: GitHubSearch, limit = 5
       reason: matched.length ? `名称/简介/topics 出现：${matched.join('、')}；完整检索短语匹配：${phrases.join(' / ') || '无'}；GitHub 检索式：${repo.matched_queries.join(' / ')}。未验证任务、平台与受众适配。`
         : 'GitHub 返回了该仓库，但名称/简介/topics 未命中规划词；可能只命中 README，也可能不相关，需人工排除。',
     }, unknowns: ['功能是否稳定可用、是否符合原创意的全部约束尚未实测。', '没有读取完整 Issue/用户反馈，不能据此确认功能不足、需求规模或维护响应。',
-      repo.license && repo.license !== 'NOASSERTION' ? '许可证为 GitHub 元数据；复用代码前仍需读取实际 LICENSE 和依赖条款。' : '未获得可识别的开源许可证；只能列为公开候选，不能认定允许复用。'] });
+      repo.license && repo.license !== 'NOASSERTION' ? '许可证为 GitHub 元数据；复用代码前仍需读取实际 LICENSE 和依赖条款。' : 'GitHub 未识别许可证；仍作为公开竞品候选分析，不代表没有许可证或允许复用。复用前须读取实际 LICENSE 和依赖条款。'] });
   }
   if (!candidates.length) warnings.push('本次有限检索没有符合筛选条件的候选；不代表没有竞品。请更换 --query 或扩大人工检索范围。');
   const directions = buildDirections(plan, candidates);

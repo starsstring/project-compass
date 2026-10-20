@@ -72,7 +72,7 @@ The [synthetic report](examples/synthetic-report.md) shows the current Chinese o
 ## Scope and limitations
 
 - Each run makes at most two GitHub Search requests and five README requests, anonymously and read-only. It reads only the first ten results per query; this is not an exhaustive competitor search.
-- Archived repositories, forks, obvious course/resource lists, and results with unrecognized license metadata are excluded and explained. License filtering can omit useful projects; check actual LICENSE and dependency terms before reuse.
+- Archived repositories, forks, and obvious course/resource lists are excluded. Unknown or `NOASSERTION` license metadata does not exclude a public competitor or lower its relevance ranking. Discovery does not grant reuse rights; check actual LICENSE and dependency terms before reuse.
 - Search uses text matching, and analysis uses disclosed rules and the Marked lexer. Complex negation, tables, platform constraints, and unfamiliar topics may be missed or misread. No language model is called.
 - Capabilities are statements from repository materials, not installation tests. Text relevance does not establish task fit, user demand, or a market gap.
 - V1 has no graphical interface, repository-URL audit, full Issue/user-feedback analysis, automatic code generation, success probability, or continuous monitoring.

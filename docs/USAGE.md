@@ -63,7 +63,9 @@ The capability table uses these labels:
 
 Directions include source evidence, existing capabilities, a small proposed change, a validation action, and a condition for reusing an existing tool or stopping. They are investigations to consider, not confirmed unmet demand.
 
-Only the first ten GitHub results per query are read, with up to five candidates shown. Archived projects, forks, obvious course/resource lists, and unrecognized licenses are filtered. Stars do not determine ranking. Platform, audience, and actual runtime quality still need manual checking. Branch links can change; timestamps, response hashes, and Git blob identifiers help review the captured material, but do not pin the entire repository to one commit.
+Only the first ten GitHub results per query are read, with up to five candidates shown. Archived projects, forks and obvious course/resource lists are filtered. Public competitors with unknown or `NOASSERTION` license metadata remain eligible, with a warning to inspect actual LICENSE and dependency terms before reuse. License metadata and stars do not determine relevance ranking. Platform, audience, and actual runtime quality still need manual checking. Branch links can change; timestamps, response hashes, and Git blob identifiers help review the captured material, but do not pin the entire repository to one commit.
+
+Recognized future/planned statements do not establish current capabilities; explicit absence and conflicting support statements remain qualified. These are conservative text rules, including common English/Chinese forms and nested roadmap headings, not full semantic understanding. Ambiguous or unfamiliar wording can still be missed or misread; inspect the cited text before relying on a comparison.
 
 ## Errors and exit codes
 

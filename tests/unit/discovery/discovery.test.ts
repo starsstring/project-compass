@@ -64,12 +64,27 @@ test('empty results mean incomplete knowledge, not an absence of competition', a
   assert.equal(report.candidates.length, 0); assert.equal(report.directions.length, 0);
   assert.match(report.warnings.join(), /不代表没有竞品/u);
 });
-test('license-unknown public projects and course materials remain visible as exclusions', async () => {
+test('unknown licenses remain candidates while explicit course materials stay excluded', async () => {
   const fake = fakeGitHub({ items: [repository(), { ...repository('sample/unknown-license', 2), license: null },
     { ...repository('sample/course', 3), description: 'The raw markdown notes for a university course.' }] });
   const report = await discover(planSearch('a markdown notes tool', ['markdown notes']), new GitHubSearch(fake.fetcher));
-  assert.equal(report.candidates.length, 1); assert.equal(report.excluded.length, 2);
+  assert.equal(report.candidates.length, 2); assert.equal(report.excluded.length, 1);
+  const unknown = report.candidates.find(item => item.full_name === 'sample/unknown-license')!;
+  assert.equal(unknown.readme.status, 'captured');
+  assert.match(unknown.unknowns.join(), /不代表没有许可证或允许复用/u);
   assert.match(renderDiscovery(report), /本次排除的结果/u);
+});
+
+test('NOASSERTION does not affect relevance ranking or block README analysis', async () => {
+  const fake = fakeGitHub({ items: [{ ...repository('sample/component', 1), description: 'Markdown rendering library', topics: ['markdown'] },
+    { ...repository('sample/notes', 2), license: { spdx_id: 'NOASSERTION' } }] });
+  const report = await discover(planSearch('a markdown notes tool', ['markdown notes']), new GitHubSearch(fake.fetcher), 1);
+  assert.equal(report.candidates[0]!.full_name, 'sample/notes');
+  assert.equal(report.candidates[0]!.license, 'NOASSERTION');
+  assert.equal(report.candidates[0]!.readme.status, 'captured');
+  assert.equal(report.excluded.length, 0);
+  assert.match(renderDiscovery(report), /许可证元数据未知仍可参与竞品比较/u);
+  assert.match(report.candidates[0]!.unknowns.join(), /复用前须读取实际 LICENSE/u);
 });
 test('exact task phrases outrank incidental single-keyword matches', async () => {
   const fake = fakeGitHub({ items: [{ ...repository('sample/battery-driver', 2), description: 'Battery Monitor driver for serial battery', topics: ['serial'] },

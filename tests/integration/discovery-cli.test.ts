@@ -2,8 +2,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, readFileSync, existsSync, rmSync, writeFileSync } from 'node:fs';
 import { resolve, join, sep } from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { runCli } from '../../src/cli.js';
-import { fakeGitHub } from '../unit/discovery/fixtures.js';
+import { GitHubSearch } from '../../src/adapters/github/search.js';
+import { fakeGitHub, repository } from '../unit/discovery/fixtures.js';
 
 function workspace(t: { after: (fn: () => void) => void }): string {
   const base = resolve('.tools/discovery-tests'); mkdirSync(base, { recursive: true });
@@ -82,4 +84,35 @@ test('CLI rejects a bad replay hash before reserving output or making network re
     fetcher: fake.fetcher, stdout: () => undefined, stderr: () => undefined,
   }), 2);
   assert.equal(fake.calls.length, 0); assert.equal(existsSync(output), false);
+});
+
+test('actual CLI subprocess retains unknown-license competitors and qualifies unsupported features', async t => {
+  const base = workspace(t), output = join(base, 'actual-cli'), snapshot = join(base, 'captures.json');
+  const fake = fakeGitHub({ items: [repository(), { ...repository('sample/unknown-license', 2), license: null },
+    { ...repository('sample/noassertion', 3), license: { spdx_id: 'NOASSERTION' } }] });
+  const fetcher: typeof fetch = async (input, init) => {
+    const response = await fake.fetcher(input, init);
+    if (String(input).includes('/search/')) return response;
+    const data = await response.json() as Record<string, unknown>;
+    return Response.json({ ...data, content: Buffer.from('# Features\n\nSync is planned.\n\nSync is not currently supported.\n').toString('base64') });
+  };
+  const client = new GitHubSearch(fetcher);
+  const search = await client.search('markdown notes');
+  for (const repo of search.items) await client.readme(repo);
+  writeFileSync(snapshot, JSON.stringify(client.captures));
+  const child = spawnSync(process.execPath, [resolve('dist/src/cli.js'), 'a markdown notes tool', '--query', 'markdown notes',
+    '--replay', snapshot, '--out', output, '--json'], { encoding: 'utf8', timeout: 15_000, maxBuffer: 2 * 1024 * 1024 });
+  assert.ifError(child.error);
+  assert.equal(child.status, 0, child.stderr);
+  const report = JSON.parse(child.stdout);
+  assert.equal(report.mode, 'replay');
+  assert.equal(report.candidates.length, 3);
+  assert.equal(report.excluded.length, 0);
+  assert.deepEqual(report.candidates.map((item: { license: string | null }) => item.license), ['MIT', null, 'NOASSERTION']);
+  for (const repo of report.candidates) {
+    assert.equal(repo.readme.status, 'captured');
+    assert.equal(repo.analysis.capabilities.find((item: { key: string }) => item.key === 'sync').state, 'author_limited');
+  }
+  assert.deepEqual(JSON.parse(readFileSync(join(output, 'report.json'), 'utf8')), report);
+  assert.match(readFileSync(join(output, 'report.md'), 'utf8'), /任何代码复用须另行核查/u);
 });

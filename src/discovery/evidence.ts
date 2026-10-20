@@ -29,6 +29,7 @@ export function extractProse(content: string, url: string): Prose[] {
     return low + 1;
   };
   let section = '';
+  const headings: string[] = [];
   const walk = (tokens: Token[], parentStart: number, parentEnd: number, depth: number) => {
     if (depth > 20 || output.length >= 2000) return;
     let cursor = parentStart;
@@ -43,7 +44,12 @@ export function extractProse(content: string, url: string): Prose[] {
       // containing source range, never invent an exact child line number.
       const endOffset = located ? start + token.raw.length : parentEnd;
       const end = lineAt(Math.max(start, start + source.slice(start, endOffset).trimEnd().length - 1));
-      if (token.type === 'heading') { section = inlineText(token.tokens ?? []); continue; }
+      if (token.type === 'heading') {
+        headings.length = token.depth;
+        headings[token.depth - 1] = inlineText(token.tokens ?? []);
+        section = headings.filter(Boolean).join(' / ');
+        continue;
+      }
       if (['code', 'html', 'table', 'def', 'space', 'hr'].includes(token.type)) continue;
       if (token.type === 'list') {
         for (const item of token.items as { raw: string; tokens: Token[] }[]) walk(item.tokens, start, endOffset, depth + 1);
@@ -96,15 +102,16 @@ const features = [
 export function capabilityLabel(key: string): string { return features.find(row => row[0] === key)?.[1] ?? key; }
 
 function uncertain(sentence: Prose): boolean {
-  return /todo|roadmap|planned|wishlist|coming soon|future work|计划|待实现|路线图/iu.test(sentence.section) ||
-    /\b(?:plan(?:ned)? to|will (?:support|add|implement)|wish to|coming soon)\b|计划支持|将支持/iu.test(sentence.text);
+  return /todo|roadmap|planned|wishlist|coming soon|future|upcoming|计划|待实现|路线图/iu.test(sentence.section) ||
+    /\b(?:planned|roadmap|wishlist|coming soon|future (?:releases?|versions?)|not (?:yet )?released|plan(?:s|ned)? to|will (?:be )?(?:support(?:ed)?|add(?:ed)?|implement(?:ed)?)|(?:wish|hope) to|(?:we are|we're|is|are) working on)\b|(?:计划|打算|准备).{0,12}(?:支持|添加|加入|实现|提供)|(?:将会?|即将)(?:支持|添加|加入|实现|提供)|尚未发布|暂未发布|仍在开发|待实现/iu.test(sentence.text);
 }
 function denied(text: string, match: RegExpMatchArray): boolean {
   const start = match.index ?? 0;
   const before = text.slice(Math.max(0, start - 80), start);
   const after = text.slice(start + match[0].length, start + match[0].length + 45);
-  return /(?:\b(?:not|never|cannot|doesn't|don't)\s+(?:support|provide|allow|include|offer|handle|implement|enable|perform|use)(?:\s+[\w-]+){0,3}\s*|\b(?:no|without|not)\s*(?:built.in\s+)?|不支持.{0,12}|无法.{0,8}|不提供.{0,8}|尚不.{0,8})$/iu.test(before) ||
-    /^\s*(?:is |are )?(?:not supported|unavailable|unsupported|不支持|不可用)/iu.test(after);
+  return /(?:\b(?:not|never|cannot|can't|doesn't|don't)\s+(?:currently\s+)?(?:support|provide|allow|include|offer|handle|implement|enable|perform|use)(?:\s+[\w-]+){0,3}\s*|\bno plans? to (?:support|provide|add|implement)\s*|\b(?:no|without|not)\s*(?:built.in\s+)?|(?:不|尚不|暂不|未|尚未|暂未)(?:支持|提供|实现|开放).{0,12}|无法.{0,8})$/iu.test(before) ||
+    /^\s*(?:(?:is|are|was|were|remains?)\s+)?(?:(?:currently|still)\s+)?(?:not\s+(?:(?:currently|yet|fully|natively)\s+)?(?:supported|available|implemented|enabled)\b|unavailable\b|unsupported\b|removed\b|disabled\b|cannot\s+(?:be\s+)?(?:used|enabled|supported)\b)/iu.test(after) ||
+    /^\s*(?:功能)?(?:(?:目前|当前|仍|暂时))?(?:在(?:本|此|当前)版本(?:中)?)?(?:(?:尚未|暂未|尚不|暂不|不|未)(?:支持|提供|实现|可用|开放)|不可用|(?:已被|已)?(?:移除|禁用))/u.test(after);
 }
 
 export function analyzeCandidate(repo: Repository, readme: { content: string; url: string } | null): CandidateAnalysis {
@@ -123,8 +130,11 @@ export function analyzeCandidate(repo: Repository, readme: { content: string; ur
   const capabilities: Capability[] = [];
   for (const [key, label, pattern] of features) {
     const hits = units.filter(unit => pattern.test(unit.text) && !uncertain(unit));
-    const negative = hits.find(unit => denied(unit.text, unit.text.match(pattern)!));
-    const positive = hits.find(unit => !denied(unit.text, unit.text.match(pattern)!));
+    // A repeated feature may be supported in one scope and denied in another.
+    // Inspect every occurrence instead of trusting just the first match.
+    const hasDenial = (unit: Prose) => [...unit.text.matchAll(new RegExp(pattern.source, `${pattern.flags}g`))].some(match => denied(unit.text, match));
+    const negative = hits.find(hasDenial);
+    const positive = hits.find(unit => !hasDenial(unit));
     // Contradictory author material is a limitation to inspect, never silently
     // convert it into an assertion of support.
     capabilities.push({ key, label, state: negative ? 'author_limited' : positive ? 'author_mentioned' : 'not_established',

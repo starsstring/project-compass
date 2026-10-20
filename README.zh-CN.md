@@ -28,6 +28,17 @@ npm run compass -- "我想做一个本地 Markdown 笔记工具"
 
 每次使用新目录，已有结果不会覆盖。参数、离线重放和退出码见 [使用说明](docs/USAGE.zh-CN.md)。
 
+## 可选 AI 分析
+
+添加 `--prepare-ai`，将已采集材料、编号来源、任务说明和 JSON Schema 导出，供你自行选择的助手分析。Compass 不调用模型、不需要模型 Key，也不会把资料包发送给服务。随后可离线导入助手返回的 JSON；程序检查结构、输入哈希和引用，语义支持与生成者身份仍未核实。
+
+```powershell
+npm run compass -- "本地 Markdown 笔记工具" --prepare-ai --out ".compass/ai-job"
+npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".compass/ai-job/ai-input.json" --out ".compass/ai-review"
+```
+
+资料包包含已采集的完整 README。发送给任何服务前先检查内容，并把仓库文字视为不可信数据。独立助手步骤、离线导出和校验边界见 [AI 分析说明](docs/AI_REVIEW.zh-CN.md)（[English](docs/AI_REVIEW.md)）。
+
 ## 当前已实现
 
 1. 输入创意，通过有限中英词表生成最多两条检索；也可自己指定检索词。

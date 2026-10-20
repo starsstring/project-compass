@@ -28,6 +28,17 @@ The terminal prints the output directory, usually `.compass/discovery/<run-id>/`
 
 Each run creates a new directory. Existing output is never overwritten. See the [usage guide](docs/USAGE.md) for options, replay, and exit codes.
 
+## Optional AI review
+
+Add `--prepare-ai` to export the captured materials, numbered sources, instructions, and a JSON Schema for an assistant you choose. Compass does not call a model, require a model key, or send this package to a service. You can then import the assistant's JSON offline; Compass checks its structure, input hash, and references, while semantic support and generator identity remain unverified.
+
+```sh
+npm run compass -- "A local Markdown notes tool" --prepare-ai --out ".compass/ai-job"
+npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".compass/ai-job/ai-input.json" --out ".compass/ai-review"
+```
+
+The package includes captured full READMEs. Review it before sharing it with any service, and treat repository text as untrusted data. See the [AI review guide](docs/AI_REVIEW.md) ([简体中文](docs/AI_REVIEW.zh-CN.md)) for the separate assistant step, offline export, and validation limits.
+
 ## What V1 does
 
 1. Accepts an idea and derives up to two searches using a limited Chinese/English vocabulary. You can supply your own queries.

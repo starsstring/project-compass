@@ -13,6 +13,8 @@ node dist/src/cli.js --help
 
 参数：`--query` 最多两条；`--limit` 为 1–5；`--out` 必须是新目录；`--json` 输出 JSON。直接调用 node 可以避免 npm 提示文字混入机器读取的 JSON。
 
+`--prepare-ai` 额外导出供独立助手分析的本地资料；`--import-ai "analysis.json"` 与 `--ai-input "ai-input.json"` 一起离线导入结果，导入时不传创意位置参数。
+
 ## 离线复查
 
 ```powershell
@@ -20,6 +22,20 @@ node dist/src/cli.js "本地 Markdown 笔记工具" --replay ".compass/first-run
 ```
 
 原运行如果指定过 `--query`，重放时也需给出相同检索词。重放检查文件结构和响应哈希，不会联网补齐；报告保留原采集时间并明确标为重放。文件上限 16 MiB、最多七份响应，旧报告不会被覆盖。
+
+## 可选 AI 分析
+
+```powershell
+npm run compass -- "本地 Markdown 笔记工具" --prepare-ai --out ".compass/ai-job"
+# 从已有响应导出，不新增网络请求：
+npm run compass -- "本地 Markdown 笔记工具" --replay ".compass/first-run/captures.json" --prepare-ai --out ".compass/ai-job-offline"
+# 自行选择的助手返回 JSON 后：
+npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".compass/ai-job/ai-input.json" --out ".compass/ai-review"
+```
+
+导入须使用助手实际分析的那份资料包。可配合 `--json` 和 `--out`，不能同时传创意、`--prepare-ai`、`--replay`、`--query` 或 `--limit`。导入全程离线，在新建输出目录前完成校验；成功后保存 `ai-review.md`、包含分析正文的结果信封 `ai-review.json`，以及 `ai-input.json` 副本。
+
+程序没有模型调用或 Key 配置。导出包含已采集的完整 README，默认只留本地；发送给任何服务前先检查内容，仓库文字是不可信数据，不是指令。四份导出文件、助手步骤、严格格式与校验边界见 [AI 分析说明](AI_REVIEW.zh-CN.md)（[English](AI_REVIEW.md)）。
 
 ## 结果解读
 
@@ -31,8 +47,8 @@ node dist/src/cli.js "本地 Markdown 笔记工具" --replay ".compass/first-run
 
 | 退出码 | 含义与下一步 |
 |---|---|
-| 0 | 有限检索完成，可能零候选；阅读筛选原因 |
-| 2 | 输入/参数有误；未知中文主题可指定英文 query |
+| 0 | 有限检索完成（可能零候选），或 AI 导入通过结构/引用校验 |
+| 2 | 数据/参数有误，包括 AI JSON 无法读取或不合法；未知中文主题可指定英文 query |
 | 4 | 输出目录已存在或写入失败；选择新目录 |
 | 5 | 网络、限流或部分完成；保留现有结果，稍后换新目录重试 |
 

@@ -1,4 +1,5 @@
 import type { DiscoveryReport } from './model.js';
+import { intentLabel } from './query.js';
 
 export function escapeMarkdown(value: string): string {
   return value.replace(/[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/gu, ' ')
@@ -13,9 +14,26 @@ export function renderDiscovery(report: DiscoveryReport): string {
   const lines = ['# Project Compass：创意竞品初查', '', `创意：${e(report.plan.idea)}`, '',
     `报告生成时间：${report.created_at}；模式：${report.mode === 'replay' ? '历史响应离线重放（未重新联网）' : '实时只读检索'}；状态：${report.status === 'partial' ? '部分完成，存在请求失败或检索不完整' : '有限检索已完成'}。`, '',
     `材料采集时间：${report.requests.map(request => request.fetched_at).sort()[0] ?? '未取得材料'} 至 ${report.requests.map(request => request.fetched_at).sort().at(-1) ?? '未取得材料'}。`, '',
-    '范围：仅 GitHub 公开、非归档、非 Fork 仓库，每条检索取前 10 项，最多展示 5 个候选。明确课程资料/清单不进入工具候选；许可证元数据未知仍可参与竞品比较，任何代码复用须另行核查实际 LICENSE 和依赖条款。排序优先完整检索短语、关键词覆盖、命中检索次数及 GitHub best match，Star 不参与排序。', '',
+    `范围：仅 GitHub 公开、非归档、非 Fork 仓库，每条检索取前 10 项，最多展示 5 个候选。${report.plan.understanding?.intent === 'learn' ? '学习意图保留课程与资源清单；' : '明确课程资料/清单不进入工具候选；'}许可证元数据未知仍可参与竞品比较，任何代码复用须另行核查实际 LICENSE 和依赖条款。排序先核对主要主题文字关联，再比较条件文字线索、针对性检索命中、检索短语、关键词覆盖、命中检索次数和 GitHub best match；Star 不参与排序，排序不是功能验收。`, '',
     '分析方式：正文结构解析、功能证据提取和条件式比较；未调用语言模型。功能是作者陈述，定位和建议是规则推断，不代表实测效果或竞品覆盖率。', '', '## 检索记录', ''];
   for (const search of report.searches) lines.push(`- ${e(search.query)} archived:false fork:false：${search.error ? e(search.error) : `GitHub 返回总数 ${search.total_count}，${search.incomplete ? '结果不完整' : '本次响应未标记不完整'}`}。`);
+  if (report.plan.understanding) {
+    const understanding = report.plan.understanding;
+    lines.push('', '## 需求理解（规则推断，待核对）', '',
+      `意图：${intentLabel(understanding.intent)}。${e(understanding.reason)}`, '',
+      `保留条件：${understanding.requirements.map(item => `${item.polarity === 'excluded' ? '排除 ' : ''}${e(item.label)}（原文：${e(item.source)}）`).join('；') || '未识别额外条件，原句仍完整保留。'}`, '',
+      `未映射要点：${understanding.unmapped_terms.map(e).join('、') || '未发现额外中文分词；不保证已理解全部语义。'}`, '');
+    if (understanding.requirements.length && report.candidates.length) {
+      lines.push('### 原始条件的文字线索（全部尚未验收）', '',
+        '| 条件 | ' + report.candidates.map(repo => e(repo.full_name)).join(' | ') + ' |',
+        '|---|' + report.candidates.map(() => '---|').join(''));
+      understanding.requirements.forEach((item, index) => lines.push(`| ${item.polarity === 'excluded' ? '排除 ' : ''}${e(item.label)} | ${report.candidates.map(repo => {
+        const source = repo.requirement_clues?.[index]?.source;
+        return source ? `${source === 'metadata' ? '简介/名称/topics' : 'README'} 出现相关文字，未验证` : '未核实；未找到相关文字';
+      }).join(' | ')} |`));
+      lines.push('', '这些线索可能含否定、计划或无关语境，不能标为支持；未找到也不等于不支持。排除条件同样需要人工核查。', '');
+    }
+  }
   if (report.candidates.length) {
     lines.push('', '## 能力比较（依据本次材料）', '',
       '| 能力 | ' + report.candidates.map((repo, index) => `${index + 1}. ${e(repo.full_name)}`).join(' | ') + ' |',

@@ -1,0 +1,40 @@
+{
+  "observed_at": "2026-10-20T12:42:16.037Z",
+  "repository": "starsstring/project-compass",
+  "candidate_commit": "dcc7469e40f3f9bb0aa45a76f9109d7ed311d169",
+  "candidate_tree": "f6d6b58a35defe3d1e62d2f0f97f679b2e9993a4",
+  "base_commit": "134943c027e6c86123363eb02b67ee962246f1ca",
+  "pr": {
+    "number": 2,
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "mergeable": true,
+    "mergeable_state": "clean",
+    "changed_files": 36
+  },
+  "main": {
+    "commit": "134943c027e6c86123363eb02b67ee962246f1ca",
+    "protected": false,
+    "required_status_checks": {
+      "enforcement_level": "off",
+      "contexts": [],
+      "checks": []
+    }
+  },
+  "rulesets": [],
+  "checks": {
+    "check_runs": 0,
+    "commit_statuses": 0,
+    "combined_state": "pending",
+    "interpretation": "No hosted checks or workflow configured; pending with zero statuses is not a passed or queued CI run."
+  },
+  "tag_refs": [],
+  "visible_releases": [],
+  "conflicting_v020_tag": false,
+  "conflicting_v020_release": false,
+  "limits": [
+    "GitHub snapshot can change before approval; recheck at actual merge/release.",
+    "No merge/tag/Release/Ready/Issue-close actions authorized or performed."
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "kind": "developer_one_shot_unseen_inputs_not_independent_human_blind_test",
+  "frozen_before_execution": "2026-10-20T11:19:32.371Z",
+  "completed_at": "2026-10-20T11:19:32.388Z",
+  "protocol_sha256": "4856cc7dad2314e49fc572b9880c1badad755e789027362f837e7fe0f31c5414",
+  "node": "v24.19.0",
+  "network_attempts": 0,
+  "limitation": "These are new developer-selected inputs after reading the implementation, not independent human testing. No result-driven tuning is allowed in this handoff.",
+  "results": [
+    {
+      "id": "H01",
+      "input": "我想找一个支持 Linux 的离线密码管理器",
+      "expected_review_points": [
+        "寻找已有工具",
+        "密码管理主题",
+        "Linux 与离线条件"
+      ],
+      "execution": "actual_production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想找一个支持 Linux 的离线密码管理器",
+        "queries": [
+          "password manager offline linux in:name,description,readme",
+          "password manager"
+        ],
+        "terms": [
+          "password",
+          "manager",
+          "offline",
+          "linux"
+        ],
+        "topic_terms": [
+          "password",
+          "password manager"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“想找”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "offline",
+              "label": "离线",
+              "source": "离线",
+              "terms": [
+                "offline",
+                "离线"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "linux",
+              "label": "Linux",
+              "source": "Linux",
+              "terms": [
+                "linux"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "管理"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "尚未映射的中文要点：管理；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H02",
+      "input": "我想学习如何做语音识别",
+      "expected_review_points": [
+        "学习而非开发产品",
+        "语音识别主题",
+        "不把查询生成当作学习路线成功"
+      ],
+      "execution": "actual_production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想学习如何做语音识别",
+        "queries": [
+          "我想 学习 如何 语音 recognition in:name,description,readme",
+          "我想 学习 如何 语音"
+        ],
+        "terms": [
+          "我想",
+          "学习",
+          "如何",
+          "语音",
+          "recognition"
+        ],
+        "topic_terms": [
+          "我想",
+          "学习",
+          "如何",
+          "语音"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "learn",
+          "reason": "根据最先出现的意图表达“学习”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "recognition",
+              "label": "识别",
+              "source": "识别",
+              "terms": [
+                "recognition",
+                "detection",
+                "识别"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "如何",
+            "语音"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：如何、语音；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H03",
+      "input": "我想开发一个不需要联网的家庭药品到期提醒工具",
+      "expected_review_points": [
+        "开发意图",
+        "药品到期提醒主题",
+        "不需要联网的约束"
+      ],
+      "execution": "actual_production_planSearch_not_cli",
+      "plan": {
+        "idea": "我想开发一个不需要联网的家庭药品到期提醒工具",
+        "queries": [
+          "我想 不需要 家庭 药品 in:name,description,readme"
+        ],
+        "terms": [
+          "我想",
+          "不需要",
+          "家庭",
+          "药品"
+        ],
+        "topic_terms": [
+          "我想",
+          "不需要",
+          "家庭",
+          "药品"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想开发”推断；复合意图仍需人工核对。",
+          "requirements": [],
+          "unmapped_terms": [
+            "家庭",
+            "药品",
+            "到期",
+            "提醒"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：家庭、药品、到期、提醒；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H04",
+      "input": "想找一个能在 macOS 上运行的音频降噪工具",
+      "expected_review_points": [
+        "寻找已有工具",
+        "音频降噪为主任务",
+        "macOS 不能替代主任务"
+      ],
+      "execution": "actual_production_planSearch_not_cli",
+      "plan": {
+        "idea": "想找一个能在 macOS 上运行的音频降噪工具",
+        "queries": [
+          "macos in:name,description,readme",
+          "macos"
+        ],
+        "terms": [
+          "macos"
+        ],
+        "topic_terms": [
+          "macos"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“想找”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "macos",
+              "label": "macOS",
+              "source": "macOS",
+              "terms": [
+                "macos",
+                "mac os"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "运行"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "尚未映射的中文要点：运行；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H05",
+      "input": "做个能同步全部书签的小工具",
+      "expected_review_points": [
+        "书签同步主题",
+        "全部是范围条件，不能无故当作空泛请求",
+        "不默认平台"
+      ],
+      "execution": "actual_production_planSearch_not_cli",
+      "plan": {
+        "idea": "做个能同步全部书签的小工具",
+        "queries": [
+          "bookmark manager"
+        ],
+        "terms": [
+          "bookmark",
+          "manager"
+        ],
+        "topic_terms": [
+          "bookmark",
+          "bookmark manager"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [],
+          "unmapped_terms": [
+            "同步",
+            "全部"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "尚未映射的中文要点：同步、全部；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    },
+    {
+      "id": "H06",
+      "input": "我现在还不确定做什么项目",
+      "expected_review_points": [
+        "输入缺少具体任务",
+        "应有澄清或明确不确定性",
+        "不能仅因生成文字检索词就判成功"
+      ],
+      "execution": "actual_production_planSearch_not_cli",
+      "plan": {
+        "idea": "我现在还不确定做什么项目",
+        "queries": [
+          "现在 确定 什么 in:name,description,readme"
+        ],
+        "terms": [
+          "现在",
+          "确定",
+          "什么"
+        ],
+        "topic_terms": [
+          "现在",
+          "确定",
+          "什么"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [],
+          "unmapped_terms": [
+            "现在",
+            "确定",
+            "什么"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：现在、确定、什么；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "error": null
+    }
+  ]
+}

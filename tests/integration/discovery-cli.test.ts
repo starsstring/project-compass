@@ -41,7 +41,7 @@ test('CLI input and help handling do not access the network or create reports', 
   const io = { fetcher: fake.fetcher, stdout: () => undefined, stderr: (text: string) => { stderr.push(text); } };
   assert.equal(await runCli(['--help'], io), 0);
   assert.equal(await runCli(['--invalid'], io), 2);
-  assert.equal(await runCli(['未识别中文创意', '--out', output], io), 2);
+  assert.equal(await runCli(['我想做一个很厉害的软件', '--out', output], io), 2);
   assert.equal(await runCli(['a markdown notes tool', '--limit', '99', '--out', output], io), 2);
   assert.equal(fake.calls.length, 0); assert.equal(existsSync(output), false);
 });

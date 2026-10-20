@@ -1,0 +1,1600 @@
+{
+  "kind": "public_safe_issue_1_handoff_no_raw_source_bodies",
+  "date": "2026-10-20",
+  "version": "0.2.0",
+  "node": "v24.19.0",
+  "npm": "12.2.0",
+  "public_source_commit": "5a540143429b2695546e7fc5e9c04d8297d3ace0",
+  "tested_local_code_commit": "151a96708faf12ef6544ee352d3cd6731862dc2a",
+  "identical_complete_source_tree": "fd60fe44d10500710e17ca2dde14b2457cc0eac2",
+  "v1_public_base": "134943c027e6c86123363eb02b67ee962246f1ca",
+  "local_report_commit_not_published": "65b022cd9d5b5f1f678292d160ab38a4d160eb0a",
+  "publication_note": "Authenticated connector created a source-only commit with the same full tree. Commit metadata differs. Original report history, machine-specific environments, raw captures and third-party full READMEs are not published.",
+  "automatic_tests": {
+    "total": 245,
+    "pass": 245,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "command": "npm test",
+    "executed_on": "151a96708faf12ef6544ee352d3cd6731862dc2a",
+    "rerun_in_this_handoff": false
+  },
+  "contracts": {
+    "status": "passed",
+    "command": "npm run check:contracts",
+    "includes": [
+      "build",
+      "check:types",
+      "TypeScript",
+      "two Ajv 2020-12 strict schemas",
+      "three examples"
+    ],
+    "rerun_in_this_handoff": false
+  },
+  "logs": [
+    {
+      "path": "validation/issue-1/tests.txt",
+      "original_local_bytes_sha256": "20939b7de9bf3890fd62bf7b6832c1a463bd8e7cf433070998bd27102da70de9",
+      "public_lf_sha256": "ee65ec7c50bcf1c316fb2122a53078c85e52a35654194fee380793cde8d321fb",
+      "normalization": "CRLF to LF only"
+    },
+    {
+      "path": "validation/issue-1/contracts.txt",
+      "original_local_bytes_sha256": "a825fd9a1e69229a981d21a0f58372e0ac1afdc43d019405de0c07489a736903",
+      "public_lf_sha256": "f163ad0f79a8ccfe6815fbeb79cd22f8672696f040b1247a190e76bb57e15bc1",
+      "normalization": "CRLF to LF only"
+    }
+  ],
+  "baseline": {
+    "inputs_sha256": "6bc9b99d5b8c45aadde1983f0897519eb8398ae717ec47f02a13fb1c49e4f6c3",
+    "protocol_sha256": "f2c801665348d57d3c7f986689ad3c61709c268d867fdb46710463054f8476b4",
+    "source_commit": "963c90083a8521761d92f730d093869885bcd068",
+    "source_tree": "ca95179fab8bd3e2ea4018344c2a36f46f4be12c"
+  },
+  "planner_comparison": [
+    {
+      "id": "B01",
+      "input": "我想逆向一切",
+      "v1": {
+        "queries": [],
+        "error": {
+          "name": "Error",
+          "code": "INVALID_INPUT",
+          "message": "当前关键词规则未识别此创意。请用 --query 提供 1–2 条 GitHub 检索词（建议英文），不会据此编造结果。"
+        }
+      },
+      "v020": {
+        "queries": [],
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [],
+          "unmapped_terms": [
+            "一切"
+          ],
+          "clarification": "你是在找某个已有项目，还是想学习或开发逆向工具？请补充对象，例如程序、APK、硬件或协议。"
+        }
+      }
+    },
+    {
+      "id": "B02",
+      "input": "我记得有个美国国家安全局开发的开源反编译工具",
+      "v1": {
+        "queries": [],
+        "error": {
+          "name": "Error",
+          "code": "INVALID_INPUT",
+          "message": "当前关键词规则未识别此创意。请用 --query 提供 1–2 条 GitHub 检索词（建议英文），不会据此编造结果。"
+        }
+      },
+      "v020": {
+        "queries": [
+          "decompiler open source nsa in:name,description,readme",
+          "reverse engineering"
+        ],
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“我记得”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "open_source",
+              "label": "开源要求（许可仍须核查）",
+              "source": "开源",
+              "terms": [
+                "open source",
+                "开源"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "nsa",
+              "label": "机构线索：美国国家安全局",
+              "source": "美国国家安全局",
+              "terms": [
+                "nsa",
+                "national security agency",
+                "美国国家安全局"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        }
+      }
+    },
+    {
+      "id": "B03",
+      "input": "有个工具能把 Android APK 反编译成接近 Java 的代码",
+      "v1": {
+        "queries": [
+          "android apk java"
+        ],
+        "error": null
+      },
+      "v020": {
+        "queries": [
+          "decompiler android apk java in:name,description,readme",
+          "reverse engineering"
+        ],
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“有个工具”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "android",
+              "label": "Android",
+              "source": "Android",
+              "terms": [
+                "android",
+                "安卓"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        }
+      }
+    },
+    {
+      "id": "B04",
+      "input": "我想做一个离线加密笔记软件",
+      "v1": {
+        "queries": [
+          "notes",
+          "note-taking"
+        ],
+        "error": null
+      },
+      "v020": {
+        "queries": [
+          "notes offline encryption in:name,description,readme",
+          "note-taking"
+        ],
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想做”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "offline",
+              "label": "离线",
+              "source": "离线",
+              "terms": [
+                "offline",
+                "离线"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "encryption",
+              "label": "加密",
+              "source": "加密",
+              "terms": [
+                "encryption",
+                "encrypted",
+                "encrypt",
+                "加密"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        }
+      }
+    },
+    {
+      "id": "B05",
+      "input": "面向开发板的串口调试工具",
+      "v1": {
+        "queries": [
+          "serial monitor",
+          "serial terminal"
+        ],
+        "error": null
+      },
+      "v020": {
+        "queries": [
+          "serial monitor embedded in:name,description,readme",
+          "serial terminal"
+        ],
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [
+            {
+              "key": "embedded",
+              "label": "开发板场景",
+              "source": "开发板",
+              "terms": [
+                "embedded",
+                "development board",
+                "开发板"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        }
+      }
+    },
+    {
+      "id": "B06",
+      "input": "支持断点续传的下载工具",
+      "v1": {
+        "queries": [
+          "download manager",
+          "download resume"
+        ],
+        "error": null
+      },
+      "v020": {
+        "queries": [
+          "download manager",
+          "download resume"
+        ],
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [],
+          "unmapped_terms": [],
+          "clarification": null
+        }
+      }
+    },
+    {
+      "id": "B07",
+      "input": "我想做一个能识别植物病害的手机应用",
+      "v1": {
+        "queries": [],
+        "error": {
+          "name": "Error",
+          "code": "INVALID_INPUT",
+          "message": "当前关键词规则未识别此创意。请用 --query 提供 1–2 条 GitHub 检索词（建议英文），不会据此编造结果。"
+        }
+      },
+      "v020": {
+        "queries": [
+          "plant disease recognition mobile in:name,description,readme",
+          "plant disease"
+        ],
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想做”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "recognition",
+              "label": "识别",
+              "source": "识别",
+              "terms": [
+                "recognition",
+                "detection",
+                "识别"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "mobile",
+              "label": "手机 / 移动端",
+              "source": "手机",
+              "terms": [
+                "mobile",
+                "android",
+                "ios",
+                "手机"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        }
+      }
+    },
+    {
+      "id": "B08",
+      "input": "校园宠物领养互助平台",
+      "v1": {
+        "queries": [],
+        "error": {
+          "name": "Error",
+          "code": "INVALID_INPUT",
+          "message": "当前关键词规则未识别此创意。请用 --query 提供 1–2 条 GitHub 检索词（建议英文），不会据此编造结果。"
+        }
+      },
+      "v020": {
+        "queries": [
+          "pet adoption campus community in:name,description,readme",
+          "pet adoption"
+        ],
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [
+            {
+              "key": "campus",
+              "label": "校园",
+              "source": "校园",
+              "terms": [
+                "campus",
+                "校园"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "community",
+              "label": "互助 / 社区",
+              "source": "互助",
+              "terms": [
+                "community",
+                "互助",
+                "社区"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        }
+      }
+    },
+    {
+      "id": "B09",
+      "input": "我想开发一个 RAG 应用评测工具",
+      "v1": {
+        "queries": [
+          "rag"
+        ],
+        "error": null
+      },
+      "v020": {
+        "queries": [
+          "rag evaluation in:name,description,readme",
+          "rag evaluation"
+        ],
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想开发”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "evaluation",
+              "label": "评测",
+              "source": "评测",
+              "terms": [
+                "evaluation",
+                "benchmark",
+                "评测",
+                "评估"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        }
+      }
+    },
+    {
+      "id": "B10",
+      "input": "Windows 桌面截图 OCR 翻译工具",
+      "v1": {
+        "queries": [
+          "screenshot"
+        ],
+        "error": null
+      },
+      "v020": {
+        "queries": [
+          "screenshot ocr translation windows desktop in:name,description,readme",
+          "screenshot ocr"
+        ],
+        "understanding": {
+          "intent": "unclear",
+          "reason": "未出现明确的寻找、开发或学习表达，先保留不确定性。",
+          "requirements": [
+            {
+              "key": "ocr",
+              "label": "文字识别 / OCR",
+              "source": "OCR",
+              "terms": [
+                "ocr",
+                "文字识别"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "translation",
+              "label": "自然语言翻译",
+              "source": "翻译",
+              "terms": [
+                "translation",
+                "translate",
+                "翻译"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "windows",
+              "label": "Windows",
+              "source": "Windows",
+              "terms": [
+                "windows"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "desktop",
+              "label": "桌面",
+              "source": "桌面",
+              "terms": [
+                "desktop",
+                "桌面"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        }
+      }
+    },
+    {
+      "id": "B11",
+      "input": "我想学习逆向工程",
+      "v1": {
+        "queries": [],
+        "error": {
+          "name": "Error",
+          "code": "INVALID_INPUT",
+          "message": "当前关键词规则未识别此创意。请用 --query 提供 1–2 条 GitHub 检索词（建议英文），不会据此编造结果。"
+        }
+      },
+      "v020": {
+        "queries": [
+          "reverse engineering"
+        ],
+        "understanding": {
+          "intent": "learn",
+          "reason": "根据最先出现的意图表达“学习”推断；复合意图仍需人工核对。",
+          "requirements": [],
+          "unmapped_terms": [
+            "工程"
+          ],
+          "clarification": null
+        }
+      }
+    },
+    {
+      "id": "B12",
+      "input": "我想做一个很厉害的软件",
+      "v1": {
+        "queries": [],
+        "error": {
+          "name": "Error",
+          "code": "INVALID_INPUT",
+          "message": "当前关键词规则未识别此创意。请用 --query 提供 1–2 条 GitHub 检索词（建议英文），不会据此编造结果。"
+        }
+      },
+      "v020": {
+        "queries": [],
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想做”推断；复合意图仍需人工核对。",
+          "requirements": [],
+          "unmapped_terms": [],
+          "clarification": "你想找现成工具、开发软件还是学习？请补充一个要解决的具体问题或输入输出。"
+        }
+      }
+    }
+  ],
+  "actual_live_cli_rounds": [
+    {
+      "round": "initial",
+      "tested_local_commit": "b2dfe493552906b9ebfcce0840a43d78864d56df",
+      "limit": 3,
+      "manual_queries": 0,
+      "retries": 0,
+      "cases": [
+        {
+          "id": "B02",
+          "input": "我记得有个美国国家安全局开发的开源反编译工具",
+          "started_at": "2026-10-20T10:23:09.016Z",
+          "completed_at": "2026-10-20T10:23:12.322Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "decompiler open source nsa in:name,description,readme",
+            "decompiler"
+          ],
+          "candidates": [
+            {
+              "repository": "alphaSeclab/awesome-reverse-engineering",
+              "url": "https://github.com/alphaSeclab/awesome-reverse-engineering",
+              "license_metadata": null,
+              "readme_url": "https://github.com/alphaSeclab/awesome-reverse-engineering/blob/master/Readme.md",
+              "readme_blob_sha": "b8b0cf553177c38fc58245630b5cdebd12302808",
+              "readme_content_sha256": "04b1937bbfe42d35554a09ceb7a6062635de454fa5ad885e083e4e60acf9e1a1"
+            },
+            {
+              "repository": "pandaadir05/re-architect",
+              "url": "https://github.com/pandaadir05/re-architect",
+              "license_metadata": "MIT",
+              "readme_url": "https://github.com/pandaadir05/re-architect/blob/master/README.md",
+              "readme_blob_sha": "485a6787254d84fbba4ed1020acf3dfa4e6eace6",
+              "readme_content_sha256": "7f436cc40b3be06bf3ab311c90f0d3c0661af40f50ba9c42741419bb4b26678a"
+            },
+            {
+              "repository": "dsasmblr/game-hacking",
+              "url": "https://github.com/dsasmblr/game-hacking",
+              "license_metadata": "Unlicense",
+              "readme_url": "https://github.com/dsasmblr/game-hacking/blob/master/README.md",
+              "readme_blob_sha": "5496ca60d111d14faa2dbe547e5eb11e82e0de39",
+              "readme_content_sha256": "7ff334781cdb9d149e64e45d43c7ebf7ede0762683b15d31bd4c8c4746266682"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=decompiler+open+source+nsa+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:10.123Z",
+              "sha256": "5bd987ae5118562adee8c1a0f9a786b522909ce6e710b0bda13a6c41c5512e5a"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=decompiler+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:10.770Z",
+              "sha256": "31fac0cae740fa84bff13e3bc04e93f8b36ec779cd67619f427cd30a9809fc25"
+            },
+            {
+              "url": "https://api.github.com/repos/alphaSeclab/awesome-reverse-engineering/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:11.417Z",
+              "sha256": "01333aea458196cc2549989ebffb25e82dd6007cb4ee3f1c89964a48e81824b9"
+            },
+            {
+              "url": "https://api.github.com/repos/pandaadir05/re-architect/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:11.951Z",
+              "sha256": "9801edc3e19c47127e62d8f7bf25be4457ab17af7c099e7856cecb43da39bd13"
+            },
+            {
+              "url": "https://api.github.com/repos/dsasmblr/game-hacking/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:12.295Z",
+              "sha256": "3261edcf416128c5cb93f97cf11307bcc3c40bc0994ec3604201e30531d16e42"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "3d19c55fc0d5f0b42c9569abaa47f53d385f97d5bf44603aa8a6dc7f1d1aff88"
+            },
+            {
+              "file": "report.json",
+              "sha256": "eb2aa5d37c7c6466ab3478d75a59543a173dd59765c71fa6abd8bfc540953e96"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "88a7055eb51602370b29760058954a398e263876820b482000a56210497d15b1"
+            }
+          ]
+        },
+        {
+          "id": "B04",
+          "input": "我想做一个离线加密笔记软件",
+          "started_at": "2026-10-20T10:23:12.324Z",
+          "completed_at": "2026-10-20T10:23:15.084Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "notes offline encryption in:name,description,readme",
+            "notes"
+          ],
+          "candidates": [
+            {
+              "repository": "Laverna/laverna",
+              "url": "https://github.com/Laverna/laverna",
+              "license_metadata": "MPL-2.0",
+              "readme_url": "https://github.com/Laverna/laverna/blob/master/README.md",
+              "readme_blob_sha": "98ad5bbd602ba8528cb9784c0ff8e1f00fd97b9a",
+              "readme_content_sha256": "5778f4fb9d6eac98eaf100bfa5c642c24c00508f20ef95f20b2afedafed5612a"
+            },
+            {
+              "repository": "permissionlesstech/bitchat",
+              "url": "https://github.com/permissionlesstech/bitchat",
+              "license_metadata": "Unlicense",
+              "readme_url": "https://github.com/permissionlesstech/bitchat/blob/main/README.md",
+              "readme_blob_sha": "36f50be27eddc81ab3afd9e7aad04d7567efe15e",
+              "readme_content_sha256": "83699fa255b69d5d02be7a5bd3b1efd6aa2e6261a28a725d73f15f28a13f3fd6"
+            },
+            {
+              "repository": "Crosstalk-Solutions/project-nomad",
+              "url": "https://github.com/Crosstalk-Solutions/project-nomad",
+              "license_metadata": "Apache-2.0",
+              "readme_url": "https://github.com/Crosstalk-Solutions/project-nomad/blob/main/README.md",
+              "readme_blob_sha": "b92ea8c630926164bdbf134481724f30d0ef3363",
+              "readme_content_sha256": "bc52e05e19828eb23dcb50759a5adfa8a56eaa9411922c25dff25a9de97a63de"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=notes+offline+encryption+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:13.356Z",
+              "sha256": "906189d7807aed22d201911a581327988c51794bc0f8183952c318ee33240a6f"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=notes+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:13.944Z",
+              "sha256": "907286348b73bab3c743bec97fb0f2697e05eb6996af78ddd4853fbb3fb0b021"
+            },
+            {
+              "url": "https://api.github.com/repos/Laverna/laverna/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:14.306Z",
+              "sha256": "793d053c9a6c002753ca1677463552c1bb50a5dcef272c6ac2f244ec7817e9df"
+            },
+            {
+              "url": "https://api.github.com/repos/permissionlesstech/bitchat/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:14.691Z",
+              "sha256": "795ab8f5f630e2817ed079ed177370e8af285a799494ef7404dbde8e44f64c4d"
+            },
+            {
+              "url": "https://api.github.com/repos/Crosstalk-Solutions/project-nomad/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:15.063Z",
+              "sha256": "b523d3c41ab7e08e2558248b33e2c8ec121778dfefadf0bb33b443661fb4ff90"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "b259b61c208c60bbc0225df4e5f6dec2f359dca2822e0ea968ab422ad6e9cdbd"
+            },
+            {
+              "file": "report.json",
+              "sha256": "cd02a437e83c70a1d706a65c368bcd8120f78f02f170bdd331a1b0cc97521b10"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "367eac55ee709bd18155047e1a1df2ba520e7916797b6a653915895d5be0f076"
+            }
+          ]
+        },
+        {
+          "id": "B07",
+          "input": "我想做一个能识别植物病害的手机应用",
+          "started_at": "2026-10-20T10:23:15.085Z",
+          "completed_at": "2026-10-20T10:23:18.202Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "plant disease recognition mobile in:name,description,readme",
+            "plant disease"
+          ],
+          "candidates": [
+            {
+              "repository": "gimnathperera/Plant-Safe",
+              "url": "https://github.com/gimnathperera/Plant-Safe",
+              "license_metadata": null,
+              "readme_url": "https://github.com/gimnathperera/Plant-Safe/blob/master/README.md",
+              "readme_blob_sha": "3d2f4c3c01b4d5f82fe3988a34bd450430b7838c",
+              "readme_content_sha256": "d8b3ff54a60272ba6e9dc9842b495c291cb574d9212a094e95381a955d4fcad9"
+            },
+            {
+              "repository": "SomiaImdad/Plant-Disease-Diagnostics-using-UAV-and-Android-APP",
+              "url": "https://github.com/SomiaImdad/Plant-Disease-Diagnostics-using-UAV-and-Android-APP",
+              "license_metadata": null,
+              "readme_url": "https://github.com/SomiaImdad/Plant-Disease-Diagnostics-using-UAV-and-Android-APP/blob/master/README.md",
+              "readme_blob_sha": "24bc6d1125d289e6006fa411faffd468a2c66407",
+              "readme_content_sha256": "8e9a45b1ceaf4d3dc60dd017a1d8c56c62539f51eac4a0fd401ae0a6924c4572"
+            },
+            {
+              "repository": "deepcpatel/GreenDoc",
+              "url": "https://github.com/deepcpatel/GreenDoc",
+              "license_metadata": null,
+              "readme_url": "https://github.com/deepcpatel/GreenDoc/blob/master/README.md",
+              "readme_blob_sha": "9fd252fe7555ae71d3df5641311f6812cd48df8b",
+              "readme_content_sha256": "346cd834b431e24c23fa31ca5025f15194cbaecdfb95b85f8c1b6a6c77f7fed4"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=plant+disease+recognition+mobile+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:16.204Z",
+              "sha256": "90b3ffa2176a6d1cac907a662e0ec9746f7df83c7c8ce9be32de7a268d908140"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=plant+disease+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:16.890Z",
+              "sha256": "3411932b0eb644201e4f3ac5392d02d45a25c9535e39bc52bf99ba0269a61349"
+            },
+            {
+              "url": "https://api.github.com/repos/gimnathperera/Plant-Safe/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:17.338Z",
+              "sha256": "ac19687e894aa17f6f0c8634c29bd2328843707472683e6de526c62d1baa9891"
+            },
+            {
+              "url": "https://api.github.com/repos/SomiaImdad/Plant-Disease-Diagnostics-using-UAV-and-Android-APP/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:17.764Z",
+              "sha256": "1e8fd870c890222f9c5449bc7a173359338538ca9f8e13dc89cea615b1fdd8df"
+            },
+            {
+              "url": "https://api.github.com/repos/deepcpatel/GreenDoc/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:18.179Z",
+              "sha256": "dfe87c365d6f1b815f8a3127d6db34731f62db8bc370a81718275461ebda7252"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "2b4bb44a74c0ee5f98fe97c1bc14c37a28cb19cd87fcd0a12b8a5014f3fba869"
+            },
+            {
+              "file": "report.json",
+              "sha256": "8a9d0ca38b6777901bc4c89ff1f6a617a21cfb1d995c3ebd40ff23173d5c7cd1"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "906e53261cfcc3cb00b6e6eac16ba68dea7cb41edd63516fa15c947933c21df8"
+            }
+          ]
+        },
+        {
+          "id": "B09",
+          "input": "我想开发一个 RAG 应用评测工具",
+          "started_at": "2026-10-20T10:23:18.203Z",
+          "completed_at": "2026-10-20T10:23:21.017Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "rag evaluation in:name,description,readme",
+            "rag evaluation"
+          ],
+          "candidates": [
+            {
+              "repository": "raga-ai-hub/RagaAI-Catalyst",
+              "url": "https://github.com/raga-ai-hub/RagaAI-Catalyst",
+              "license_metadata": "Apache-2.0",
+              "readme_url": "https://github.com/raga-ai-hub/RagaAI-Catalyst/blob/main/README.md",
+              "readme_blob_sha": "7450aa665127bb801fe118abced587d1b020b305",
+              "readme_content_sha256": "4530edece36d9321326cbe0c81888872fbc14b32bd3e2b07db5a28595b353cde"
+            },
+            {
+              "repository": "vibrantlabsai/ragas",
+              "url": "https://github.com/vibrantlabsai/ragas",
+              "license_metadata": "Apache-2.0",
+              "readme_url": "https://github.com/vibrantlabsai/ragas/blob/main/README.md",
+              "readme_blob_sha": "07b1f00fde50ee8506f3087326285041c1a1a05c",
+              "readme_content_sha256": "af20b2258507b12bf930e897b63ee5bb87aac4a4696da078ea5a3c29addb6db7"
+            },
+            {
+              "repository": "confident-ai/deepeval",
+              "url": "https://github.com/confident-ai/deepeval",
+              "license_metadata": "Apache-2.0",
+              "readme_url": "https://github.com/confident-ai/deepeval/blob/main/README.md",
+              "readme_blob_sha": "3a0898fcf91d70f1b2643c1fc8851ffaee054700",
+              "readme_content_sha256": "7720fa66b5288458942be1169ee2dcbfcac1940e03cbf2144dd2101f51a546e2"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=rag+evaluation+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:19.308Z",
+              "sha256": "cdd9456f73dcd1ba11cbb53c2e607777b0308164087be0a0cb655af1c81e5027"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=rag+evaluation+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:19.885Z",
+              "sha256": "4069f16d9367803bb6ae0b913544ad8dcaeab5b726b6c32903e5abbf265135bb"
+            },
+            {
+              "url": "https://api.github.com/repos/raga-ai-hub/RagaAI-Catalyst/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:20.255Z",
+              "sha256": "5cfc8175e248f7dc3ede93657f66db99f1626d40d22de019dbc41151fc11656d"
+            },
+            {
+              "url": "https://api.github.com/repos/vibrantlabsai/ragas/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:20.629Z",
+              "sha256": "6db7d4a7a708541051617d5cdb1db08cad3ec3423f61056e2480641c4baa5edb"
+            },
+            {
+              "url": "https://api.github.com/repos/confident-ai/deepeval/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:20.990Z",
+              "sha256": "61f927d5224dbd4c26afa70bf4f3d1b70a4d1ac6e5f0efd5cb62f154b752f98b"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "62f6692c17c1d3b44b835e662d41b27e46da2b43d24c65ac0c20212b7d21cd35"
+            },
+            {
+              "file": "report.json",
+              "sha256": "3a34f6cd7a2b402e51e1a3dc0caea3aa8a7b080e618fa61bce2b62d0dce5edb7"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "b5dfe25dfe8b637723bdc9a1bb4d6c1db2e33fb30b36360ac9e580dbc034a328"
+            }
+          ]
+        },
+        {
+          "id": "B10",
+          "input": "Windows 桌面截图 OCR 翻译工具",
+          "started_at": "2026-10-20T10:23:21.018Z",
+          "completed_at": "2026-10-20T10:23:23.815Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "screenshot ocr translation windows desktop in:name,description,readme",
+            "screenshot ocr"
+          ],
+          "candidates": [
+            {
+              "repository": "jiuwanzi-hui/Screenshot",
+              "url": "https://github.com/jiuwanzi-hui/Screenshot",
+              "license_metadata": "NOASSERTION",
+              "readme_url": "https://github.com/jiuwanzi-hui/Screenshot/blob/main/README.md",
+              "readme_blob_sha": "7cf2805a1b9fbee41bf4396791e5a4fc8392927a",
+              "readme_content_sha256": "e010da4ce705192db894a85d4d16af744e9f99ddab233741b517fe83f54ef1a3"
+            },
+            {
+              "repository": "ShareX/ShareX",
+              "url": "https://github.com/ShareX/ShareX",
+              "license_metadata": "GPL-3.0",
+              "readme_url": "https://github.com/ShareX/ShareX/blob/develop/README.md",
+              "readme_blob_sha": "224c4d4b908934b0745aed8c38b669c75f483ac0",
+              "readme_content_sha256": "f5887844ceebcb1bd96a79369533b2ec5388a70725f8e8d7bfa54688f3115fbc"
+            },
+            {
+              "repository": "ksnip/ksnip",
+              "url": "https://github.com/ksnip/ksnip",
+              "license_metadata": "GPL-3.0",
+              "readme_url": "https://github.com/ksnip/ksnip/blob/master/README.md",
+              "readme_blob_sha": "44f0ae888d36210e90d969a6054b45b70bda6268",
+              "readme_content_sha256": "405a4875f6cb472d0bbe5669a54c5d23603e94e4a9b3ffaa5be279a46f4856ae"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=screenshot+ocr+translation+windows+desktop+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:22.095Z",
+              "sha256": "5f98a43a05afa958eaa7786c8a5136b1d3c9afa7e98ab8d235d8ad6dc0aa6cbd"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=screenshot+ocr+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:22.632Z",
+              "sha256": "ee510d3b1ea56c5272b7cf17bd4b3df3beb3cfc40f888b6ce47364b61f10a22e"
+            },
+            {
+              "url": "https://api.github.com/repos/jiuwanzi-hui/Screenshot/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:23.074Z",
+              "sha256": "686c156e73debe20f14f2387106c4425a3c3b9dc8d8f84145e67a3e7604e5124"
+            },
+            {
+              "url": "https://api.github.com/repos/ShareX/ShareX/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:23.434Z",
+              "sha256": "777944d6d823e432b5ebb2a84b2f9ccdcdd9a61c0059f47439bee408ea8609b6"
+            },
+            {
+              "url": "https://api.github.com/repos/ksnip/ksnip/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:23:23.783Z",
+              "sha256": "b078e5265bc9e8842490c3d487c45a2d9c50e892af98cf60184e62991c603b9d"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "2b3cc6ad114950e31781f16453d5232e761a610516ddc0782d60f083e81220f3"
+            },
+            {
+              "file": "report.json",
+              "sha256": "2e56ded6ce6a053a62fb000282b2d89f5baab77bf1363c4bbb97acf621fde864"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "ae01ad35582a67a5650bb6f63a7d99c5690b4ea2a620a4c35a8b889c6203fd56"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": "repair/",
+      "tested_local_commit": "5b1479c79c07e7df0200140b26ccbb097ce371ac",
+      "limit": 3,
+      "manual_queries": 0,
+      "retries": 0,
+      "cases": [
+        {
+          "id": "B02",
+          "input": "我记得有个美国国家安全局开发的开源反编译工具",
+          "started_at": "2026-10-20T10:28:14.216Z",
+          "completed_at": "2026-10-20T10:28:17.352Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "decompiler open source nsa in:name,description,readme",
+            "reverse engineering"
+          ],
+          "candidates": [
+            {
+              "repository": "alphaSeclab/awesome-reverse-engineering",
+              "url": "https://github.com/alphaSeclab/awesome-reverse-engineering",
+              "license_metadata": null,
+              "readme_url": "https://github.com/alphaSeclab/awesome-reverse-engineering/blob/master/Readme.md",
+              "readme_blob_sha": "b8b0cf553177c38fc58245630b5cdebd12302808",
+              "readme_content_sha256": "04b1937bbfe42d35554a09ceb7a6062635de454fa5ad885e083e4e60acf9e1a1"
+            },
+            {
+              "repository": "NationalSecurityAgency/ghidra",
+              "url": "https://github.com/NationalSecurityAgency/ghidra",
+              "license_metadata": "Apache-2.0",
+              "readme_url": "https://github.com/NationalSecurityAgency/ghidra/blob/master/README.md",
+              "readme_blob_sha": "3f1eea7b35d8551f2433f3074f68ba736d72673f",
+              "readme_content_sha256": "8d4cc75b5c6d0d6ce218bbfa45adc36029d4719d6bcabb33499a36d66ccbf3ec"
+            },
+            {
+              "repository": "pandaadir05/re-architect",
+              "url": "https://github.com/pandaadir05/re-architect",
+              "license_metadata": "MIT",
+              "readme_url": "https://github.com/pandaadir05/re-architect/blob/master/README.md",
+              "readme_blob_sha": "485a6787254d84fbba4ed1020acf3dfa4e6eace6",
+              "readme_content_sha256": "7f436cc40b3be06bf3ab311c90f0d3c0661af40f50ba9c42741419bb4b26678a"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=decompiler+open+source+nsa+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:15.378Z",
+              "sha256": "5bd987ae5118562adee8c1a0f9a786b522909ce6e710b0bda13a6c41c5512e5a"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=reverse+engineering+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:15.921Z",
+              "sha256": "7573822a7f2538eb067d13eeb1eb55f8d3f09f8620ab5021fab9c1aa70ea990e"
+            },
+            {
+              "url": "https://api.github.com/repos/alphaSeclab/awesome-reverse-engineering/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:16.541Z",
+              "sha256": "01333aea458196cc2549989ebffb25e82dd6007cb4ee3f1c89964a48e81824b9"
+            },
+            {
+              "url": "https://api.github.com/repos/NationalSecurityAgency/ghidra/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:16.978Z",
+              "sha256": "43ca8fa49c3546835709ff46ce18895266cf9a45b8a90c1306a566b86db762de"
+            },
+            {
+              "url": "https://api.github.com/repos/pandaadir05/re-architect/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:17.326Z",
+              "sha256": "9801edc3e19c47127e62d8f7bf25be4457ab17af7c099e7856cecb43da39bd13"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "c8538d5680fac4868e386570fa905b461635111a4b588ce1d413e87878b60081"
+            },
+            {
+              "file": "report.json",
+              "sha256": "e7ad6c23c567ec618a1eb64b9990eadd44555a2740bd2260f0a0739b22850682"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "d866a16eafe2054d23628aeb3810405176ccfea2189dd7fc1bc4ca439a82df65"
+            }
+          ]
+        },
+        {
+          "id": "B04",
+          "input": "我想做一个离线加密笔记软件",
+          "started_at": "2026-10-20T10:28:17.355Z",
+          "completed_at": "2026-10-20T10:28:20.201Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "notes offline encryption in:name,description,readme",
+            "note-taking"
+          ],
+          "candidates": [
+            {
+              "repository": "Laverna/laverna",
+              "url": "https://github.com/Laverna/laverna",
+              "license_metadata": "MPL-2.0",
+              "readme_url": "https://github.com/Laverna/laverna/blob/master/README.md",
+              "readme_blob_sha": "98ad5bbd602ba8528cb9784c0ff8e1f00fd97b9a",
+              "readme_content_sha256": "5778f4fb9d6eac98eaf100bfa5c642c24c00508f20ef95f20b2afedafed5612a"
+            },
+            {
+              "repository": "streetwriters/notesnook",
+              "url": "https://github.com/streetwriters/notesnook",
+              "license_metadata": "GPL-3.0",
+              "readme_url": "https://github.com/streetwriters/notesnook/blob/master/README.md",
+              "readme_blob_sha": "a2f119c03522cd08e1f3da3930dc178e48621593",
+              "readme_content_sha256": "16c8ed53b093b4ca1637ef2e633e57558ba76fdd22e8fb7e218f6d5bc46f334b"
+            },
+            {
+              "repository": "TriliumNext/Trilium",
+              "url": "https://github.com/TriliumNext/Trilium",
+              "license_metadata": "AGPL-3.0",
+              "readme_url": "https://github.com/TriliumNext/Trilium/blob/main/README.md",
+              "readme_blob_sha": "e686e04e62c5659dd7e5c19120ee9e5fc1aed87d",
+              "readme_content_sha256": "087906667d44cbca6a47a4e198713c7b068c1766c8fe9a80daa9b4e7480eae95"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=notes+offline+encryption+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:18.478Z",
+              "sha256": "e9024cdf80b603a83b6b7312f0cd410657138761b77ca20902e5e507c06c4782"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=note-taking+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:19.069Z",
+              "sha256": "23a9739a3f750d945e5e8baad5e53825253361b1efebf78c937e4d032d6ca9af"
+            },
+            {
+              "url": "https://api.github.com/repos/Laverna/laverna/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:19.406Z",
+              "sha256": "793d053c9a6c002753ca1677463552c1bb50a5dcef272c6ac2f244ec7817e9df"
+            },
+            {
+              "url": "https://api.github.com/repos/streetwriters/notesnook/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:19.785Z",
+              "sha256": "7190df75af4d678457e293fef9ac8136ce09d93da16ba441a4e6da5fa1fa5fe7"
+            },
+            {
+              "url": "https://api.github.com/repos/TriliumNext/Trilium/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:20.174Z",
+              "sha256": "15667df0660e6799e0aa1ba2871e3e0f4f64678149c6f166e87c7f4e751a1e04"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "09c8357723411154364390170dfbff9073b0bef2b60968ced49359e8f9881e1c"
+            },
+            {
+              "file": "report.json",
+              "sha256": "1ce3f896e8a9f01e475c117a2dd8d70b5f5f218401d5fe38f9b27c1f82755061"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "3faac1141cb2e400aa1b2f5b08da0a4c27300b060c128c8cb17867964f53c25b"
+            }
+          ]
+        },
+        {
+          "id": "B07",
+          "input": "我想做一个能识别植物病害的手机应用",
+          "started_at": "2026-10-20T10:28:20.202Z",
+          "completed_at": "2026-10-20T10:28:23.096Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "plant disease recognition mobile in:name,description,readme",
+            "plant disease"
+          ],
+          "candidates": [
+            {
+              "repository": "gimnathperera/Plant-Safe",
+              "url": "https://github.com/gimnathperera/Plant-Safe",
+              "license_metadata": null,
+              "readme_url": "https://github.com/gimnathperera/Plant-Safe/blob/master/README.md",
+              "readme_blob_sha": "3d2f4c3c01b4d5f82fe3988a34bd450430b7838c",
+              "readme_content_sha256": "d8b3ff54a60272ba6e9dc9842b495c291cb574d9212a094e95381a955d4fcad9"
+            },
+            {
+              "repository": "SomiaImdad/Plant-Disease-Diagnostics-using-UAV-and-Android-APP",
+              "url": "https://github.com/SomiaImdad/Plant-Disease-Diagnostics-using-UAV-and-Android-APP",
+              "license_metadata": null,
+              "readme_url": "https://github.com/SomiaImdad/Plant-Disease-Diagnostics-using-UAV-and-Android-APP/blob/master/README.md",
+              "readme_blob_sha": "24bc6d1125d289e6006fa411faffd468a2c66407",
+              "readme_content_sha256": "8e9a45b1ceaf4d3dc60dd017a1d8c56c62539f51eac4a0fd401ae0a6924c4572"
+            },
+            {
+              "repository": "deepcpatel/GreenDoc",
+              "url": "https://github.com/deepcpatel/GreenDoc",
+              "license_metadata": null,
+              "readme_url": "https://github.com/deepcpatel/GreenDoc/blob/master/README.md",
+              "readme_blob_sha": "9fd252fe7555ae71d3df5641311f6812cd48df8b",
+              "readme_content_sha256": "346cd834b431e24c23fa31ca5025f15194cbaecdfb95b85f8c1b6a6c77f7fed4"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=plant+disease+recognition+mobile+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:21.328Z",
+              "sha256": "90b3ffa2176a6d1cac907a662e0ec9746f7df83c7c8ce9be32de7a268d908140"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=plant+disease+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:21.951Z",
+              "sha256": "307d10e5b37ebe6e150e30793785eacc5313e9ee1304d9d93f7a60e36bb3a780"
+            },
+            {
+              "url": "https://api.github.com/repos/gimnathperera/Plant-Safe/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:22.360Z",
+              "sha256": "ac19687e894aa17f6f0c8634c29bd2328843707472683e6de526c62d1baa9891"
+            },
+            {
+              "url": "https://api.github.com/repos/SomiaImdad/Plant-Disease-Diagnostics-using-UAV-and-Android-APP/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:22.705Z",
+              "sha256": "1e8fd870c890222f9c5449bc7a173359338538ca9f8e13dc89cea615b1fdd8df"
+            },
+            {
+              "url": "https://api.github.com/repos/deepcpatel/GreenDoc/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:23.075Z",
+              "sha256": "dfe87c365d6f1b815f8a3127d6db34731f62db8bc370a81718275461ebda7252"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "467c03d8a851f57ffbca940127fc26aaa4e364951cdec5c6a62cae49f3f9f608"
+            },
+            {
+              "file": "report.json",
+              "sha256": "58036e059cee99ae1d6ed4f037e221256872cec2a1dea18a1a2794345a0f9549"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "94f1b61bc4f77bdf8728a2c614e73dfb7918d2d10b369e2c3f76a82e1718f441"
+            }
+          ]
+        },
+        {
+          "id": "B09",
+          "input": "我想开发一个 RAG 应用评测工具",
+          "started_at": "2026-10-20T10:28:23.098Z",
+          "completed_at": "2026-10-20T10:28:25.865Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "rag evaluation in:name,description,readme",
+            "rag evaluation"
+          ],
+          "candidates": [
+            {
+              "repository": "raga-ai-hub/RagaAI-Catalyst",
+              "url": "https://github.com/raga-ai-hub/RagaAI-Catalyst",
+              "license_metadata": "Apache-2.0",
+              "readme_url": "https://github.com/raga-ai-hub/RagaAI-Catalyst/blob/main/README.md",
+              "readme_blob_sha": "7450aa665127bb801fe118abced587d1b020b305",
+              "readme_content_sha256": "4530edece36d9321326cbe0c81888872fbc14b32bd3e2b07db5a28595b353cde"
+            },
+            {
+              "repository": "vibrantlabsai/ragas",
+              "url": "https://github.com/vibrantlabsai/ragas",
+              "license_metadata": "Apache-2.0",
+              "readme_url": "https://github.com/vibrantlabsai/ragas/blob/main/README.md",
+              "readme_blob_sha": "07b1f00fde50ee8506f3087326285041c1a1a05c",
+              "readme_content_sha256": "af20b2258507b12bf930e897b63ee5bb87aac4a4696da078ea5a3c29addb6db7"
+            },
+            {
+              "repository": "firecrawl/rag-arena",
+              "url": "https://github.com/firecrawl/rag-arena",
+              "license_metadata": "MIT",
+              "readme_url": "https://github.com/firecrawl/rag-arena/blob/master/README.md",
+              "readme_blob_sha": "a1e24c9f8275b79f1890bd46e31cefdd03799aaf",
+              "readme_content_sha256": "41ede4d7ae59d5bef2ff3965c68aae6414883c5dd9841d51849c12f58d2416c9"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=rag+evaluation+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:24.172Z",
+              "sha256": "28ea12e8ed839c6fe4b773f82a69620703d8b8f6fadb6ebaf0df0ef15340b4ab"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=rag+evaluation+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:24.739Z",
+              "sha256": "a259a8be2d8b3c0a5ad1a53da8954f9d605c93e3edaf509593604dedbe100eae"
+            },
+            {
+              "url": "https://api.github.com/repos/raga-ai-hub/RagaAI-Catalyst/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:25.075Z",
+              "sha256": "5cfc8175e248f7dc3ede93657f66db99f1626d40d22de019dbc41151fc11656d"
+            },
+            {
+              "url": "https://api.github.com/repos/vibrantlabsai/ragas/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:25.434Z",
+              "sha256": "6db7d4a7a708541051617d5cdb1db08cad3ec3423f61056e2480641c4baa5edb"
+            },
+            {
+              "url": "https://api.github.com/repos/firecrawl/rag-arena/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:25.842Z",
+              "sha256": "b59f2f812e974cf0dd6a24bf0fd2b51a2e912d2294eea8b40c9e40f39d60327f"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "1f91ad1b7f27a10db10cbf9881b09725e7df2a77aa325993ff542eaf053b93d5"
+            },
+            {
+              "file": "report.json",
+              "sha256": "f894bd1c39c60f090ca55e7b5b81199365f760c318885295c55aa2fd0a5c767f"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "5605b3c4d00871a42fe6804e0173f055f41665d8028b19db6f6f7d2b41c6f838"
+            }
+          ]
+        },
+        {
+          "id": "B10",
+          "input": "Windows 桌面截图 OCR 翻译工具",
+          "started_at": "2026-10-20T10:28:25.867Z",
+          "completed_at": "2026-10-20T10:28:28.856Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "screenshot ocr translation windows desktop in:name,description,readme",
+            "screenshot ocr"
+          ],
+          "candidates": [
+            {
+              "repository": "jiuwanzi-hui/Screenshot",
+              "url": "https://github.com/jiuwanzi-hui/Screenshot",
+              "license_metadata": "NOASSERTION",
+              "readme_url": "https://github.com/jiuwanzi-hui/Screenshot/blob/main/README.md",
+              "readme_blob_sha": "7cf2805a1b9fbee41bf4396791e5a4fc8392927a",
+              "readme_content_sha256": "e010da4ce705192db894a85d4d16af744e9f99ddab233741b517fe83f54ef1a3"
+            },
+            {
+              "repository": "InkTimeRecord/TTime",
+              "url": "https://github.com/InkTimeRecord/TTime",
+              "license_metadata": "NOASSERTION",
+              "readme_url": "https://github.com/InkTimeRecord/TTime/blob/main/README.md",
+              "readme_blob_sha": "9064f12b07eedb84280307beb3a08382973a1a75",
+              "readme_content_sha256": "8f4995999b852ba7421061fb3178211347dac80eefb232a4ae57945ec03ee204"
+            },
+            {
+              "repository": "xushengfeng/eSearch",
+              "url": "https://github.com/xushengfeng/eSearch",
+              "license_metadata": "GPL-3.0",
+              "readme_url": "https://github.com/xushengfeng/eSearch/blob/master/README.md",
+              "readme_blob_sha": "d4695e3d80f41cb04e20fc5ea5e54f0323acee18",
+              "readme_content_sha256": "75b7f4129d364555dae67122c047d864cb47950203f06116e7f39951de151e1c"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=screenshot+ocr+translation+windows+desktop+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:27.090Z",
+              "sha256": "39da4bbe2233c259de9aab8122526abbcee9260ca54c154415fdcd5d2019d3fb"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=screenshot+ocr+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:27.699Z",
+              "sha256": "ee510d3b1ea56c5272b7cf17bd4b3df3beb3cfc40f888b6ce47364b61f10a22e"
+            },
+            {
+              "url": "https://api.github.com/repos/jiuwanzi-hui/Screenshot/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:28.133Z",
+              "sha256": "686c156e73debe20f14f2387106c4425a3c3b9dc8d8f84145e67a3e7604e5124"
+            },
+            {
+              "url": "https://api.github.com/repos/InkTimeRecord/TTime/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:28.494Z",
+              "sha256": "2d0c2681e04a98c8eca97c0cd2a2e32b44d945ac4184311a91467d1f9eb1a5c9"
+            },
+            {
+              "url": "https://api.github.com/repos/xushengfeng/eSearch/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:28:28.822Z",
+              "sha256": "c625bb6340b2c8a39bf67bc9862e2ec5a3fbfa33cae1177bac42554d2e118bea"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "a4e29fc88e27f31bff6701558a3319790d3ec409b75adc680524b73837ce570b"
+            },
+            {
+              "file": "report.json",
+              "sha256": "e27724ce55948c07d18e83d233a232e6b8a096d2821ce97868921949a5a84479"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "61c90a146c99844039930b02254ffa0a811a9c4a375a553ccb074bdad5d66dac"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "round": "final/",
+      "tested_local_commit": "151a96708faf12ef6544ee352d3cd6731862dc2a",
+      "limit": 3,
+      "manual_queries": 0,
+      "retries": 0,
+      "cases": [
+        {
+          "id": "B04",
+          "input": "我想做一个离线加密笔记软件",
+          "started_at": "2026-10-20T10:31:49.832Z",
+          "completed_at": "2026-10-20T10:31:52.524Z",
+          "exit": 0,
+          "status": "complete",
+          "mode": "live",
+          "queries": [
+            "notes offline encryption in:name,description,readme",
+            "note-taking"
+          ],
+          "candidates": [
+            {
+              "repository": "Laverna/laverna",
+              "url": "https://github.com/Laverna/laverna",
+              "license_metadata": "MPL-2.0",
+              "readme_url": "https://github.com/Laverna/laverna/blob/master/README.md",
+              "readme_blob_sha": "98ad5bbd602ba8528cb9784c0ff8e1f00fd97b9a",
+              "readme_content_sha256": "5778f4fb9d6eac98eaf100bfa5c642c24c00508f20ef95f20b2afedafed5612a"
+            },
+            {
+              "repository": "streetwriters/notesnook",
+              "url": "https://github.com/streetwriters/notesnook",
+              "license_metadata": "GPL-3.0",
+              "readme_url": "https://github.com/streetwriters/notesnook/blob/master/README.md",
+              "readme_blob_sha": "a2f119c03522cd08e1f3da3930dc178e48621593",
+              "readme_content_sha256": "16c8ed53b093b4ca1637ef2e633e57558ba76fdd22e8fb7e218f6d5bc46f334b"
+            },
+            {
+              "repository": "TriliumNext/Trilium",
+              "url": "https://github.com/TriliumNext/Trilium",
+              "license_metadata": "AGPL-3.0",
+              "readme_url": "https://github.com/TriliumNext/Trilium/blob/main/README.md",
+              "readme_blob_sha": "e686e04e62c5659dd7e5c19120ee9e5fc1aed87d",
+              "readme_content_sha256": "087906667d44cbca6a47a4e198713c7b068c1766c8fe9a80daa9b4e7480eae95"
+            }
+          ],
+          "responses": [
+            {
+              "url": "https://api.github.com/search/repositories?q=notes+offline+encryption+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:31:50.900Z",
+              "sha256": "c33be90a082ab832e07f7792dfbbefcc1e35b3c9d44d7f6b230118fc49505229"
+            },
+            {
+              "url": "https://api.github.com/search/repositories?q=note-taking+archived%3Afalse+fork%3Afalse&per_page=10",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:31:51.479Z",
+              "sha256": "a0ddf9ad3a162bfb6772eb8ec2cfb72291771474221224ae49cb6f5f6b970811"
+            },
+            {
+              "url": "https://api.github.com/repos/Laverna/laverna/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:31:51.799Z",
+              "sha256": "793d053c9a6c002753ca1677463552c1bb50a5dcef272c6ac2f244ec7817e9df"
+            },
+            {
+              "url": "https://api.github.com/repos/streetwriters/notesnook/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:31:52.122Z",
+              "sha256": "7190df75af4d678457e293fef9ac8136ce09d93da16ba441a4e6da5fa1fa5fe7"
+            },
+            {
+              "url": "https://api.github.com/repos/TriliumNext/Trilium/readme",
+              "status": 200,
+              "fetched_at": "2026-10-20T10:31:52.498Z",
+              "sha256": "15667df0660e6799e0aa1ba2871e3e0f4f64678149c6f166e87c7f4e751a1e04"
+            }
+          ],
+          "artifact_hashes": [
+            {
+              "file": "report.md",
+              "sha256": "fc9bd954bccefa505195b578ecd489201c623692f4a251567f34302ac79376b9"
+            },
+            {
+              "file": "report.json",
+              "sha256": "9a67cb7e5772e30c383010e95fc342604c55f0dbb5f99aae492b4d60dfa02bdf"
+            },
+            {
+              "file": "captures.json",
+              "sha256": "567d1e6d595a660f38ca58fbd23b71a0962a4bbf87066bae872094cc8968cfa8"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "v1_files_unchanged": 79,
+    "live_cli_runs": 11,
+    "live_search_and_readme_responses": 55,
+    "all_http_200": true,
+    "quota_preflights": 3,
+    "offline_old_v1_cli_replays": 4,
+    "old_real_ai_import": "passed structure and references, no model generation; semantic support not checked",
+    "final_saved_response_selection_checks": 5,
+    "selection_check_type": "isolated production-function check on saved real responses, not five fresh final-commit CLI runs"
+  },
+  "source_spot_checks": [
+    {
+      "id": "B02",
+      "repository": "NationalSecurityAgency/ghidra",
+      "blob_sha": "3f1eea7b35d8551f2433f3074f68ba736d72673f",
+      "lines": [
+        4,
+        5,
+        8
+      ]
+    },
+    {
+      "id": "B04",
+      "repository": "Laverna/laverna",
+      "blob_sha": "98ad5bbd602ba8528cb9784c0ff8e1f00fd97b9a",
+      "lines": [
+        7,
+        17,
+        18
+      ]
+    },
+    {
+      "id": "B04",
+      "repository": "streetwriters/notesnook",
+      "blob_sha": "a2f119c03522cd08e1f3da3930dc178e48621593",
+      "lines": [
+        13
+      ]
+    },
+    {
+      "id": "B04",
+      "repository": "TriliumNext/Trilium",
+      "blob_sha": "e686e04e62c5659dd7e5c19120ee9e5fc1aed87d",
+      "lines": [
+        53,
+        129,
+        134
+      ]
+    },
+    {
+      "id": "B07",
+      "repository": "deepcpatel/GreenDoc",
+      "blob_sha": "9fd252fe7555ae71d3df5641311f6812cd48df8b",
+      "lines": [
+        2,
+        11,
+        15
+      ]
+    },
+    {
+      "id": "B09",
+      "repository": "raga-ai-hub/RagaAI-Catalyst",
+      "blob_sha": "7450aa665127bb801fe118abced587d1b020b305",
+      "lines": [
+        104,
+        106
+      ]
+    },
+    {
+      "id": "B09",
+      "repository": "vibrantlabsai/ragas",
+      "blob_sha": "07b1f00fde50ee8506f3087326285041c1a1a05c",
+      "lines": [
+        47,
+        81,
+        89
+      ]
+    },
+    {
+      "id": "B09",
+      "repository": "firecrawl/rag-arena",
+      "blob_sha": "a1e24c9f8275b79f1890bd46e31cefdd03799aaf",
+      "lines": [
+        3
+      ]
+    },
+    {
+      "id": "B10",
+      "repository": "jiuwanzi-hui/Screenshot",
+      "blob_sha": "7cf2805a1b9fbee41bf4396791e5a4fc8392927a",
+      "lines": [
+        18,
+        22,
+        33
+      ]
+    },
+    {
+      "id": "B10",
+      "repository": "InkTimeRecord/TTime",
+      "blob_sha": "9064f12b07eedb84280307beb3a08382973a1a75",
+      "lines": [
+        19,
+        43
+      ]
+    },
+    {
+      "id": "B10",
+      "repository": "xushengfeng/eSearch",
+      "blob_sha": "d4695e3d80f41cb04e20fc5ea5e54f0323acee18",
+      "lines": [
+        25,
+        97,
+        99
+      ]
+    }
+  ],
+  "limitations": [
+    "Known development examples, historical V1 searches and limit=3 versus original max five; not a causal or independent quality estimate.",
+    "New one-shot holdout inputs expose missing tasks/constraints and incomplete clarification. No tuning or code changes from these results.",
+    "Actual captures/full reports are local only; public URLs/blob hashes/summaries do not replace private original material.",
+    "No installed candidate verification, permission audit, product value validation, merge, tag or Release."
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "kind": "tracked_candidate_file_audit_not_comprehensive_security_review",
+  "audited_at": "2026-10-20T12:38:02.247Z",
+  "commit": "dcc7469e40f3f9bb0aa45a76f9109d7ed311d169",
+  "base_commit": "134943c027e6c86123363eb02b67ee962246f1ca",
+  "files": 100,
+  "changed_files": 36,
+  "changes": [
+    "M\tREADME.md",
+    "M\tREADME.zh-CN.md",
+    "A\tdocs/INPUT_PLANNING.md",
+    "A\tdocs/ISSUE_1_FOLLOWUP.md",
+    "A\tdocs/ISSUE_1_REVIEW.md",
+    "M\tdocs/USAGE.md",
+    "M\tdocs/USAGE.zh-CN.md",
+    "M\tpackage-lock.json",
+    "M\tpackage.json",
+    "M\tsrc/adapters/github/search.ts",
+    "M\tsrc/cli.ts",
+    "M\tsrc/discovery/analyze.ts",
+    "M\tsrc/discovery/directions.ts",
+    "M\tsrc/discovery/markdown.ts",
+    "M\tsrc/discovery/model.ts",
+    "M\tsrc/discovery/query.ts",
+    "A\tsrc/discovery/vocabulary.ts",
+    "M\ttests/integration/discovery-cli.test.ts",
+    "A\ttests/integration/planning-cli.test.ts",
+    "M\ttests/unit/discovery/discovery.test.ts",
+    "A\ttests/unit/discovery/planning.test.ts",
+    "A\tvalidation/issue-1/contracts.txt",
+    "A\tvalidation/issue-1/evidence.json",
+    "A\tvalidation/issue-1/followup/contracts.txt",
+    "A\tvalidation/issue-1/followup/live-summary.json",
+    "A\tvalidation/issue-1/followup/planning-results.json",
+    "A\tvalidation/issue-1/followup/protocol.json",
+    "A\tvalidation/issue-1/followup/review.json",
+    "A\tvalidation/issue-1/followup/run-cli.mjs",
+    "A\tvalidation/issue-1/followup/run-planning.mjs",
+    "A\tvalidation/issue-1/followup/tests.txt",
+    "A\tvalidation/issue-1/holdout-protocol.json",
+    "A\tvalidation/issue-1/holdout-results.json",
+    "A\tvalidation/issue-1/holdout-review.json",
+    "A\tvalidation/issue-1/run-holdout.mjs",
+    "A\tvalidation/issue-1/tests.txt"
+  ],
+  "prohibited_paths": [],
+  "pattern_findings": [],
+  "raw_json_body_findings": [],
+  "version": {
+    "package": "0.2.0",
+    "lock": "0.2.0",
+    "root_package": "0.2.0",
+    "private": true,
+    "engines": {
+      "node": ">=24.19.0 <25"
+    },
+    "packageManager": "npm@12.2.0"
+  },
+  "lock_sha256": "d2c0e46288d5470e9026ab7a2b0b362eda0daa2a346510411d1047bffc84005a",
+  "preserved_v1_files": [
+    {
+      "path": "LICENSE",
+      "unchanged_from_v1": true
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "unchanged_from_v1": true
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.zh-CN.md",
+      "unchanged_from_v1": true
+    },
+    {
+      "path": "PROJECT_COMPASS_START_HERE_v1-1.md",
+      "unchanged_from_v1": true
+    },
+    {
+      "path": "contracts/report-v1.schema.json",
+      "unchanged_from_v1": true
+    },
+    {
+      "path": "contracts/decision-v1.schema.json",
+      "unchanged_from_v1": true
+    },
+    {
+      "path": "src/discovery/evidence.ts",
+      "unchanged_from_v1": true
+    },
+    {
+      "path": "src/adapters/github/replay.ts",
+      "unchanged_from_v1": true
+    },
+    {
+      "path": "src/advice/schema.ts",
+      "unchanged_from_v1": true
+    }
+  ],
+  "ci_workflows": [],
+  "limitation": "Pattern scans do not prove absence of all secrets or third-party material. Full tracked file list, new evidence summaries, license files and diff scope are also reviewed. No dependency vulnerability scan or candidate installation performed."
+}

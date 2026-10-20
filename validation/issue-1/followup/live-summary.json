@@ -1,0 +1,601 @@
+{
+  "source_commit": "536a3ade12181a6d8ee8dfe9721d3e92aa192adb",
+  "node": "v24.19.0",
+  "quota_preflight": {
+    "at": "2026-10-20T11:56:00.022Z",
+    "http_status": 200,
+    "resources": {
+      "code_search": {
+        "limit": 60,
+        "remaining": 44,
+        "reset": 1792499600,
+        "used": 16
+      },
+      "core": {
+        "limit": 60,
+        "remaining": 44,
+        "reset": 1792499600,
+        "used": 16
+      },
+      "graphql": {
+        "limit": 0,
+        "remaining": 0,
+        "reset": 1792500960,
+        "used": 0
+      },
+      "integration_manifest": {
+        "limit": 5000,
+        "remaining": 5000,
+        "reset": 1792500960,
+        "used": 0
+      },
+      "search": {
+        "limit": 10,
+        "remaining": 10,
+        "reset": 1792497420,
+        "used": 0
+      }
+    }
+  },
+  "limitation": "Anonymous read-only retrieval; no manual query, no models, no repository installation. Candidate mentions are not verified capabilities. Raw captures and third-party full READMEs remain local.",
+  "results": [
+    {
+      "id": "H04",
+      "input": "想找一个能在 macOS 上运行的音频降噪工具",
+      "execution": "actual_node_CLI_subprocess_anonymous_GitHub",
+      "started_at": "2026-10-20T11:56:00.023Z",
+      "completed_at": "2026-10-20T11:56:03.224Z",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "status": "complete",
+      "private_report_directory": ".compass/issue-1-followup/1792497359485/H04",
+      "plan": {
+        "idea": "想找一个能在 macOS 上运行的音频降噪工具",
+        "queries": [
+          "音频降噪 macos in:name,description,readme",
+          "音频降噪"
+        ],
+        "terms": [
+          "音频降噪",
+          "macos"
+        ],
+        "topic_terms": [
+          "音频降噪"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“想找”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "macos",
+              "label": "macOS",
+              "source": "macOS",
+              "terms": [
+                "macos",
+                "mac os"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "音频降噪"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索和相邻短语，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：音频降噪；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "searches": [
+        {
+          "query": "音频降噪 macos in:name,description,readme",
+          "total_count": 65,
+          "incomplete": false,
+          "error": null
+        },
+        {
+          "query": "音频降噪",
+          "total_count": 90,
+          "incomplete": false,
+          "error": null
+        }
+      ],
+      "candidates": [
+        {
+          "name": "andy8609/audio_processor",
+          "url": "https://github.com/andy8609/audio_processor",
+          "license": null,
+          "relevance": {
+            "level": "较强文本关联",
+            "matched_terms": [
+              "音频降噪"
+            ],
+            "reason": "名称/简介/topics 出现：音频降噪；完整检索短语匹配：音频降噪；GitHub 检索式：音频降噪 macos in:name,description,readme。未验证任务、平台与受众适配。"
+          },
+          "requirement_clues": [
+            {
+              "label": "macOS",
+              "polarity": "required",
+              "source": "readme"
+            }
+          ],
+          "readme": {
+            "status": "captured",
+            "url": "https://github.com/andy8609/audio_processor/blob/master/README.md",
+            "blob_sha": "c8c5b832c2d247416bfcf50333b1b1687461c455",
+            "content_sha256": "b1d0a68520eba25b0107779ffeb6c5828ee2e4fe46f82e76d2c0738213d29652"
+          }
+        },
+        {
+          "name": "joeseesun/qiaomu-screen2video",
+          "url": "https://github.com/joeseesun/qiaomu-screen2video",
+          "license": "MIT",
+          "relevance": {
+            "level": "较强文本关联",
+            "matched_terms": [
+              "音频降噪"
+            ],
+            "reason": "名称/简介/topics 出现：音频降噪；完整检索短语匹配：音频降噪；GitHub 检索式：音频降噪 macos in:name,description,readme。未验证任务、平台与受众适配。"
+          },
+          "requirement_clues": [
+            {
+              "label": "macOS",
+              "polarity": "required",
+              "source": "readme"
+            }
+          ],
+          "readme": {
+            "status": "captured",
+            "url": "https://github.com/joeseesun/qiaomu-screen2video/blob/main/README.md",
+            "blob_sha": "a78cec1b39888a43101edc068aeb517dd0cd9c3a",
+            "content_sha256": "c9422fa6ee68e9b8768b643f2b913ad266335b9f97068ae3fc530eec2b6e4458"
+          }
+        },
+        {
+          "name": "ming123aaa/WaveKit",
+          "url": "https://github.com/ming123aaa/WaveKit",
+          "license": null,
+          "relevance": {
+            "level": "较强文本关联",
+            "matched_terms": [
+              "音频降噪"
+            ],
+            "reason": "名称/简介/topics 出现：音频降噪；完整检索短语匹配：音频降噪；GitHub 检索式：音频降噪 macos in:name,description,readme。未验证任务、平台与受众适配。"
+          },
+          "requirement_clues": [
+            {
+              "label": "macOS",
+              "polarity": "required",
+              "source": "readme"
+            }
+          ],
+          "readme": {
+            "status": "captured",
+            "url": "https://github.com/ming123aaa/WaveKit/blob/master/README.md",
+            "blob_sha": "ae4371e9c6256e3eafa2552f8b14841616ba3d5d",
+            "content_sha256": "bc6c17b792bb6108e9a4a056f3ea2f60e16b3da7e67cae82e62368f1cc86d955"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://api.github.com/search/repositories?q=%E9%9F%B3%E9%A2%91%E9%99%8D%E5%99%AA+macos+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+          "fetched_at": "2026-10-20T11:56:01.257Z",
+          "status": 200,
+          "remaining": "9",
+          "reset": "1792497420",
+          "retry_after": null,
+          "sha256": "1a6c38ac1bf72f916f2a2926eedaa3466e0abf526d8125c681c9535389170469"
+        },
+        {
+          "url": "https://api.github.com/search/repositories?q=%E9%9F%B3%E9%A2%91%E9%99%8D%E5%99%AA+archived%3Afalse+fork%3Afalse&per_page=10",
+          "fetched_at": "2026-10-20T11:56:01.963Z",
+          "status": 200,
+          "remaining": "8",
+          "reset": "1792497420",
+          "retry_after": null,
+          "sha256": "98c210ffb099ed86f560ba9c3b672a04df3ea220a9cf8b34a27505bacbd408dc"
+        },
+        {
+          "url": "https://api.github.com/repos/andy8609/audio_processor/readme",
+          "fetched_at": "2026-10-20T11:56:02.364Z",
+          "status": 200,
+          "remaining": "43",
+          "reset": "1792499600",
+          "retry_after": null,
+          "sha256": "f062bdf4db13c5f8049425a3a9987db6a577bbaf6f43f23e729a51bf277aa217"
+        },
+        {
+          "url": "https://api.github.com/repos/joeseesun/qiaomu-screen2video/readme",
+          "fetched_at": "2026-10-20T11:56:02.738Z",
+          "status": 200,
+          "remaining": "42",
+          "reset": "1792499600",
+          "retry_after": null,
+          "sha256": "8b3b355182882e63e82b9a4cc84bb4a27ea871291d9d3ce0ff4770bae6b62685"
+        },
+        {
+          "url": "https://api.github.com/repos/ming123aaa/WaveKit/readme",
+          "fetched_at": "2026-10-20T11:56:03.201Z",
+          "status": 200,
+          "remaining": "41",
+          "reset": "1792499600",
+          "retry_after": null,
+          "sha256": "d60884de0fe71b6feb69aaad2c2b9f843c9174c1afbfcbcb8ac8c80fbfecb0fc"
+        }
+      ]
+    },
+    {
+      "id": "H03",
+      "input": "我想开发一个不需要联网的家庭药品到期提醒工具",
+      "execution": "actual_node_CLI_subprocess_anonymous_GitHub",
+      "started_at": "2026-10-20T11:56:03.224Z",
+      "completed_at": "2026-10-20T11:56:05.511Z",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "status": "complete",
+      "private_report_directory": ".compass/issue-1-followup/1792497359485/H03",
+      "plan": {
+        "idea": "我想开发一个不需要联网的家庭药品到期提醒工具",
+        "queries": [
+          "家庭药品到期提醒 offline in:name,description,readme",
+          "家庭药品到期提醒"
+        ],
+        "terms": [
+          "家庭药品到期提醒",
+          "offline"
+        ],
+        "topic_terms": [
+          "家庭药品到期提醒"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "develop",
+          "reason": "根据最先出现的意图表达“我想开发”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "offline",
+              "label": "离线",
+              "source": "不需要联网",
+              "terms": [
+                "offline",
+                "离线"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [
+            "家庭药品到期提醒"
+          ],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。",
+          "未识别英文主题：保留中文分词检索和相邻短语，不保证覆盖英文 README；查询为空或不相关时请补充用途。",
+          "尚未映射的中文要点：家庭药品到期提醒；原文保留，不保证这些条件已进入查询。"
+        ]
+      },
+      "searches": [
+        {
+          "query": "家庭药品到期提醒 offline in:name,description,readme",
+          "total_count": 0,
+          "incomplete": false,
+          "error": null
+        },
+        {
+          "query": "家庭药品到期提醒",
+          "total_count": 2,
+          "incomplete": false,
+          "error": null
+        }
+      ],
+      "candidates": [
+        {
+          "name": "Dujltqzv/Some-Many-Books",
+          "url": "https://github.com/Dujltqzv/Some-Many-Books",
+          "license": null,
+          "relevance": {
+            "level": "待人工核查",
+            "matched_terms": [],
+            "reason": "GitHub 返回了该仓库，但名称/简介/topics 未命中规划词；可能只命中 README，也可能不相关，需人工排除。"
+          },
+          "requirement_clues": [
+            {
+              "label": "离线",
+              "polarity": "required",
+              "source": null
+            }
+          ],
+          "readme": {
+            "status": "captured",
+            "url": "https://github.com/Dujltqzv/Some-Many-Books/blob/main/README.md",
+            "blob_sha": "1158ac08c75b59e4e329db676fc720ee8a0276d9",
+            "content_sha256": "83a604d2587f1d3aef4e7ba2f408735a3acb7f90fdec51a8be08a10775a5edbe"
+          }
+        },
+        {
+          "name": "pxvr-official/1",
+          "url": "https://github.com/pxvr-official/1",
+          "license": null,
+          "relevance": {
+            "level": "待人工核查",
+            "matched_terms": [],
+            "reason": "GitHub 返回了该仓库，但名称/简介/topics 未命中规划词；可能只命中 README，也可能不相关，需人工排除。"
+          },
+          "requirement_clues": [
+            {
+              "label": "离线",
+              "polarity": "required",
+              "source": null
+            }
+          ],
+          "readme": {
+            "status": "captured",
+            "url": "https://github.com/pxvr-official/1/blob/main/README.md",
+            "blob_sha": "1e372147d5bb9725ab8b4b7f94f26e58a9fb1012",
+            "content_sha256": "b40d2015275174b35016e0b701418404efab47f367a074e2e92b5bdddd62c8c8"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://api.github.com/search/repositories?q=%E5%AE%B6%E5%BA%AD%E8%8D%AF%E5%93%81%E5%88%B0%E6%9C%9F%E6%8F%90%E9%86%92+offline+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+          "fetched_at": "2026-10-20T11:56:04.095Z",
+          "status": 200,
+          "remaining": "7",
+          "reset": "1792497420",
+          "retry_after": null,
+          "sha256": "4af480b8ee5b87b369a76c49bd22c9a783908272ebffbe97898f8ab0f0772a5f"
+        },
+        {
+          "url": "https://api.github.com/search/repositories?q=%E5%AE%B6%E5%BA%AD%E8%8D%AF%E5%93%81%E5%88%B0%E6%9C%9F%E6%8F%90%E9%86%92+archived%3Afalse+fork%3Afalse&per_page=10",
+          "fetched_at": "2026-10-20T11:56:04.789Z",
+          "status": 200,
+          "remaining": "6",
+          "reset": "1792497420",
+          "retry_after": null,
+          "sha256": "9d4f79cdeb0404934ce3324694e7e259317f7dd0fbc60b589b00b61be11311e3"
+        },
+        {
+          "url": "https://api.github.com/repos/Dujltqzv/Some-Many-Books/readme",
+          "fetched_at": "2026-10-20T11:56:05.122Z",
+          "status": 200,
+          "remaining": "40",
+          "reset": "1792499600",
+          "retry_after": null,
+          "sha256": "245cb72c90f95a86153610f6d2e929a5e4d48872253cf1b6c1a8d3f506003bf1"
+        },
+        {
+          "url": "https://api.github.com/repos/pxvr-official/1/readme",
+          "fetched_at": "2026-10-20T11:56:05.479Z",
+          "status": 200,
+          "remaining": "39",
+          "reset": "1792499600",
+          "retry_after": null,
+          "sha256": "ab53ed109cc1d26d385de4bc966575b5d94cfe5ce3a619a6f98fc7297069a520"
+        }
+      ]
+    },
+    {
+      "id": "N06",
+      "input": "Find an offline Linux spectral analyzer",
+      "execution": "actual_node_CLI_subprocess_anonymous_GitHub",
+      "started_at": "2026-10-20T11:56:05.512Z",
+      "completed_at": "2026-10-20T11:56:08.735Z",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "status": "complete",
+      "private_report_directory": ".compass/issue-1-followup/1792497359485/N06",
+      "plan": {
+        "idea": "Find an offline Linux spectral analyzer",
+        "queries": [
+          "spectral analyzer offline linux in:name,description,readme",
+          "spectral analyzer"
+        ],
+        "terms": [
+          "spectral",
+          "analyzer",
+          "offline",
+          "linux"
+        ],
+        "topic_terms": [
+          "spectral",
+          "analyzer"
+        ],
+        "method": "keyword_rules",
+        "understanding": {
+          "intent": "find_project",
+          "reason": "根据最先出现的意图表达“Find”推断；复合意图仍需人工核对。",
+          "requirements": [
+            {
+              "key": "offline",
+              "label": "离线",
+              "source": "offline",
+              "terms": [
+                "offline",
+                "离线"
+              ],
+              "polarity": "required"
+            },
+            {
+              "key": "linux",
+              "label": "Linux",
+              "source": "Linux",
+              "terms": [
+                "linux"
+              ],
+              "polarity": "required"
+            }
+          ],
+          "unmapped_terms": [],
+          "clarification": null
+        },
+        "warnings": [
+          "规划来自有限词表、规则与中文分词，未调用模型；意图是推断，条件文字线索不代表功能已验证。"
+        ]
+      },
+      "searches": [
+        {
+          "query": "spectral analyzer offline linux in:name,description,readme",
+          "total_count": 792,
+          "incomplete": false,
+          "error": null
+        },
+        {
+          "query": "spectral analyzer",
+          "total_count": 227,
+          "incomplete": false,
+          "error": null
+        }
+      ],
+      "candidates": [
+        {
+          "name": "ghostop14/sparrow-wifi",
+          "url": "https://github.com/ghostop14/sparrow-wifi",
+          "license": "GPL-3.0",
+          "relevance": {
+            "level": "部分文本关联",
+            "matched_terms": [
+              "analyzer",
+              "linux"
+            ],
+            "reason": "名称/简介/topics 出现：analyzer、linux；完整检索短语匹配：无；GitHub 检索式：spectral analyzer offline linux in:name,description,readme。未验证任务、平台与受众适配。"
+          },
+          "requirement_clues": [
+            {
+              "label": "离线",
+              "polarity": "required",
+              "source": "readme"
+            },
+            {
+              "label": "Linux",
+              "polarity": "required",
+              "source": "metadata"
+            }
+          ],
+          "readme": {
+            "status": "captured",
+            "url": "https://github.com/ghostop14/sparrow-wifi/blob/master/README.md",
+            "blob_sha": "f8225a6487c719e4e14495de3df2a25e3817df17",
+            "content_sha256": "88a5467ee790db83a4b4e39f9c74d90f15edb8a904444ca6abaa8c4244a22410"
+          }
+        },
+        {
+          "name": "pborky/pynfsa",
+          "url": "https://github.com/pborky/pynfsa",
+          "license": null,
+          "relevance": {
+            "level": "较强文本关联",
+            "matched_terms": [
+              "spectral",
+              "analyzer"
+            ],
+            "reason": "名称/简介/topics 出现：spectral、analyzer；完整检索短语匹配：spectral analyzer；GitHub 检索式：spectral analyzer。未验证任务、平台与受众适配。"
+          },
+          "requirement_clues": [
+            {
+              "label": "离线",
+              "polarity": "required",
+              "source": null
+            },
+            {
+              "label": "Linux",
+              "polarity": "required",
+              "source": null
+            }
+          ],
+          "readme": {
+            "status": "captured",
+            "url": "https://github.com/pborky/pynfsa/blob/master/README.md",
+            "blob_sha": "72440e45090db46250f741b605e4d1934e21c784",
+            "content_sha256": "5cba0e78b5ea80612fdf47ae4482851dfa96b21b2a3adae21c1ae5388020f2ea"
+          }
+        },
+        {
+          "name": "Alisinalessani/SGCPro-Spectral-Analyzer",
+          "url": "https://github.com/Alisinalessani/SGCPro-Spectral-Analyzer",
+          "license": "MIT",
+          "relevance": {
+            "level": "较强文本关联",
+            "matched_terms": [
+              "spectral",
+              "analyzer"
+            ],
+            "reason": "名称/简介/topics 出现：spectral、analyzer；完整检索短语匹配：spectral analyzer；GitHub 检索式：spectral analyzer。未验证任务、平台与受众适配。"
+          },
+          "requirement_clues": [
+            {
+              "label": "离线",
+              "polarity": "required",
+              "source": null
+            },
+            {
+              "label": "Linux",
+              "polarity": "required",
+              "source": null
+            }
+          ],
+          "readme": {
+            "status": "captured",
+            "url": "https://github.com/Alisinalessani/SGCPro-Spectral-Analyzer/blob/main/README.md",
+            "blob_sha": "9394d9ca58dbcbf1c025263d5aa487d43fba2416",
+            "content_sha256": "0c8e397701c85afdf8d0d831e3cdf07d26264d9211e87ecf9746b2558814f746"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "url": "https://api.github.com/search/repositories?q=spectral+analyzer+offline+linux+in%3Aname%2Cdescription%2Creadme+archived%3Afalse+fork%3Afalse&per_page=10",
+          "fetched_at": "2026-10-20T11:56:06.656Z",
+          "status": 200,
+          "remaining": "5",
+          "reset": "1792497420",
+          "retry_after": null,
+          "sha256": "bb0dbcb59518dbcbaba608035aa4e1b8d656e581834ba4b5403aa68e3f70a494"
+        },
+        {
+          "url": "https://api.github.com/search/repositories?q=spectral+analyzer+archived%3Afalse+fork%3Afalse&per_page=10",
+          "fetched_at": "2026-10-20T11:56:07.328Z",
+          "status": 200,
+          "remaining": "4",
+          "reset": "1792497420",
+          "retry_after": null,
+          "sha256": "17ec5d772e6cffd1699fef4acda989ed3c44af051213f42faa88f4747bf01538"
+        },
+        {
+          "url": "https://api.github.com/repos/ghostop14/sparrow-wifi/readme",
+          "fetched_at": "2026-10-20T11:56:07.702Z",
+          "status": 200,
+          "remaining": "38",
+          "reset": "1792499600",
+          "retry_after": null,
+          "sha256": "5d311a75ea21c4011cfba9f989dc99ba8eed267a15a31c044e2f736fb2196d42"
+        },
+        {
+          "url": "https://api.github.com/repos/pborky/pynfsa/readme",
+          "fetched_at": "2026-10-20T11:56:08.229Z",
+          "status": 200,
+          "remaining": "37",
+          "reset": "1792499600",
+          "retry_after": null,
+          "sha256": "fd2ac283f7fe1c2c09161f383ccdbf35ebf8ec5fe5f7d2125e6a186d63169d04"
+        },
+        {
+          "url": "https://api.github.com/repos/Alisinalessani/SGCPro-Spectral-Analyzer/readme",
+          "fetched_at": "2026-10-20T11:56:08.711Z",
+          "status": 200,
+          "remaining": "36",
+          "reset": "1792499600",
+          "retry_after": null,
+          "sha256": "b1c8fc7662c5aa4765538d450486129339499583438ecbda8e3abf190d08c7e5"
+        }
+      ]
+    }
+  ]
+}

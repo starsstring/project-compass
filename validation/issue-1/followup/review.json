@@ -1,0 +1,219 @@
+{
+  "kind": "developer_followup_actual_execution_and_separate_manual_review",
+  "review_comment": "https://github.com/starsstring/project-compass/issues/1#issuecomment-6290116774",
+  "tested_local_commit": "536a3ade12181a6d8ee8dfe9721d3e92aa192adb",
+  "public_code_commit": "a741297222d54833a32f88a8582d03093696684a",
+  "identical_complete_tree": "47fb85ee939f2abe765b8f58f9b6c1799e10abcf",
+  "node": "v24.19.0",
+  "npm": "12.2.0",
+  "automatic": {
+    "command": "npm test",
+    "exit": 0,
+    "tests": 251,
+    "pass": 251,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "contracts": {
+    "command": "npm run check:contracts",
+    "exit": 0
+  },
+  "earlier_attempts": [
+    {
+      "type": "targeted",
+      "pass": 29,
+      "tests": 30,
+      "issue": "Generic recognition incorrectly survived a vague input; fixed before final tests."
+    },
+    {
+      "type": "full",
+      "pass": 250,
+      "tests": 251,
+      "source": "a148920d96318c0408f892a44379f48d2ca0a8a2",
+      "issue": "English DNS fallback query scope changed unnecessarily; fixed before final tests."
+    }
+  ],
+  "logs": [
+    {
+      "path": "validation/issue-1/followup/tests.txt",
+      "original_encoding": "utf8",
+      "original_sha256": "359092f984aef6117808e0805e55158e113b530441891be4a57d3e867e48ed48",
+      "public_utf8_lf_sha256": "f149769d592294b92d1bbc565f968a888099f5caf4e8c11af7be629c997f339b",
+      "normalization": "UTF-16LE to UTF-8 if needed; remove BOM and CRLF to LF only"
+    },
+    {
+      "path": "validation/issue-1/followup/contracts.txt",
+      "original_encoding": "utf8",
+      "original_sha256": "a825fd9a1e69229a981d21a0f58372e0ac1afdc43d019405de0c07489a736903",
+      "public_utf8_lf_sha256": "f163ad0f79a8ccfe6815fbeb79cd22f8672696f040b1247a190e76bb57e15bc1",
+      "normalization": "UTF-16LE to UTF-8 if needed; remove BOM and CRLF to LF only"
+    }
+  ],
+  "baseline_queries_unchanged": 12,
+  "planning_cases": 24,
+  "planning_network_attempts": 0,
+  "new_counterexample_policy": "Six developer-selected inputs frozen before one pass. Not independent blind testing. No product code changes after results.",
+  "live_cli": {
+    "runs": 3,
+    "search_responses": 6,
+    "readme_responses": 8,
+    "http_statuses": [
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200
+    ],
+    "quota_preflights": 1
+  },
+  "source_files": [
+    {
+      "path": "src/discovery/query.ts",
+      "sha256": "86956588a0f5039a98186f4644c5b9d04581ec17aed8a2ae697032ddde3915bc"
+    },
+    {
+      "path": "src/discovery/vocabulary.ts",
+      "sha256": "895d34e248c5a34571b52457bcb1ab7c6316e578c70d47d727e08298410cc3d1"
+    },
+    {
+      "path": "tests/integration/planning-cli.test.ts",
+      "sha256": "52e4f6769fb83ed731a0b1d19da1e2399b98a662c276f54707a285764c01dc7a"
+    },
+    {
+      "path": "tests/unit/discovery/planning.test.ts",
+      "sha256": "82b78a5934acba5457489348b71686073e0980c3034cb7b046a9b9fc4c7c7aef"
+    }
+  ],
+  "manual_evaluations": [
+    {
+      "id": "H02",
+      "assessment": "Cleaner query retains Chinese speech topic; no translation or candidate-quality validation."
+    },
+    {
+      "id": "H03",
+      "assessment": "Offline and complete task now retained, but live focused search returned 0 and broader search yielded two candidates without sufficient medicine-reminder product evidence. Retrieval relevance remains failed."
+    },
+    {
+      "id": "H04",
+      "assessment": "Main task now retained. Live README claims include denoising and macOS; candidates not installed or verified."
+    },
+    {
+      "id": "H05",
+      "assessment": "Unchanged bookmark query; sync remains unmapped and not searched."
+    },
+    {
+      "id": "H06",
+      "assessment": "Now asks for a concrete task rather than searching generic words."
+    },
+    {
+      "id": "N01",
+      "assessment": "Task/platform retained; generic Chinese usage word remains query noise. No live search."
+    },
+    {
+      "id": "N02",
+      "assessment": "Complete unknown task and required offline condition retained. No live search."
+    },
+    {
+      "id": "N03",
+      "assessment": "Reasonable clarification; planner only, no independent network observation."
+    },
+    {
+      "id": "N04",
+      "assessment": "Reasonable clarification for platform without task; planner only."
+    },
+    {
+      "id": "N05",
+      "assessment": "Task retained but unseen no-network paraphrase not mapped to offline. Explicit limitation; no subsequent product code tuning."
+    },
+    {
+      "id": "N06",
+      "assessment": "Task/conditions retained; live candidates span wireless, network-flow, and astronomy. Domain unspecified, platform/offline not fully established."
+    }
+  ],
+  "manual_readme_checks": [
+    {
+      "repository": "andy8609/audio_processor",
+      "lines": [
+        9,
+        48
+      ],
+      "judgment": "Author claims audio denoising and lists macOS/Linux setup; not verified execution."
+    },
+    {
+      "repository": "ming123aaa/WaveKit",
+      "lines": [
+        11,
+        77
+      ],
+      "judgment": "Author lists denoising and a macOS section; not verified execution."
+    },
+    {
+      "repository": "joeseesun/qiaomu-screen2video",
+      "lines": [
+        40,
+        110
+      ],
+      "judgment": "Optional denoising in video workflow; host-app integration has version/platform limitations."
+    },
+    {
+      "repository": "Dujltqzv/Some-Many-Books",
+      "lines": [
+        7,
+        9,
+        10
+      ],
+      "judgment": "Reviewed material is a book list, insufficient medicine expiry-reminder product evidence."
+    },
+    {
+      "repository": "pxvr-official/1",
+      "lines": [
+        3,
+        5,
+        9,
+        11
+      ],
+      "judgment": "Reviewed material is website/image-download FAQ, insufficient intended product evidence."
+    },
+    {
+      "repository": "ghostop14/sparrow-wifi",
+      "lines": [
+        3,
+        34,
+        68
+      ],
+      "judgment": "Linux wireless spectral task; offline reference is cached map/airspace data, not proof all functionality is offline."
+    },
+    {
+      "repository": "pborky/pynfsa",
+      "lines": [
+        4
+      ],
+      "judgment": "Network-flow analysis rather than an established general offline desktop analyzer."
+    },
+    {
+      "repository": "Alisinalessani/SGCPro-Spectral-Analyzer",
+      "lines": [
+        3,
+        11
+      ],
+      "judgment": "Astronomical lines; task/domain must be checked."
+    }
+  ],
+  "not_executed": [
+    "independent human blind test",
+    "candidate installation/runtime verification",
+    "new model-generated AI semantic review",
+    "rerun of all previous live cases or four original V1 captures"
+  ],
+  "recommendation": "Keep Draft; no merge or formal release approval. Limited entry improvements are evidenced; open-domain relevance and product value remain unproven."
+}

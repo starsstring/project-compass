@@ -1,0 +1,48 @@
+{
+  "kind": "actual_authorized_smoke_fix_validation_not_release_authorization",
+  "started_at": "2026-10-20T13:08:03.840Z",
+  "tested_local_commit": "5c4c4fd36920320dd480858db9476fd47725f307",
+  "tested_tree": "a040831aa8d9b5809a04e40070fce0ef24718d0d",
+  "node": "v24.19.0",
+  "npm": "12.2.0",
+  "platform": "win32",
+  "arch": "x64",
+  "version": "0.2.0",
+  "base": "e273a9b6f28cb3d14b4ef5fc16c1d5673f901333",
+  "targeted_before_commit": {
+    "command": "npm run build && node --test dist/tests/integration/live-validation-script.test.js",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "includes_full_source_script": true,
+    "fixture_api": 21,
+    "fixture_pages": 6,
+    "external_network_requests": 0
+  },
+  "steps": [
+    {
+      "command": "npm test",
+      "started_at": "2026-10-20T13:08:04.580Z",
+      "completed_at": "2026-10-20T13:08:28.981Z",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "log": "validation/issue-1/smoke-fix/tests.txt",
+      "sha256": "3677fc3fe6f49e899351c49d8c9ae5b70069a697a4a1a036068b467b95b0904b"
+    },
+    {
+      "command": "npm run check:contracts",
+      "started_at": "2026-10-20T13:08:28.998Z",
+      "completed_at": "2026-10-20T13:08:37.461Z",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "log": "validation/issue-1/smoke-fix/contracts.txt",
+      "sha256": "f163ad0f79a8ccfe6815fbeb79cd22f8672696f040b1247a190e76bb57e15bc1"
+    }
+  ],
+  "completed_at": "2026-10-20T13:08:37.463Z",
+  "production_diff_after": "",
+  "tracked_diff_after": "",
+  "head_after": "5c4c4fd36920320dd480858db9476fd47725f307"
+}

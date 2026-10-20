@@ -25,7 +25,7 @@ node dist/src/cli.js --help
 | `--ai-input "ai-input.json"` | Supply the matching exported input package for import |
 | `--help` | Show the current Chinese CLI help |
 
-Use `node dist/src/cli.js` directly when piping JSON to another program, so npm's own banners do not enter stdout. JSON uses English field names; explanatory string values may be Chinese. Unknown Chinese topics need explicit queries. An arbitrary English phrase can produce search terms, but matching terms do not guarantee relevant results.
+Use `node dist/src/cli.js` directly when piping JSON to another program, so npm's own banners do not enter stdout. JSON uses English field names; explanatory values may be Chinese. Unknown Chinese topics fall back to Chinese word segmentation, with limited English-README coverage. Vague input returns exit 2 and `status: needs_clarification` with `--json`, without network access or a report directory. You can clarify in natural language; an English query is optional. Matching terms do not guarantee relevant results.
 
 ## Replay saved responses
 
@@ -35,7 +35,7 @@ After the first example above has saved its responses:
 node dist/src/cli.js "A local Markdown notes tool" --replay ".compass/first-run/captures.json" --out ".compass/replay-1"
 ```
 
-Reuse the original idea and any explicit `--query` options. Replay validates structure, response hashes, and bounded input size (16 MiB, at most seven responses). It never fetches missing responses. Reports preserve capture times and clearly identify replay; the new report is not a fresh online check. Always choose a new output directory.
+Reuse the original idea. Without `--query`, replay uses the saved search strings and attempted candidate order, including V1 captures; new planning rules do not silently replace historical searches. An explicit query must still match saved responses. Replay validates structure, hashes, and bounded size (16 MiB, at most seven responses), and never fetches missing responses. Reports preserve capture times and identify replay. Always choose a new output directory.
 
 ## Optional AI review
 
@@ -63,7 +63,7 @@ The capability table uses these labels:
 
 Directions include source evidence, existing capabilities, a small proposed change, a validation action, and a condition for reusing an existing tool or stopping. They are investigations to consider, not confirmed unmet demand.
 
-Only the first ten GitHub results per query are read, with up to five candidates shown. Archived projects, forks and obvious course/resource lists are filtered. Public competitors with unknown or `NOASSERTION` license metadata remain eligible, with a warning to inspect actual LICENSE and dependency terms before reuse. License metadata and stars do not determine relevance ranking. Platform, audience, and actual runtime quality still need manual checking. Branch links can change; timestamps, response hashes, and Git blob identifiers help review the captured material, but do not pin the entire repository to one commit.
+Only the first ten GitHub results per query are read, with up to five candidates shown. Archived projects and forks are filtered. Obvious course/resource lists are retained for learning requests and filtered for tool discovery. Public competitors with unknown or `NOASSERTION` license metadata remain eligible, with a warning to inspect actual LICENSE and dependency terms before reuse. License metadata and stars do not determine relevance ranking. Platform, audience, and actual runtime quality still need manual checking. Branch links can change; timestamps, response hashes, and Git blob identifiers help review the captured material, but do not pin the entire repository to one commit.
 
 Recognized future/planned statements do not establish current capabilities; explicit absence and conflicting support statements remain qualified. These are conservative text rules, including common English/Chinese forms and nested roadmap headings, not full semantic understanding. Ambiguous or unfamiliar wording can still be missed or misread; inspect the cited text before relying on a comparison.
 
@@ -72,7 +72,7 @@ Recognized future/planned statements do not establish current capabilities; expl
 | Code | Meaning and next action |
 |---|---|
 | 0 | The bounded search completed, possibly with zero candidates, or an AI import passed structural/reference validation |
-| 2 | Invalid data/options, including an unreadable or invalid AI JSON file; use explicit queries for an unrecognized topic |
+| 2 | Needs clarification (no network/output directory), or invalid data/options; clarify the request in natural language, or fix the indicated data error |
 | 4 | Output already exists or cannot be written; choose a new writable directory |
 | 5 | Network/rate-limit failure or partial results; keep captured evidence and try a new directory later |
 

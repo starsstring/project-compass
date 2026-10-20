@@ -1,0 +1,48 @@
+{
+  "kind": "actual_final_release_preflight_not_release_authorization",
+  "started_at": "2026-10-20T12:36:47.170Z",
+  "node": "v24.19.0",
+  "npm": "12.2.0",
+  "platform": "win32",
+  "arch": "x64",
+  "tested_commit": "dcc7469e40f3f9bb0aa45a76f9109d7ed311d169",
+  "tested_tree": "f6d6b58a35defe3d1e62d2f0f97f679b2e9993a4",
+  "base_commit": "134943c027e6c86123363eb02b67ee962246f1ca",
+  "initial_status": "clean",
+  "version": "0.2.0",
+  "steps": [
+    {
+      "command": "npm ci --ignore-scripts --no-audit --no-fund",
+      "started_at": "2026-10-20T12:36:48.731Z",
+      "completed_at": "2026-10-20T12:36:51.881Z",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "log": "validation/issue-1/release-check/install.txt",
+      "sha256": "c15d2eea10ab9adb153027237f2955463a5cee84dadd2721bb517c3a2f4251fe"
+    },
+    {
+      "command": "npm test",
+      "started_at": "2026-10-20T12:36:51.912Z",
+      "completed_at": "2026-10-20T12:37:14.167Z",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "log": "validation/issue-1/release-check/tests.txt",
+      "sha256": "6e54c08b22698eea73fd90d32d0145d9c68eadf42eb23f5790b4b4c843f9bfdc"
+    },
+    {
+      "command": "npm run check:contracts",
+      "started_at": "2026-10-20T12:37:14.177Z",
+      "completed_at": "2026-10-20T12:37:19.993Z",
+      "exit": 0,
+      "signal": null,
+      "error": null,
+      "log": "validation/issue-1/release-check/contracts.txt",
+      "sha256": "f163ad0f79a8ccfe6815fbeb79cd22f8672696f040b1247a190e76bb57e15bc1"
+    }
+  ],
+  "completed_at": "2026-10-20T12:37:20.001Z",
+  "tracked_diff_after": "",
+  "head_after": "dcc7469e40f3f9bb0aa45a76f9109d7ed311d169"
+}

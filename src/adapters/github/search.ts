@@ -12,6 +12,15 @@ export class GitHubSearch {
   constructor(private readonly fetcher: typeof fetch = fetch, private readonly timeoutMs = 15000,
     private readonly replayRecords?: ReadonlyMap<string, ApiCapture>) {}
   get mode(): 'live' | 'replay' { return this.replayRecords ? 'replay' : 'live'; }
+  get savedQueries(): string[] | undefined {
+    if (!this.replayRecords) return undefined;
+    return [...this.replayRecords.keys()].filter(url => new URL(url).pathname === '/search/repositories')
+      .map(url => new URL(url).searchParams.get('q')?.replace(/ archived:false fork:false$/u, '') ?? '');
+  }
+  get savedRepositories(): string[] | undefined {
+    return this.replayRecords ? [...this.replayRecords.keys()].filter(url => /^\/repos\/[^/]+\/[^/]+\/readme$/u.test(new URL(url).pathname))
+      .map(url => new URL(url).pathname.slice('/repos/'.length, -'/readme'.length)) : undefined;
+  }
 
   private async request(path: string): Promise<unknown> {
     if (this.blocked) throw new DiscoveryError('RATE_LIMIT', 'GitHub 已限流，本次运行不再请求。请稍后重试。');

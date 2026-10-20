@@ -1,9 +1,26 @@
+export interface SearchRequirement {
+  key: string;
+  label: string;
+  source: string;
+  terms: string[];
+  polarity: 'required' | 'excluded';
+}
+export interface InputUnderstanding {
+  intent: 'find_project' | 'develop' | 'learn' | 'unclear';
+  reason: string;
+  requirements: SearchRequirement[];
+  unmapped_terms: string[];
+  clarification: string | null;
+}
 export interface SearchPlan {
   idea: string;
   queries: string[];
   terms: string[];
-  method: 'explicit_query' | 'keyword_rules';
+  method: 'explicit_query' | 'keyword_rules' | 'replay_queries';
   warnings: string[];
+  // Optional so existing reports and callers remain readable.
+  understanding?: InputUnderstanding;
+  topic_terms?: string[];
 }
 
 export interface Repository {
@@ -31,6 +48,7 @@ export interface ApiCapture {
 }
 
 export interface Candidate extends Repository {
+  requirement_clues?: { label: string; polarity: SearchRequirement['polarity']; source: 'metadata' | 'readme' | null }[];
   analysis: CandidateAnalysis;
   relevance: { level: '较强文本关联' | '部分文本关联' | '待人工核查'; matched_terms: string[]; reason: string };
   readme: {

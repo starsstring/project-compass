@@ -263,5 +263,17 @@
       }
     ]
   },
-  "captures_count": 6
+  "captures_count": 6,
+  "preload_provenance": {
+    "status": "not_contemporaneously_bound",
+    "annotation_recorded_at_utc": "2026-10-21T10:42:44.644616+00:00",
+    "preserved_source_snapshot": {
+      "commit": "51da74ba82005e2b9e5a20a4a1a87ae3ac133fd8",
+      "path": "validation/issue-6/network-guard.mjs",
+      "sha256": "e40634bc17e4f9c5172871e50d7100e68568580a48fab5feaaff7983a9dd5922",
+      "git_blob_sha1": "14ed06fa06457f9f39b1846af63c38d7cf21c660"
+    },
+    "executed_preload_identity_proven": false,
+    "limitation": "This digest was recovered after review, not recorded at launch. It does not prove the original live process loaded these bytes. Previous byte-identical/guard-enforcement assurance is withdrawn for this historical run."
+  }
 }

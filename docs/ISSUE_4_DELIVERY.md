@@ -1,3 +1,5 @@
+> 后续状态（2026-10-21）：下文为初始交付时的历史记录，测试日志与当时结论保留。后续 P2 回放修复和独立工程验收已完成，[PR #5](https://github.com/starsstring/project-compass/pull/5) 已合并至 `main@0102201a4246ebc9c2aa704b117f86ec108efe61`。包版本和最新发布仍为 0.2.0 / v0.2.0 Pre-release，v0.3.0 未发布；[合并后首跑核验](POST_MERGE_0.3_READINESS.md)另记，不改变原研究限制。
+
 # Issue #4 experimental prototype delivery — pending independent review
 
 本交付按 Issue #4 实施，不代表 v0.3.0 发布或验收通过。独立工作分支为 `feat/0.3-semantic-query-prototype`，基线为 v0.2.0 `85241267113a81ab190f598281a659752c8ea3b5`。包/锁文件版本、AI v1 和 SQLite/持久化报告协议未变，无新增依赖。

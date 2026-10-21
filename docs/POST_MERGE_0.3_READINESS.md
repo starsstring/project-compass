@@ -1,50 +1,38 @@
-# v0.3 experimental source — post-merge readiness (working draft)
+# v0.3 experimental source — post-merge readiness
 
-> Status: **not a release approval**; issue [#6](https://github.com/starsstring/project-compass/issues/6). Last independently checked on 2026-10-21. Items labeled pending have **not** been verified.
+As of 2026-10-21; [Issue #6](https://github.com/starsstring/project-compass/issues/6), [Draft PR #7](https://github.com/starsstring/project-compass/pull/7). **Engineering evidence, pending independent acceptance; no release approval.**
 
-## Verified historical facts
+## Verified behavior and source state
 
-| Item | Evidence | Interpretation |
-| --- | --- | --- |
-| Source merged into `main` | [PR #5](https://github.com/starsstring/project-compass/pull/5), merge commit `0102201a4246ebc9c2aa704b117f86ec108efe61` | Experimental code present in default branch |
-| Post-merge CI | [GitHub Actions run 39550707734](https://github.com/starsstring/project-compass/actions/runs/39550707734) `push`, `success` | Existing automated steps passed on the merge commit; not a manual end-user smoke test |
-| P2 fallback-replay fix | PR #5 commit `87192901c7f4e65c62f8ac8b92226bad9b8e66ce`; original Codex review + subsequent independent review | Archived search count is not used to assert historical semantic fallback. In replay the fallback state is `null` (unknown). |
-| Published artifact | [v0.2.0 pre-release](https://github.com/starsstring/project-compass/releases/tag/v0.2.0); `package.json` at main has version 0.2.0 | **There is no v0.3.0 tag or release.** Source merge is not a release. |
+The experiment and P2 replay fix were merged in [PR #5](https://github.com/starsstring/project-compass/pull/5), `main@0102201a4246ebc9c2aa704b117f86ec108efe61`; [main push CI](https://github.com/starsstring/project-compass/actions/runs/39550707734) passed. Package version remains **0.2.0**, latest release is [v0.2.0 Pre-release](https://github.com/starsstring/project-compass/releases/tag/v0.2.0); no v0.3.0 tag/release. This PR changes documentation and verification evidence, with no product source, tests, contracts, dependencies or workflow changes.
 
-The previously completed [Issue #3](https://github.com/starsstring/project-compass/issues/3) three-query-method research and [Issue #4](https://github.com/starsstring/project-compass/issues/4) validation are **not** independent blind benchmarks. For the semantic experiment, the CLI reads externally supplied JSON; it does not generate a plan or call a model. Three bounded live checks from Issue #4 did not exercise real fallback, and the OpenAPI translation search returned an unrelated Morse-code project. Conditions remain unverified rather than asserted as met.
+| This issue's new check | Actual observation | Evidence |
+|---|---|---|
+| Fresh detached checkout of that exact main commit, initially without node_modules/dist | Linux x64, Node 24.19.0 / npm 12.2.0: `npm ci`, build, test and contracts exit 0; **313 pass, 0 fail/skip** | [Commands, times, stdout hashes](../validation/issue-6/execution.json) |
+| Native CLI with the existing public point-cloud plan | exit 0, complete; 1 Search + 5 README, all HTTP 200; four output files, five candidates; no fallback | [Frozen protocol](../validation/issue-6/protocol.json), [actual requests/artifact inventory](../validation/issue-6/first-run.json) |
+| Saved plan/captures replayed in a second new directory | exit 0; **0 fetch / 0 HTTP or socket attempts**; actual queries, searches, candidate order/READMEs, request metadata, entire captures and plan equal | [Replay comparisons and guards](../validation/issue-6/replay.json) |
+| Five controlled first-run error/clarification probes | Expected exits 2/4; zero network, no new output on input/clarification errors, existing report preserved | [Exact commands and diagnostics](../validation/issue-6/friction-probes.json) |
+| GitHub CI for this PR | Existing workflow runs four required commands against exact PR head; final head/run verification is recorded in the delivery comment | [PR checks](https://github.com/starsstring/project-compass/pull/7/checks) |
 
-## First-run user path — documented, not yet independently executed for this issue
+These are Codex checks in a new clean directory on the same machine, **not** a second human evaluator or independent user test. GitHub CI is separate hosted execution. The real CLI used the existing platform proxy without a client Authorization header; proxy-injected authentication cannot be ruled out, so this is not proof of a purely anonymous environment. No synthetic replacement run was needed. No candidate was installed or executed. Raw third-party captures/reports stay local; public evidence contains metadata and hashes.
 
-From a clean checkout of the merged `main` with Node.js 24.19.x and npm 12.2.0:
+## Reproduce the first-run path
 
-```sh
-npm ci
-npm run build
-npm test
-npm run check:contracts
-node dist/src/cli.js "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？" --semantic-plan examples/semantic-plan.json
-```
+From the exact main commit with the runtime above, run the four commands in [execution.json](../validation/issue-6/execution.json), then the two commands in the [English README](../README.md#try-the-merged-experiment-optional) / [中文 README](../README.zh-CN.md#试用已合并的实验入口可选). They use new `.compass/semantic-example` and `.compass/semantic-example-replay` directories, so no run-ID substitution is needed. Prepare JSON externally; Compass does not generate it or call a model. The [audit index](../validation/issue-6/README.md) explains instrumentation and retained artifacts.
 
-Use the `captures.json` and `semantic-plan.json` paths shown by the output directory for a **new-output-directory** `--replay` run; see the [Chinese guide](SEMANTIC_PLAN.zh-CN.md) or [English guide](SEMANTIC_PLAN.md). Only the short search terms go to GitHub. Captures and reports can contain public third-party source text; never publish whole captured READMEs by default.
+## First-run friction audit — developer inspection, not a user study
 
-**Still pending (do not interpret this draft as verification):**
+| Friction | Observed basis and current limitation |
+|---|---|
+| External JSON preparation | Exact original idea, English object/action, conditions and schema must be supplied by the user/external tool. The public example works, but it does not establish that a new Chinese-speaking user can prepare a new valid plan unaided. |
+| Chinese guidance | README, guide, schema link, examples, exits and replay are available. Fixed output paths remove manual run-ID copying. Node/npm versions are now explicit. No Windows/macOS or nontechnical-user execution was observed. |
+| Error recovery | Missing-file and idea-mismatch diagnostics state what to check; existing-output errors require a fresh directory. Schema failures list categories but **do not locate the offending field**; the user must consult the schema/guide. Recorded rather than expanding into a product fix. |
+| Unknown evidence | All 20 candidate-condition entries remain unknown; Markdown explicitly says conditions are unverified. Replay separately states that the original fallback status is unknown (`null`), not that fallback happened or was disproved. `--prepare-ai` remains a later material-export flow, not plan generation. |
 
-- [ ] A second clean Node 24 checkout independently ran the four commands above and retained exact stdout/exit codes.
-- [ ] Exact live/synthetic mode and any network/permission blocker recorded for a CLI first-run smoke (maximum 2 Search + 5 README; sample frozen before live use).
-- [ ] First-run output path, report/captures and replay request equality/zero external-network calls independently verified.
-- [ ] New PR head CI success independently verified, and the final deliverable audited.
+## Decision and one next experiment
 
-## Friction audit (inspectable design facts; not a user study)
+**Conditional engineering readiness: yes for a clearly labeled Linux source-only experimental preview** within the checked runtime and example path. Install/build/contracts, full offline tests, real first-run artifacts and zero-network replay were observed. Final PR-head CI and independent acceptance must still be assessed at the linked checks/delivery; this is not authority to merge, bump version, tag or publish. Packaged release artifacts and cross-platform installation remain unchecked.
 
-- **External plan burden:** Users must know the JSON fields, create a file matching the original input verbatim, and supply English core object/action words; the CLI does **not** invoke a model. This is the largest first-run obstacle for a nontechnical Chinese-speaking developer.
-- **Two separate AI workflows:** `--prepare-ai` exports GitHub materials for an external assistant after discovery; it is not a pre-search semantic planner. Do not conflate the two.
-- **Evidence interpretation:** README descriptions and keyword matches are author claims or textual relevance, not installation checks, market demand, privacy guarantees or proven hard-condition compliance.
-- **Documentation drift:** `main` previously claimed the experiment was still awaiting independent review. The companion README corrections in this Draft PR align status without changing CLI behavior.
+Search quality, external-plan semantics and hard-condition satisfaction are still unproven. This known example is not blind or a repeat of Issue #3/#4 research. Real GitHub semantic fallback remains unexercised; Issue #4's unrelated OpenAPI/Morse-code result and README404/partial case remain failures/limits. No satisfaction, market-value or accuracy claim follows from successful commands.
 
-## One candidate next experiment after issue #6 passes
-
-**Unassisted first-run trial (not yet authorized as a feature build):** give two independent, previously uninvolved users the public README and an unfamiliar project-finding task. Without telling them how to make the JSON, observe whether they can get a provenance-aware report and identify one relevant known/unknown distinction. Record completion, minutes, assistance, incorrect claims, and exact stumbling steps; do not collect private search text or access credentials. Compare with the same participants using ordinary ChatGPT or direct GitHub search on the same task, and disclose small-sample and ordering effects.
-
-**Decision gate:** if new users cannot finish the external-plan path, prioritize the smallest remedy for plan preparation/user guidance rather than adding scoring, a UI, or a model API. If Compass adds no meaningful evidentiary or decision value beyond existing tools, shrink or redirect the product rather than claiming success.
-
-**Release gate:** No `v0.3.0` tag or GitHub Release, no version bump, and no merge of this documentation PR without separate user approval.
+**Only recommended next experiment (not executed or authorized here): external-plan preparation walkthrough.** Chosen because copying the public example does not test the prerequisite of preparing a new plan. Give two previously uninvolved Chinese-speaking developers the public instructions and one unfamiliar, nonprivate task. Without author coaching, ask each to prepare a plan and explain a known/unknown distinction; an observer checks it offline with the existing validator. Record time, help and the first incorrect field, not satisfaction or retrieval scores. Stop after one attempt per person or 15 minutes: if both succeed unaided, stop adding onboarding features; if either fails, propose only the smallest instruction/example correction at the first observed obstacle. Do not build a model service, UI or new scoring on this evidence.

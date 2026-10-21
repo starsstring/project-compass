@@ -12,7 +12,7 @@ Project Compass 是本地命令行工具，输出 Markdown 和 JSON，无需 Git
 
 ## 快速开始
 
-需要 Node.js 24.19.x（含 npm）。克隆后运行：
+需要 Node.js 24.19.x 和 npm 12.2.0，可用 `node --version` / `npm --version` 检查。必要时，在有写入权限的 Node 安装环境运行 `npm install --global npm@12.2.0` 选择固定 npm 版本。克隆后运行：
 
 ```powershell
 git clone https://github.com/starsstring/project-compass.git
@@ -59,16 +59,18 @@ npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".co
 该入口必须由用户或外部工具准备 JSON 语义计划，CLI **不会自动生成计划**。在完成 `npm ci`、`npm run build` 后，运行仓库中已有的公开示例：
 
 ```powershell
-node dist/src/cli.js "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？" --semantic-plan examples/semantic-plan.json
+node dist/src/cli.js "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？" --semantic-plan examples/semantic-plan.json --out ".compass/semantic-example"
 ```
 
-运行后终端会显示新生成的目录。把下面路径里的 `REPLACE_WITH_RUN_ID` 换成真实运行号，可以用保存的响应进行**零联网离线重放**；新输出目录不可已存在：
+示例写入 `.compass/semantic-example/`，接着复制下面命令即可用保存的响应进行**零联网离线重放**。两个输出目录都必须是新目录；再次运行时请选用新目录，并同步修改回放输入路径：
 
 ```powershell
-node dist/src/cli.js "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？" --semantic-plan ".compass/discovery/REPLACE_WITH_RUN_ID/semantic-plan.json" --replay ".compass/discovery/REPLACE_WITH_RUN_ID/captures.json" --out ".compass/replay-smoke"
+node dist/src/cli.js "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？" --semantic-plan ".compass/semantic-example/semantic-plan.json" --replay ".compass/semantic-example/captures.json" --out ".compass/semantic-example-replay"
 ```
 
 此例是既有公开回归样例，**不是独立用户测试或检索质量证明**。字段、限制和错误处理见 [语义计划使用说明](docs/SEMANTIC_PLAN.zh-CN.md)。
+
+[合并后核验记录](docs/POST_MERGE_0.3_READINESS.md)分别说明首跑检查、检索质量限制与发布批准的边界。
 
 ## 使用场景
 

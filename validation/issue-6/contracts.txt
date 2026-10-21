@@ -1,0 +1,13 @@
+npm notice run project-compass@0.2.0 check:contracts
+npm notice run npm run build && node scripts/check-contracts.mjs
+npm notice run project-compass@0.2.0 build
+npm notice run npm run check:types && tsc -p tsconfig.json
+npm notice run project-compass@0.2.0 check:types
+npm notice run node scripts/generate-contract-types.mjs --check
+Contract types match schemas.
+report-initial.json: valid
+report-corrected.json: valid
+human-decision.json: valid
+Both JSON Schemas compiled with Ajv 2020-12 strict:true. This command checks structure; domain tests run via npm test.
+semantic-plan.json: external semantic schema/runtime valid (semantics unverified)
+semantic-plan-clarification.json: external semantic schema/runtime valid (semantics unverified)

@@ -1,0 +1,87 @@
+{
+  "argv": [
+    "node",
+    "--import",
+    "/workspace/.delivery/project-compass/issue-6/network-guard.mjs",
+    "dist/src/cli.js",
+    "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？",
+    "--semantic-plan",
+    ".compass/semantic-example/semantic-plan.json",
+    "--replay",
+    ".compass/semantic-example/captures.json",
+    "--out",
+    ".compass/semantic-example-replay"
+  ],
+  "shell_command": "node --import /workspace/.delivery/project-compass/issue-6/network-guard.mjs dist/src/cli.js '有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？' --semantic-plan .compass/semantic-example/semantic-plan.json --replay .compass/semantic-example/captures.json --out .compass/semantic-example-replay",
+  "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+  "started_at_utc": "2026-10-21T06:38:35.840710+00:00",
+  "completed_at_utc": "2026-10-21T06:38:36.210481+00:00",
+  "exit_code": 0,
+  "metrics": {
+    "mode": "offline",
+    "started_at": "2026-10-21T06:38:35.904Z",
+    "fetch_calls": 0,
+    "other_network_attempts": [],
+    "requests": [],
+    "completed_at": "2026-10-21T06:38:36.201Z",
+    "process_exit_code": 0
+  },
+  "stdout_sha256": "1c71328b6773990ed3bb4cfdb023a8363e4560c0799dec4ff742781e2ef49b4b",
+  "stderr": "意图（外部声明，未验证）：寻找已有项目；用户/外部语义计划声明，来源身份与语义均未验证。\n历史响应离线重放：point cloud viewer\n已保存：/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example-replay/report.md\n/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example-replay/report.json\n",
+  "comparison_checks": {
+    "actual_queries": true,
+    "searches": true,
+    "candidate_order": true,
+    "candidate_readmes": true,
+    "requests": true,
+    "capture_arrays": true,
+    "saved_semantic_plan": true
+  },
+  "report_status": "complete",
+  "query_execution": {
+    "strategy": "semantic_short_fallback",
+    "planned_queries": [
+      "point cloud viewer"
+    ],
+    "attempted_queries": [
+      "point cloud viewer"
+    ],
+    "replay": true,
+    "fallback": {
+      "attempted": null,
+      "reason": "replay_actual_queries"
+    }
+  },
+  "unknown_conditions_preserved": true,
+  "markdown_fallback_unknown": true,
+  "artifacts": [
+    {
+      "name": "captures.json",
+      "bytes": 258074,
+      "sha256": "fa2328b24ca99673fed07d6a1c700787f4d42530c2ed90b20b58a730ffbf6195",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example-replay/captures.json"
+    },
+    {
+      "name": "report.json",
+      "bytes": 44348,
+      "sha256": "23c2fccb8fa8c18fca7dc3232741f8769623c982b29665c043a88e8da60ab00f",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example-replay/report.json"
+    },
+    {
+      "name": "report.md",
+      "bytes": 17304,
+      "sha256": "1c71328b6773990ed3bb4cfdb023a8363e4560c0799dec4ff742781e2ef49b4b",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example-replay/report.md"
+    },
+    {
+      "name": "semantic-plan.json",
+      "bytes": 616,
+      "sha256": "29281bde8812eb92fd9053dda39eb22b5c5f20dc077247eff67fed480a43505b",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example-replay/semantic-plan.json"
+    }
+  ],
+  "environment_overrides": {
+    "COMPASS_SMOKE_MODE": "offline",
+    "COMPASS_SMOKE_METRICS": "/workspace/.delivery/project-compass/issue-6/replay-metrics.json"
+  }
+}

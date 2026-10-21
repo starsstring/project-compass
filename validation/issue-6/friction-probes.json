@@ -1,0 +1,191 @@
+{
+  "kind": "developer-controlled CLI probes, not independent user test",
+  "cases": [
+    {
+      "argv": [
+        "node",
+        "--import",
+        "/workspace/.delivery/project-compass/issue-6/network-guard.mjs",
+        "dist/src/cli.js",
+        "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？",
+        "--semantic-plan",
+        ".compass/no-such-plan.json",
+        "--out",
+        ".compass/probe-missing"
+      ],
+      "shell_command": "node --import /workspace/.delivery/project-compass/issue-6/network-guard.mjs dist/src/cli.js '有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？' --semantic-plan .compass/no-such-plan.json --out .compass/probe-missing",
+      "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+      "started_at_utc": "2026-10-21T06:38:36.214527+00:00",
+      "completed_at_utc": "2026-10-21T06:38:36.455000+00:00",
+      "exit_code": 2,
+      "metrics": {
+        "mode": "offline",
+        "started_at": "2026-10-21T06:38:36.274Z",
+        "fetch_calls": 0,
+        "other_network_attempts": [],
+        "requests": [],
+        "completed_at": "2026-10-21T06:38:36.443Z",
+        "process_exit_code": 2
+      },
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "INVALID_INPUT: 无法读取语义计划；请检查普通文件路径、UTF-8 编码与 JSON 格式。\n",
+      "case": "missing_file",
+      "stdout": "",
+      "expected_exit_code": 2,
+      "new_output_directory_created": false,
+      "environment_overrides": {
+        "COMPASS_SMOKE_MODE": "offline",
+        "COMPASS_SMOKE_METRICS": "/workspace/.delivery/project-compass/issue-6/missing_file-metrics.json"
+      }
+    },
+    {
+      "argv": [
+        "node",
+        "--import",
+        "/workspace/.delivery/project-compass/issue-6/network-guard.mjs",
+        "dist/src/cli.js",
+        "一个不同的点云需求",
+        "--semantic-plan",
+        "examples/semantic-plan.json",
+        "--out",
+        ".compass/probe-mismatch"
+      ],
+      "shell_command": "node --import /workspace/.delivery/project-compass/issue-6/network-guard.mjs dist/src/cli.js '一个不同的点云需求' --semantic-plan examples/semantic-plan.json --out .compass/probe-mismatch",
+      "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+      "started_at_utc": "2026-10-21T06:38:36.455248+00:00",
+      "completed_at_utc": "2026-10-21T06:38:36.697201+00:00",
+      "exit_code": 2,
+      "metrics": {
+        "mode": "offline",
+        "started_at": "2026-10-21T06:38:36.515Z",
+        "fetch_calls": 0,
+        "other_network_attempts": [],
+        "requests": [],
+        "completed_at": "2026-10-21T06:38:36.690Z",
+        "process_exit_code": 2
+      },
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "INVALID_INPUT: 语义计划的 idea 必须与 CLI 原句一致。\n",
+      "case": "idea_mismatch",
+      "stdout": "",
+      "expected_exit_code": 2,
+      "new_output_directory_created": false,
+      "environment_overrides": {
+        "COMPASS_SMOKE_MODE": "offline",
+        "COMPASS_SMOKE_METRICS": "/workspace/.delivery/project-compass/issue-6/idea_mismatch-metrics.json"
+      }
+    },
+    {
+      "argv": [
+        "node",
+        "--import",
+        "/workspace/.delivery/project-compass/issue-6/network-guard.mjs",
+        "dist/src/cli.js",
+        "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？",
+        "--semantic-plan",
+        ".compass/invalid-plan.json",
+        "--out",
+        ".compass/probe-schema"
+      ],
+      "shell_command": "node --import /workspace/.delivery/project-compass/issue-6/network-guard.mjs dist/src/cli.js '有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？' --semantic-plan .compass/invalid-plan.json --out .compass/probe-schema",
+      "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+      "started_at_utc": "2026-10-21T06:38:36.697335+00:00",
+      "completed_at_utc": "2026-10-21T06:38:36.920838+00:00",
+      "exit_code": 2,
+      "metrics": {
+        "mode": "offline",
+        "started_at": "2026-10-21T06:38:36.749Z",
+        "fetch_calls": 0,
+        "other_network_attempts": [],
+        "requests": [],
+        "completed_at": "2026-10-21T06:38:36.914Z",
+        "process_exit_code": 2
+      },
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "INVALID_INPUT: 外部语义计划不符合 semantic-plan-v1 Schema；请检查版本、字段、长度、控制字符与英文核心短语。\n",
+      "case": "malformed_schema",
+      "stdout": "",
+      "expected_exit_code": 2,
+      "new_output_directory_created": false,
+      "environment_overrides": {
+        "COMPASS_SMOKE_MODE": "offline",
+        "COMPASS_SMOKE_METRICS": "/workspace/.delivery/project-compass/issue-6/malformed_schema-metrics.json"
+      }
+    },
+    {
+      "argv": [
+        "node",
+        "--import",
+        "/workspace/.delivery/project-compass/issue-6/network-guard.mjs",
+        "dist/src/cli.js",
+        "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？",
+        "--semantic-plan",
+        "examples/semantic-plan.json",
+        "--out",
+        ".compass/semantic-example"
+      ],
+      "shell_command": "node --import /workspace/.delivery/project-compass/issue-6/network-guard.mjs dist/src/cli.js '有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？' --semantic-plan examples/semantic-plan.json --out .compass/semantic-example",
+      "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+      "started_at_utc": "2026-10-21T06:38:36.920957+00:00",
+      "completed_at_utc": "2026-10-21T06:38:37.138132+00:00",
+      "exit_code": 4,
+      "metrics": {
+        "mode": "offline",
+        "started_at": "2026-10-21T06:38:36.986Z",
+        "fetch_calls": 0,
+        "other_network_attempts": [],
+        "requests": [],
+        "completed_at": "2026-10-21T06:38:37.131Z",
+        "process_exit_code": 4
+      },
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "意图（外部声明，未验证）：寻找已有项目；用户/外部语义计划声明，来源身份与语义均未验证。\nOUTPUT: 输出目录已存在或无法创建；请使用一个新的 --out 目录。\n",
+      "case": "existing_output",
+      "stdout": "",
+      "expected_exit_code": 4,
+      "new_output_directory_created": "existing output left intact",
+      "environment_overrides": {
+        "COMPASS_SMOKE_MODE": "offline",
+        "COMPASS_SMOKE_METRICS": "/workspace/.delivery/project-compass/issue-6/existing_output-metrics.json"
+      }
+    },
+    {
+      "argv": [
+        "node",
+        "--import",
+        "/workspace/.delivery/project-compass/issue-6/network-guard.mjs",
+        "dist/src/cli.js",
+        "我只知道想做一款给老人用的软件，功能还没想好",
+        "--semantic-plan",
+        "examples/semantic-plan-clarification.json",
+        "--out",
+        ".compass/probe-clarification"
+      ],
+      "shell_command": "node --import /workspace/.delivery/project-compass/issue-6/network-guard.mjs dist/src/cli.js '我只知道想做一款给老人用的软件，功能还没想好' --semantic-plan examples/semantic-plan-clarification.json --out .compass/probe-clarification",
+      "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+      "started_at_utc": "2026-10-21T06:38:37.138219+00:00",
+      "completed_at_utc": "2026-10-21T06:38:37.348760+00:00",
+      "exit_code": 2,
+      "metrics": {
+        "mode": "offline",
+        "started_at": "2026-10-21T06:38:37.189Z",
+        "fetch_calls": 0,
+        "other_network_attempts": [],
+        "requests": [],
+        "completed_at": "2026-10-21T06:38:37.343Z",
+        "process_exit_code": 2
+      },
+      "stdout_sha256": "96215a900de9dd4ea957e61be034ed617b1cb61a63dc3fa7388cb7b53f39497b",
+      "stderr": "",
+      "case": "clarification",
+      "stdout": "需要澄清：这款软件要帮老年用户解决什么具体问题？请举一个使用场景。\n未联网；补充后可直接重新运行，无需英文检索词。\n",
+      "expected_exit_code": 2,
+      "new_output_directory_created": false,
+      "environment_overrides": {
+        "COMPASS_SMOKE_MODE": "offline",
+        "COMPASS_SMOKE_METRICS": "/workspace/.delivery/project-compass/issue-6/clarification-metrics.json"
+      }
+    }
+  ],
+  "existing_report_unchanged": true
+}

@@ -17,7 +17,23 @@ export function renderDiscovery(report: DiscoveryReport): string {
     `范围：仅 GitHub 公开、非归档、非 Fork 仓库，每条检索取前 10 项，最多展示 5 个候选。${report.plan.understanding?.intent === 'learn' ? '学习意图保留课程与资源清单；' : '明确课程资料/清单不进入工具候选；'}许可证元数据未知仍可参与竞品比较，任何代码复用须另行核查实际 LICENSE 和依赖条款。排序先核对主要主题文字关联，再比较条件文字线索、针对性检索命中、检索短语、关键词覆盖、命中检索次数和 GitHub best match；Star 不参与排序，排序不是功能验收。`, '',
     '分析方式：正文结构解析、功能证据提取和条件式比较；未调用语言模型。功能是作者陈述，定位和建议是规则推断，不代表实测效果或竞品覆盖率。', '', '## 检索记录', ''];
   for (const search of report.searches) lines.push(`- ${e(search.query)} archived:false fork:false：${search.error ? e(search.error) : `GitHub 返回总数 ${search.total_count}，${search.incomplete ? '结果不完整' : '本次响应未标记不完整'}`}。`);
-  if (report.plan.understanding) {
+  if (report.plan.semantic) {
+    const semantic = report.plan.semantic.input;
+    lines.push('', '## 外部语义计划（实验入口，语义未验证）', '',
+      `来源：用户/外部提供；未核实生成者。结构哈希：${report.plan.semantic.sha256}。未调用模型。`, '',
+      `意图（外部声明）：${intentLabel(semantic.intent)}；核心：${e(semantic.core ? `${semantic.core.object} + ${semantic.core.action}` : '待澄清')}。`, '',
+      `必须条件：${semantic.required_conditions.map(e).join('；') || '未声明'}。`, '',
+      `排除条件：${semantic.excluded_conditions.map(e).join('；') || '未声明'}。`, '',
+      `未确定项：${semantic.unknowns.map(e).join('；') || '未声明；不保证不存在未知项'}。`, '',
+      '条件仅供追踪；所有候选的外部条件状态均为 unknown。没有将关键词、否定、计划或 README 缺写转换成满足/不满足，也未按排除条件自动删候选。', '');
+    if (report.query_execution) {
+      const execution = report.query_execution;
+      const fallback = execution.fallback.attempted === null ? '原始回退状态不可证明（未知）'
+        : `回退${execution.fallback.attempted ? '已执行' : '未执行'}`;
+      lines.push(`查询策略：${execution.strategy}；实际尝试 ${execution.attempted_queries.length} 条；${fallback}；原因：${e(execution.fallback.reason)}${execution.replay ? '（仅重放留档实际查询，不重新决定回退）' : ''}。`, '');
+    }
+  }
+  if (report.plan.understanding && !report.plan.semantic) {
     const understanding = report.plan.understanding;
     lines.push('', '## 需求理解（规则推断，待核对）', '',
       `意图：${intentLabel(understanding.intent)}。${e(understanding.reason)}`, '',

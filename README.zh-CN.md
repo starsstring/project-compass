@@ -43,6 +43,8 @@ npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".co
 
 ## 当前已实现
 
+可选的[外部语义计划实验入口](docs/SEMANTIC_PLAN.zh-CN.md)接收 `--semantic-plan <json>`，使用短查询和零候选有限回退。JSON 由用户/外部准备，语义未验证；Compass 不生成计划、不调用模型，默认规则输入不变。此 Issue #4 原型待独立验收，不是 0.3.0 发布。
+
 1. 输入需求，保留意图推断、条件及未映射要点，通过有限词表与分词生成最多两条检索；模糊输入先澄清，也可指定检索词。
 2. 获取最多五个 GitHub 候选，展示链接、简介、语言、许可证元数据、更新时间和文本关联依据。
 3. 解析简介和 README 正文，提取有依据的功能陈述，生成带引用的摘要和能力比较表。

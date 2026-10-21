@@ -1,0 +1,126 @@
+{
+  "frozen_at": "2026-10-20T18:23:12.102078+00:00",
+  "baseline": "85241267113a81ab190f598281a659752c8ea3b5",
+  "implementation_freeze": "d73d7f1ffe670a857e2a3ef60ca346b16daea605",
+  "cases_sha256": "3f57e6847be1d77a1fe7ffce55e8d58c11e8d2aed0a03c752c35e61f275b3855",
+  "case_order": [
+    "V01",
+    "V02",
+    "V03"
+  ],
+  "sample_status": "Three of the six post-implementation inputs, after synthetic software validation but before any GitHub query for them; Codex-selected, not independent blind tests.",
+  "mode": "One actual CLI run per input with --semantic-plan; no --query, no adaptive edits, no A/B repeat samples.",
+  "budget": {
+    "total_candidate_api_requests": 21,
+    "search_per_case": 2,
+    "results_per_search": 10,
+    "readme_per_case": 5,
+    "quota_checks": 1,
+    "retries": 0,
+    "extra_link_checks": 0
+  },
+  "stop": "Insufficient quota, 401/403/429, transport failure or timeout: retain partial data, stop remaining live cases without new identity or retries. README 404 is retained as partial; do not replace or refetch.",
+  "evaluation": {
+    "0": "unrelated",
+    "1": "adjacent or only part of core supported",
+    "2": "core task explicitly supported by author materials; key hard constraints unknown/limited",
+    "3": "core plus all declared hard constraints explicitly supported by author materials, not installed or runtime verified"
+  },
+  "model_calls": 0,
+  "selected": [
+    {
+      "id": "V01",
+      "coverage": "long_tail_forced_empty_then_fallback",
+      "plan": {
+        "version": 1,
+        "idea": "想找能检查 CityGML 建筑模型几何是否闭合、并定位无效面的工具",
+        "intent": "find_project",
+        "core": {
+          "object": "citygml",
+          "action": "validator"
+        },
+        "alternative": {
+          "object": "building geometry",
+          "action": "validation"
+        },
+        "required_conditions": [
+          "CityGML 输入",
+          "闭合性检查",
+          "定位无效面"
+        ],
+        "excluded_conditions": [],
+        "unknowns": [
+          "支持的 CityGML 版本未指定"
+        ],
+        "clarification": null
+      },
+      "expected_queries": [
+        "citygml validator",
+        "building geometry validation"
+      ]
+    },
+    {
+      "id": "V02",
+      "coverage": "language_conversion_primary_nonempty",
+      "plan": {
+        "version": 1,
+        "idea": "把 OpenAPI 接口说明转换成中文文档，但保留参数名和代码示例原文",
+        "intent": "unclear",
+        "core": {
+          "object": "openapi documentation",
+          "action": "translator"
+        },
+        "alternative": {
+          "object": "api documentation",
+          "action": "translation"
+        },
+        "required_conditions": [
+          "中文说明输出",
+          "保留参数名",
+          "保留代码示例原文"
+        ],
+        "excluded_conditions": [
+          "改写参数名和代码示例"
+        ],
+        "unknowns": [
+          "翻译质量与文档格式未指定"
+        ],
+        "clarification": null
+      },
+      "expected_queries": [
+        "openapi documentation translator"
+      ]
+    },
+    {
+      "id": "V03",
+      "coverage": "privacy_readme404",
+      "plan": {
+        "version": 1,
+        "idea": "需要一个本地整理医疗 DICOM 影像元数据的命令行工具，去除身份信息且不上传文件",
+        "intent": "find_project",
+        "core": {
+          "object": "dicom",
+          "action": "anonymizer"
+        },
+        "alternative": {
+          "object": "dicom",
+          "action": "deidentification"
+        },
+        "required_conditions": [
+          "本地命令行",
+          "DICOM 元数据身份信息去除"
+        ],
+        "excluded_conditions": [
+          "上传影像或元数据"
+        ],
+        "unknowns": [
+          "去标识规则与标准版本未指定"
+        ],
+        "clarification": null
+      },
+      "expected_queries": [
+        "dicom anonymizer"
+      ]
+    }
+  ]
+}

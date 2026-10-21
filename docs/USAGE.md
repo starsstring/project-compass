@@ -1,5 +1,9 @@
 # Usage
 
+The optional [external semantic-plan prototype](SEMANTIC_PLAN.md) adds
+`--semantic-plan <json>` with a separate validated file and bounded fallback.
+It conflicts with `--query`/`--import-ai`; it does not call a model.
+
 English | [简体中文](USAGE.zh-CN.md) · [Home](../README.md)
 
 Install with `npm ci` and build with `npm run build` first. Normal discovery needs no database, GitHub token, or model service. English input works; generated prose, diagnostics, and help currently use Chinese.

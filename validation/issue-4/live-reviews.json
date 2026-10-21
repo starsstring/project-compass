@@ -1,0 +1,16 @@
+{
+  "method": "Codex manual review of this run's README/metadata, not independent human review or candidate execution. Core relevance and hard constraints are separate; no score 3 is established.",
+  "candidates": [
+    {"case":"V01","rank":1,"repository":"virtualcitySYSTEMS/cityGML-Validator","score":1,"locator":"README L1; empty description","quote":"cityGML-Validator","assessment":"只有标题，无正文/简介建立具体几何检验能力。CityGML关联可见，闭合检查与无效面定位均 unknown。"},
+    {"case":"V01","rank":2,"repository":"Project-PLATEAU/CityGML-geometry-validator","score":2,"locator":"README L5–16, L26, L38–44","quote":"位相一貫性検証機能","assessment":"作者说明 CityGML 2.0 建筑拓扑一致性检查、JSON日志；闭合性和无效面精确定位仍 unknown。需要商用 FME，不是独立可用程序；未安装执行或购买服务。"},
+    {"case":"V01","rank":3,"repository":"tudelft3d/CityGML-schema-validation","score":1,"locator":"README L3–9","quote":"against the XSD schemas","assessment":"XSD结构校验不等于三维闭合/几何面定位；后两项 unknown。"},
+    {"case":"V01","rank":4,"repository":"tudelft3d/CityGML-QIE-3Dvalidation","score":1,"locator":"README L1–13, L41–52","quote":"unit test","assessment":"是几何错误测试数据和预期输出规范，并非已实现的检查工具。不能把 should-return 规范当现有能力。"},
+    {"case":"V01","rank":5,"repository":"tum-gis/3dcitydb-v5-docker-sfcgal-patched","score":1,"locator":"README L3–36","quote":"Strips validity assertions","assessment":"目标是让几何计算绕过某些有效性/自交断言，属于相邻环境补丁，不证明能发现闭合缺陷或定位无效面；未执行。"},
+    {"case":"V02","rank":1,"repository":"ElyahuAnavi/morse-code-translator","score":0,"locator":"README L15–22, L119–120","quote":"Morse Code Translator API","assessment":"实际功能是文本与摩斯码转换，OpenAPI只用于其接口文档生成，不是文档中文翻译。中文输出、参数名和示例保留均 unknown。非零且可纳入候选，依冻结规则不能人工触发回退。"},
+    {"case":"V03","rank":1,"repository":"KitwareMedical/dicom-anonymizer","score":2,"locator":"README L3–9, L26","quote":"anonymize DICOM files","assessment":"DICOM字段按标准匿名化有作者材料；本地CLI完整流程和无上传承诺仍 unknown。日期匿名化保留而非直接删除；不作隐私合规或实测保证。"},
+    {"case":"V03","rank":2,"repository":"chop-dbhi/dicom-anon","score":2,"locator":"README L26–42, L47–49","quote":"DICOM anonymization script","assessment":"输入/输出目录和CLI去标识流程有材料；不上传仍 unknown。作者明确本地审计库会保留原身份信息，且不能检测像素烧录信息，不能据匿名化名称宣称全部身份已去除。"},
+    {"case":"V03","rank":3,"repository":"RSNA/anonymizer","score":1,"locator":"README L1, L77–87","quote":"headless DICOM receive","assessment":"本次README主要为安装/GUI及headless接收入口；对所需元数据处理和无上传流程材料不足，保守按相邻定位评分。不是声称项目没有匿名化能力。"},
+    {"case":"V03","rank":4,"repository":"johnperry/DicomAnonymizerTool","score":1,"locator":"Search description; README HTTP 404","quote":"command-line tool","assessment":"仅描述调用匿名化器的CLI包装；具体字段处理和无上传证据 unknown。README 404原样保留，不补抓或替换。"},
+    {"case":"V03","rank":5,"repository":"bill4278/Anonymizer","score":2,"locator":"README L5–7","quote":"DICOM","assessment":"正文声明DICOM文件/压缩包匿名化；元数据细项、CLI方式与不上传均 unknown，不把GUI标题或线程性能宣称当验收。"}
+  ]
+}

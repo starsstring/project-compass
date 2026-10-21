@@ -1,5 +1,7 @@
 # 使用说明
 
+可选的[外部语义计划实验入口](SEMANTIC_PLAN.zh-CN.md)使用 `--semantic-plan <json>`，校验外部文件并按零候选规则有限回退；与 `--query/--import-ai` 互斥，不调用模型。
+
 [English](USAGE.md) | 简体中文 · [首页](../README.zh-CN.md)
 
 先执行 `npm ci` 和 `npm run build`。正常使用不需要数据库、Token 或模型服务。支持英文创意输入；帮助、报错与报告文字目前以中文为主。

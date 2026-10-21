@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "idea": "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？",
+  "intent": "find_project",
+  "core": {"object": "point cloud", "action": "viewer"},
+  "alternative": {"object": "point cloud", "action": "visualization"},
+  "required_conditions": ["浏览器运行", "LAS/LAZ 输入", "两点距离测量", "剖面查看"],
+  "excluded_conditions": [],
+  "unknowns": ["点云规模未指定", "格式预转换是否可接受未指定", "作者材料不等于实测"],
+  "clarification": null
+}

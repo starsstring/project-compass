@@ -1,0 +1,76 @@
+{
+  "classification": "First-use validation passed for all six inputs after implementation freeze; final-suite repetitions are regressions, not blind tests. Synthetic transport is not real GitHub evidence.",
+  "implementation_freeze": "d73d7f1ffe670a857e2a3ef60ca346b16daea605",
+  "cases": [
+    {
+      "validation_case": "V01",
+      "exit": 0,
+      "status": "complete",
+      "queries": [
+        "citygml validator",
+        "building geometry validation"
+      ],
+      "search": 2,
+      "readme": 1,
+      "fallback": true,
+      "intent": "find_project"
+    },
+    {
+      "validation_case": "V02",
+      "exit": 0,
+      "status": "complete",
+      "queries": [
+        "openapi documentation translator"
+      ],
+      "search": 1,
+      "readme": 1,
+      "fallback": false,
+      "intent": "unclear"
+    },
+    {
+      "validation_case": "V03",
+      "exit": 5,
+      "status": "partial",
+      "queries": [
+        "dicom anonymizer"
+      ],
+      "search": 1,
+      "readme": 1,
+      "fallback": false,
+      "intent": "find_project"
+    },
+    {
+      "validation_case": "V04",
+      "exit": 0,
+      "status": "complete",
+      "queries": [
+        "distributed lock model checking"
+      ],
+      "search": 1,
+      "readme": 1,
+      "fallback": false,
+      "intent": "learn"
+    },
+    {
+      "validation_case": "V05",
+      "exit": 0,
+      "status": "complete",
+      "queries": [
+        "midi musicxml converter"
+      ],
+      "search": 1,
+      "readme": 1,
+      "fallback": false,
+      "intent": "find_project"
+    },
+    {
+      "validation_case": "V06",
+      "exit": 2,
+      "status": "needs_clarification",
+      "queries": [],
+      "search": 0,
+      "readme": 0,
+      "directory_created": false
+    }
+  ]
+}

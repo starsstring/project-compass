@@ -1,0 +1,28 @@
+{
+  "changed_at": "2026-10-20T18:27:51.627117+00:00",
+  "reason": "Initial push was rejected by GitHub GH007 email privacy protection. Only unpublished author/committer identity metadata was replaced with the account public noreply identity. Trees, messages and dates are preserved; immutable freeze references remain original local SHAs with public aliases below. No account privacy setting or credential was changed.",
+  "baseline_unchanged": "85241267113a81ab190f598281a659752c8ea3b5",
+  "commits": [
+    {
+      "original_local_commit": "7d960e5188a1716fd8b70d93cbe799ecad78729a",
+      "public_noreply_commit": "6540ed4370ed991262c7563e42ada8f25b48b7fa",
+      "tree": "0a8c23161c80657df05274f0755309aa036253e9",
+      "author_date_preserved": "2026-10-20T18:07:37Z",
+      "committer_date_preserved": "2026-10-20T18:07:37Z"
+    },
+    {
+      "original_local_commit": "d73d7f1ffe670a857e2a3ef60ca346b16daea605",
+      "public_noreply_commit": "77420856eb58daa9a7cd2363c64738662989cc7d",
+      "tree": "026834394bd0fd6e9f770bc51aaefcfe6b738fd4",
+      "author_date_preserved": "2026-10-20T18:18:33Z",
+      "committer_date_preserved": "2026-10-20T18:18:33Z"
+    },
+    {
+      "original_local_commit": "8a5a54bfe2039d8a3ec2c8f1f33e3f4a158038d6",
+      "public_noreply_commit": "d67080f454b057be7ee96de84f8762c9129434b6",
+      "tree": "34f6fa0335568e19c6c6651143985dc3834ed170",
+      "author_date_preserved": "2026-10-20T18:25:13Z",
+      "committer_date_preserved": "2026-10-20T18:25:13Z"
+    }
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "started_at": "2026-10-20T18:26:06.297Z",
+  "completed_at": "2026-10-20T18:26:15.863Z",
+  "tested_commit": "8a5a54bfe2039d8a3ec2c8f1f33e3f4a158038d6",
+  "source_tree": "b8561fd2fc9bf641c1f0e3b5025346940efd2c6b",
+  "protocol_sha256": "3ccdc72cd2a577d8d0a5a48237175ab11c1058f769586c15b05a8700154bcaa9",
+  "actual_candidate_api_requests": 14,
+  "external_model_calls": 0,
+  "stopped": null,
+  "authentication": "No client Authorization header; existing platform proxy may inject authentication; not a pure anonymous-IP quota test.",
+  "quota_checks": [
+    {
+      "started_at": "2026-10-20T18:26:06.302Z",
+      "client_authorization_header_supplied": false,
+      "status": 200,
+      "resources": {
+        "core": {
+          "limit": 15000,
+          "used": 10,
+          "remaining": 14990,
+          "reset": 1792522534
+        },
+        "search": {
+          "limit": 30,
+          "used": 0,
+          "remaining": 30,
+          "reset": 1792520826
+        },
+        "graphql": {
+          "limit": 10000,
+          "used": 3,
+          "remaining": 9997,
+          "reset": 1792522035
+        },
+        "integration_manifest": {
+          "limit": 5000,
+          "used": 0,
+          "remaining": 5000,
+          "reset": 1792524366
+        },
+        "source_import": {
+          "limit": 100,
+          "used": 0,
+          "remaining": 100,
+          "reset": 1792520826
+        },
+        "code_scanning_autofix": {
+          "limit": 10,
+          "used": 0,
+          "remaining": 10,
+          "reset": 1792520826
+        },
+        "actions_runner_registration": {
+          "limit": 20000,
+          "used": 0,
+          "remaining": 20000,
+          "reset": 1792524366
+        },
+        "scim": {
+          "limit": 15000,
+          "used": 0,
+          "remaining": 15000,
+          "reset": 1792524366
+        },
+        "dependency_snapshots": {
+          "limit": 100,
+          "used": 0,
+          "remaining": 100,
+          "reset": 1792520826
+        },
+        "dependency_sbom": {
+          "limit": 200,
+          "used": 0,
+          "remaining": 200,
+          "reset": 1792520826
+        },
+        "audit_log": {
+          "limit": 1750,
+          "used": 0,
+          "remaining": 1750,
+          "reset": 1792524366
+        },
+        "audit_log_streaming": {
+          "limit": 15,
+          "used": 0,
+          "remaining": 15,
+          "reset": 1792524366
+        },
+        "code_search": {
+          "limit": 10,
+          "used": 0,
+          "remaining": 10,
+          "reset": 1792520826
+        },
+        "copilot_usage_records": {
+          "limit": 1750,
+          "used": 0,
+          "remaining": 1750,
+          "reset": 1792524366
+        },
+        "enterprise_token_inventory": {
+          "limit": 1750,
+          "used": 0,
+          "remaining": 1750,
+          "reset": 1792524366
+        }
+      },
+      "completed_at": "2026-10-20T18:26:06.647Z"
+    }
+  ],
+  "cases": [
+    {
+      "id": "V01",
+      "started_at": "2026-10-20T18:26:06.648Z",
+      "completed_at": "2026-10-20T18:26:10.033Z",
+      "elapsed_ms": 3385.153045,
+      "exit_code": 0,
+      "status": "complete",
+      "searches": [
+        {
+          "query": "citygml validator",
+          "total_count": 14,
+          "incomplete": false,
+          "error": null
+        }
+      ],
+      "query_execution": {
+        "strategy": "semantic_short_fallback",
+        "planned_queries": [
+          "citygml validator",
+          "building geometry validation"
+        ],
+        "attempted_queries": [
+          "citygml validator"
+        ],
+        "replay": false,
+        "fallback": {
+          "attempted": false,
+          "reason": "primary_has_candidates"
+        }
+      },
+      "search_count": 1,
+      "readme_count": 5,
+      "candidates": [
+        {
+          "name": "virtualcitySYSTEMS/cityGML-Validator",
+          "url": "https://github.com/virtualcitySYSTEMS/cityGML-Validator",
+          "readme_status": "captured",
+          "source_url": "https://github.com/virtualcitySYSTEMS/cityGML-Validator/blob/main/README.md",
+          "blob_sha": "e6f5c9e8f8c305f4622ebc08e9cf4737f55c1c8a",
+          "content_sha256": "efdafe492287b125c41e5f8084e8594d9acbff633f987fa27931840d2665221c",
+          "score": 1,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        },
+        {
+          "name": "Project-PLATEAU/CityGML-geometry-validator",
+          "url": "https://github.com/Project-PLATEAU/CityGML-geometry-validator",
+          "readme_status": "captured",
+          "source_url": "https://github.com/Project-PLATEAU/CityGML-geometry-validator/blob/main/README.md",
+          "blob_sha": "6cda616e7e282ca4e48e9d24e5a3932320938c6b",
+          "content_sha256": "83b675bacc428a2bbd97d2f140e5d538ef4b5dc9332d2c8f0d5a78a16effa95e",
+          "score": 2,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        },
+        {
+          "name": "tudelft3d/CityGML-schema-validation",
+          "url": "https://github.com/tudelft3d/CityGML-schema-validation",
+          "readme_status": "captured",
+          "source_url": "https://github.com/tudelft3d/CityGML-schema-validation/blob/master/README.md",
+          "blob_sha": "442357d4c2e6808d11557a5a5d01f09d56187622",
+          "content_sha256": "b238bf21282722a62d75e744ca78f76e3f94f16c85254eb6f474de29303adb6f",
+          "score": 1,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        },
+        {
+          "name": "tudelft3d/CityGML-QIE-3Dvalidation",
+          "url": "https://github.com/tudelft3d/CityGML-QIE-3Dvalidation",
+          "readme_status": "captured",
+          "source_url": "https://github.com/tudelft3d/CityGML-QIE-3Dvalidation/blob/master/README.md",
+          "blob_sha": "3989c79672b893f5f39db13d153a2bfe44048183",
+          "content_sha256": "8a255f2c53896419178d2d07fc019e94c4a04b8e3e249c1fd34ee8c8ede2d17c",
+          "score": 1,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        },
+        {
+          "name": "tum-gis/3dcitydb-v5-docker-sfcgal-patched",
+          "url": "https://github.com/tum-gis/3dcitydb-v5-docker-sfcgal-patched",
+          "readme_status": "captured",
+          "source_url": "https://github.com/tum-gis/3dcitydb-v5-docker-sfcgal-patched/blob/main/README.md",
+          "blob_sha": "1881a46e6290e2dab8beb5b9287a9e838df135bb",
+          "content_sha256": "2ac9e3250770f239c9c23c114825c94c846c07ecc2d2ea91c89bf70df7d5515a",
+          "score": 1,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        }
+      ],
+      "replay": {
+        "exit_code": 0,
+        "network_requests": 0,
+        "actual_queries_preserved": true,
+        "candidate_order_preserved": true,
+        "response_metadata_and_hashes_preserved": true
+      },
+      "response_hashes": [
+        {
+          "url": "https://api.github.com/search/repositories?q=citygml+validator+archived%3Afalse+fork%3Afalse&per_page=10",
+          "status": 200,
+          "sha256": "9aa83726c3bea50be6afc6c56915dc7cfc5198626760a8cd3564d635091983e4",
+          "fetched_at": "2026-10-20T18:26:07.936Z"
+        },
+        {
+          "url": "https://api.github.com/repos/virtualcitySYSTEMS/cityGML-Validator/readme",
+          "status": 200,
+          "sha256": "e1d840234d0ee465d6edd81d985f2fdb7a0e30cc9d69d02b7d1ba0a9cd61adf1",
+          "fetched_at": "2026-10-20T18:26:08.401Z"
+        },
+        {
+          "url": "https://api.github.com/repos/Project-PLATEAU/CityGML-geometry-validator/readme",
+          "status": 200,
+          "sha256": "9db9bc904b99607547c721ee5f5b90a812106ebfcb448c5e4cd534b0d55a01af",
+          "fetched_at": "2026-10-20T18:26:08.884Z"
+        },
+        {
+          "url": "https://api.github.com/repos/tudelft3d/CityGML-schema-validation/readme",
+          "status": 200,
+          "sha256": "7177e05452828079b48753935ce644c3e91d7f0b5aea61c01a0a92c971e63aed",
+          "fetched_at": "2026-10-20T18:26:09.264Z"
+        },
+        {
+          "url": "https://api.github.com/repos/tudelft3d/CityGML-QIE-3Dvalidation/readme",
+          "status": 200,
+          "sha256": "fb29591adcccf75519b902e8395fcb55f0babc0ac35128f288f88bbb2b7c35c4",
+          "fetched_at": "2026-10-20T18:26:09.601Z"
+        },
+        {
+          "url": "https://api.github.com/repos/tum-gis/3dcitydb-v5-docker-sfcgal-patched/readme",
+          "status": 200,
+          "sha256": "0fd21e0a7761de226412bb505a60638ecff4ec92e0fc4a4d7a4b8864bc2cca9c",
+          "fetched_at": "2026-10-20T18:26:09.983Z"
+        }
+      ],
+      "files": {
+        "report.json": "ac9cca131e6db1422b09979c9feb7d1b67e38b83e7396eb2314af945a79809d2",
+        "report.md": "32683604bbfa2f29a100b4313a00aadd8fe69e46b0560eb6fb1b6f0bf2db6160",
+        "captures.json": "7a500fba5df3dda0a4b3f7a25bda778f3dde5e7ee6e9a08b18c1ab0b93d704a0",
+        "semantic-plan.json": "64ed1b6640129b0b9e6d70b56809062d34bba19c128e2f7b70e031bccd94ff1d"
+      }
+    },
+    {
+      "id": "V02",
+      "started_at": "2026-10-20T18:26:10.447Z",
+      "completed_at": "2026-10-20T18:26:11.638Z",
+      "elapsed_ms": 1191.358263,
+      "exit_code": 0,
+      "status": "complete",
+      "searches": [
+        {
+          "query": "openapi documentation translator",
+          "total_count": 1,
+          "incomplete": false,
+          "error": null
+        }
+      ],
+      "query_execution": {
+        "strategy": "semantic_short_fallback",
+        "planned_queries": [
+          "openapi documentation translator",
+          "api documentation translation"
+        ],
+        "attempted_queries": [
+          "openapi documentation translator"
+        ],
+        "replay": false,
+        "fallback": {
+          "attempted": false,
+          "reason": "primary_has_candidates"
+        }
+      },
+      "search_count": 1,
+      "readme_count": 1,
+      "candidates": [
+        {
+          "name": "ElyahuAnavi/morse-code-translator",
+          "url": "https://github.com/ElyahuAnavi/morse-code-translator",
+          "readme_status": "captured",
+          "source_url": "https://github.com/ElyahuAnavi/morse-code-translator/blob/main/README.md",
+          "blob_sha": "40476ab573c1f7f90cafa377ef9fe73d648c98d6",
+          "content_sha256": "1ddf3abc17363ab17ba9eb214b24d8a38b35c14d322d78e4acf2a1143ae5fe1c",
+          "score": 0,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        }
+      ],
+      "replay": {
+        "exit_code": 0,
+        "network_requests": 0,
+        "actual_queries_preserved": true,
+        "candidate_order_preserved": true,
+        "response_metadata_and_hashes_preserved": true
+      },
+      "response_hashes": [
+        {
+          "url": "https://api.github.com/search/repositories?q=openapi+documentation+translator+archived%3Afalse+fork%3Afalse&per_page=10",
+          "status": 200,
+          "sha256": "8d3f73781eb0cfec699b29b8e8357952f18d45b0cfd86f5a1641231803e702e6",
+          "fetched_at": "2026-10-20T18:26:11.173Z"
+        },
+        {
+          "url": "https://api.github.com/repos/ElyahuAnavi/morse-code-translator/readme",
+          "status": 200,
+          "sha256": "90d08b75fc4573808502ac0733ecc0ac2b70a31bf1ff265505e10572d190ac98",
+          "fetched_at": "2026-10-20T18:26:11.574Z"
+        }
+      ],
+      "files": {
+        "report.json": "cd23964f72f2892f373c8b69bf894743140c1c0e87db89e68982f97e13bf979e",
+        "report.md": "50f9fa211aa17f674c388f92681e551247c6ebe376242c04cae8f120632e162a",
+        "captures.json": "daf11d67a769097102c16d81e550626a56dec9dc1068deb5056071ab5449c937",
+        "semantic-plan.json": "98c665d5466733803851a7e92a9c50599838294e68856ef13d5c30034302bebb"
+      }
+    },
+    {
+      "id": "V03",
+      "started_at": "2026-10-20T18:26:11.968Z",
+      "completed_at": "2026-10-20T18:26:15.513Z",
+      "elapsed_ms": 3545.10077,
+      "exit_code": 5,
+      "status": "partial",
+      "searches": [
+        {
+          "query": "dicom anonymizer",
+          "total_count": 263,
+          "incomplete": false,
+          "error": null
+        }
+      ],
+      "query_execution": {
+        "strategy": "semantic_short_fallback",
+        "planned_queries": [
+          "dicom anonymizer",
+          "dicom deidentification"
+        ],
+        "attempted_queries": [
+          "dicom anonymizer"
+        ],
+        "replay": false,
+        "fallback": {
+          "attempted": false,
+          "reason": "primary_has_candidates"
+        }
+      },
+      "search_count": 1,
+      "readme_count": 5,
+      "candidates": [
+        {
+          "name": "KitwareMedical/dicom-anonymizer",
+          "url": "https://github.com/KitwareMedical/dicom-anonymizer",
+          "readme_status": "captured",
+          "source_url": "https://github.com/KitwareMedical/dicom-anonymizer/blob/master/README.md",
+          "blob_sha": "d2fa366f5d02c0300aca10b2563a695cc6e1a476",
+          "content_sha256": "846b6ce9942aaa6cb5269db426fd5352883db1c4e46ba23b414dda5103ce3d86",
+          "score": 2,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        },
+        {
+          "name": "chop-dbhi/dicom-anon",
+          "url": "https://github.com/chop-dbhi/dicom-anon",
+          "readme_status": "captured",
+          "source_url": "https://github.com/chop-dbhi/dicom-anon/blob/master/README.md",
+          "blob_sha": "0f080e6e2ee5e9aca686fb98d6a2e4f44f2af640",
+          "content_sha256": "941353b6cebe0275392d55d106e4d70035e9a43bb41d9a11b420adecda700f59",
+          "score": 2,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        },
+        {
+          "name": "RSNA/anonymizer",
+          "url": "https://github.com/RSNA/anonymizer",
+          "readme_status": "captured",
+          "source_url": "https://github.com/RSNA/anonymizer/blob/master/readme.md",
+          "blob_sha": "21d2b21e8e9e26bdc8227a6ef5c37482bba8ab82",
+          "content_sha256": "ed994e70bda41cc3158db7e928393c21c7a69400c05306815f558a89ca90365f",
+          "score": 1,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        },
+        {
+          "name": "johnperry/DicomAnonymizerTool",
+          "url": "https://github.com/johnperry/DicomAnonymizerTool",
+          "readme_status": "unavailable",
+          "source_url": null,
+          "blob_sha": null,
+          "content_sha256": null,
+          "score": 1,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        },
+        {
+          "name": "bill4278/Anonymizer",
+          "url": "https://github.com/bill4278/Anonymizer",
+          "readme_status": "captured",
+          "source_url": "https://github.com/bill4278/Anonymizer/blob/MergeLogBrowserIntoMainWindow/README.md",
+          "blob_sha": "352025c5da341dd2f77b5c654c4d4ca77f4c3ba0",
+          "content_sha256": "4e07dd5e444a347147dd5fd38ab9d640bfa206feb2584d6db5d5d13884280d5c",
+          "score": 2,
+          "conditions": "unknown; manual material limits in live-reviews.json"
+        }
+      ],
+      "replay": {
+        "exit_code": 5,
+        "network_requests": 0,
+        "actual_queries_preserved": true,
+        "candidate_order_preserved": true,
+        "response_metadata_and_hashes_preserved": true
+      },
+      "response_hashes": [
+        {
+          "url": "https://api.github.com/search/repositories?q=dicom+anonymizer+archived%3Afalse+fork%3Afalse&per_page=10",
+          "status": 200,
+          "sha256": "4eda70419e8cdfbe570e88c13eaf74578e57e38a6561514a03707202d9de40bc",
+          "fetched_at": "2026-10-20T18:26:13.374Z"
+        },
+        {
+          "url": "https://api.github.com/repos/KitwareMedical/dicom-anonymizer/readme",
+          "status": 200,
+          "sha256": "17bd9b8bea46811e92a6e6ab08fd7e4376ae44549c01bdab33cd1546c8b9b270",
+          "fetched_at": "2026-10-20T18:26:13.858Z"
+        },
+        {
+          "url": "https://api.github.com/repos/chop-dbhi/dicom-anon/readme",
+          "status": 200,
+          "sha256": "2accb66496b880347e68b4e7d571c91ba6d2b778d5932b3ca1d4a9a6d30dfae8",
+          "fetched_at": "2026-10-20T18:26:14.368Z"
+        },
+        {
+          "url": "https://api.github.com/repos/RSNA/anonymizer/readme",
+          "status": 200,
+          "sha256": "a3ed498624c992ed4d61ea1b1325dadd398ba5f71eb4136c63de4b25c9540e16",
+          "fetched_at": "2026-10-20T18:26:14.654Z"
+        },
+        {
+          "url": "https://api.github.com/repos/johnperry/DicomAnonymizerTool/readme",
+          "status": 404,
+          "sha256": "cd06f5cb22929a0bc5fb340149daaab49796a37572df0b2fcb8ac3dfafbae4c9",
+          "fetched_at": "2026-10-20T18:26:15.043Z"
+        },
+        {
+          "url": "https://api.github.com/repos/bill4278/Anonymizer/readme",
+          "status": 200,
+          "sha256": "dc6c69e3489e015e0319815332ef65d36440c427696ab004a110f2a541c7a0ed",
+          "fetched_at": "2026-10-20T18:26:15.495Z"
+        }
+      ],
+      "files": {
+        "report.json": "a9beff30e2d3b746f8bd9e7ab5e15464945d4d774ae1c766eb5adb512b1fe9c4",
+        "report.md": "4b2ec94dd9a5ef39d84c779167a4c1a2d975a7cb3a82a04a0fd3be176ea008f2",
+        "captures.json": "41bbeeee0fda765ef7b07ec00889a0519d70e132e3a43698527647e04c3d1409",
+        "semantic-plan.json": "84ec89525697020c555adba15895848d7dac747c243ef3297e8f1cbb8315f0e0"
+      }
+    }
+  ],
+  "verified": {
+    "response_hashes": 14,
+    "successful_readme_content_and_git_blob_hashes": 10,
+    "replays_with_zero_network": 3,
+    "all_external_conditions_unknown": true,
+    "request_budget_met": true,
+    "source_tree_unchanged_since_implementation_freeze": true
+  }
+}

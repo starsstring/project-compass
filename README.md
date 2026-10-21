@@ -43,6 +43,12 @@ The package includes captured full READMEs. Review it before sharing it with any
 
 ## What it does
 
+An optional [external semantic-plan prototype](docs/SEMANTIC_PLAN.md) accepts
+`--semantic-plan <json>` and tries short queries with a bounded zero-candidate
+fallback. The JSON is user/external input whose semantics remain unverified;
+Compass does not generate it or call a model. Default rule input is unchanged.
+This Issue #4 prototype is pending independent review, not a 0.3.0 release.
+
 1. Accepts a request, infers a possible find/build/learn intent, preserves requirements, and derives up to two searches using finite rules. Unmapped Chinese words remain visible; explicit queries still take precedence.
 2. Retrieves up to five GitHub candidates, with links, descriptions, language, license metadata, update time, and reasons for text relevance.
 3. Extracts prose from descriptions and READMEs, summarizes supported capability statements, and shows a comparison table with source references.

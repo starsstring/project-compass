@@ -7,10 +7,11 @@ import { GitHubSearch } from './adapters/github/search.js';
 import { loadReplay } from './adapters/github/replay.js';
 import { planSearch, intentLabel } from './discovery/query.js';
 import { discover } from './discovery/analyze.js';
-import { DiscoveryError } from './discovery/model.js';
+import { DiscoveryError, type QueryExecution } from './discovery/model.js';
 import { renderDiscovery } from './discovery/markdown.js';
 import { createAiInput, aiInstructions, renderAiSources, aiReviewSchemaJson, readBoundedJson, validateAiInput, serializeAiInput, AI_INPUT_MAX_BYTES, AI_REVIEW_MAX_BYTES } from './advice/input.js';
 import { createReviewResult, renderAiReview } from './advice/review.js';
+import { planSemanticSearch, readSemanticPlan } from './discovery/semantic-plan.js';
 
 const help = `Project Compass 0.2.0 — GitHub 项目初查（匿名只读，无模型 Key）
 
@@ -20,6 +21,7 @@ const help = `Project Compass 0.2.0 — GitHub 项目初查（匿名只读，无
       npm run compass -- "面向开发板的串口调试工具" --query "serial monitor"
 
 --query 可重复，最多两条；省略时用有限词表、条件规则与中文分词规划。
+--semantic-plan <json> 实验入口：显式外部语义计划；与 --query/--import-ai 互斥，不调用模型。首查完整且筛选后零候选才回退。
 --out 必须为尚不存在的目录；默认 .compass/discovery/<唯一运行号>。
 --limit 1–5；--json 输出结构化报告；--help 显示帮助。
 --replay 使用已有响应重新分析，不联网；未指定 --query 时自动使用留档检索词。
@@ -47,12 +49,13 @@ export async function runCli(args: string[], io: CliIO = {}): Promise<number> {
         query: { type: 'string', multiple: true }, limit: { type: 'string' }, out: { type: 'string' },
         json: { type: 'boolean' }, help: { type: 'boolean', short: 'h' },
         replay: { type: 'string' },
+        'semantic-plan': { type: 'string' },
         'prepare-ai': { type: 'boolean' }, 'import-ai': { type: 'string' }, 'ai-input': { type: 'string' },
       } });
     } catch { throw new DiscoveryError('INVALID_INPUT', '参数无法识别，请运行 npm run compass -- --help。'); }
     if (parsed.values.help) { stdout(`${help}\n`); return 0; }
     if (parsed.values['import-ai'] !== undefined) {
-      if (!parsed.values['ai-input'] || parsed.positionals.length || parsed.values['prepare-ai'] !== undefined || parsed.values.replay !== undefined || parsed.values.query !== undefined || parsed.values.limit !== undefined) {
+      if (!parsed.values['ai-input'] || parsed.positionals.length || parsed.values['prepare-ai'] !== undefined || parsed.values.replay !== undefined || parsed.values.query !== undefined || parsed.values.limit !== undefined || parsed.values['semantic-plan'] !== undefined) {
         throw new DiscoveryError('INVALID_INPUT', '导入须提供 --import-ai 和 --ai-input，不与创意、检索或资料导出参数混用。');
       }
       // Validate everything before creating output, and never construct a network client.
@@ -71,13 +74,16 @@ export async function runCli(args: string[], io: CliIO = {}): Promise<number> {
       return 0;
     }
     if (parsed.values['ai-input'] !== undefined) throw new DiscoveryError('INVALID_INPUT', '--ai-input 只与 --import-ai 一起使用。');
+    if (parsed.values['semantic-plan'] !== undefined && parsed.values.query !== undefined) throw new DiscoveryError('INVALID_INPUT', '--semantic-plan 与 --query 不能同时使用。');
     if (parsed.positionals.length !== 1) throw new DiscoveryError('INVALID_INPUT', '请用引号传入一段项目创意；用 --help 查看示例。');
     const limit = parsed.values.limit === undefined ? 5 : Number(parsed.values.limit);
     if (!Number.isInteger(limit) || limit < 1 || limit > 5) throw new DiscoveryError('INVALID_INPUT', '--limit 必须为 1–5。');
     const replay = parsed.values.replay !== undefined ? await loadReplay(parsed.values.replay) : undefined;
     if (replay && !replay.savedQueries?.length) throw new DiscoveryError('INVALID_INPUT', '重放文件没有检索记录；未联网。');
-    const plan = planSearch(parsed.positionals[0]!, parsed.values.query ?? replay?.savedQueries);
-    if (replay && parsed.values.query === undefined) {
+    const semantic = parsed.values['semantic-plan'] !== undefined ? await readSemanticPlan(parsed.values['semantic-plan'], parsed.positionals[0]!) : undefined;
+    const plan = semantic ? planSemanticSearch(semantic, parsed.positionals[0]!, replay?.savedQueries)
+      : planSearch(parsed.positionals[0]!, parsed.values.query ?? replay?.savedQueries);
+    if (replay && parsed.values.query === undefined && !semantic) {
       plan.method = 'replay_queries';
       const automatic = planSearch(parsed.positionals[0]!);
       plan.warnings = [...automatic.warnings];
@@ -88,17 +94,22 @@ export async function runCli(args: string[], io: CliIO = {}): Promise<number> {
       stdout(parsed.values.json ? JSON.stringify(clarification, null, 2) + '\n' : `需要澄清：${plan.understanding?.clarification}\n未联网；补充后可直接重新运行，无需英文检索词。\n`);
       return 2;
     }
-    stderr(`意图（规则推断）：${intentLabel(plan.understanding!.intent)}；${plan.understanding!.reason}\n`);
+    stderr(`意图（${semantic ? '外部声明，未验证' : '规则推断'}）：${intentLabel(plan.understanding!.intent)}；${plan.understanding!.reason}\n`);
     const client = replay ?? new GitHubSearch(io.fetcher);
     const output = await reserveOutput(parsed.values.out, 'discovery');
+    let executedPlan = plan;
+    let queryExecution: QueryExecution | undefined;
     try {
       stderr(`${client.mode === 'replay' ? '历史响应离线重放' : 'GitHub 只读检索'}：${plan.queries.join(' / ')}\n`);
       const report = await discover(plan, client, limit);
+      executedPlan = report.plan;
+      queryExecution = report.query_execution;
       const aiInput = parsed.values['prepare-ai'] ? createAiInput(report, client.captures) : undefined;
       const markdown = renderDiscovery(report);
       await writeFile(join(output, 'captures.json'), JSON.stringify(client.captures, null, 2) + '\n', { flag: 'wx' });
       await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
       await writeFile(join(output, 'report.md'), markdown, { flag: 'wx' });
+      if (semantic) await writeFile(join(output, 'semantic-plan.json'), JSON.stringify(semantic, null, 2) + '\n', { flag: 'wx' });
       if (aiInput) {
         await writeFile(join(output, 'ai-input.json'), serializeAiInput(aiInput), { flag: 'wx' });
         await writeFile(join(output, 'ai-sources.md'), renderAiSources(aiInput), { flag: 'wx' });
@@ -112,8 +123,11 @@ export async function runCli(args: string[], io: CliIO = {}): Promise<number> {
     } catch (error) {
       // Keep available evidence on failure, without saving a success report.
       await writeFile(join(output, 'captures.json'), JSON.stringify(client.captures, null, 2) + '\n', { flag: 'wx' }).catch(() => undefined);
-      await writeFile(join(output, 'failure.json'), JSON.stringify({ status: 'failed', plan, error: error instanceof DiscoveryError ?
-        { code: error.code, message: error.message } : { code: 'OUTPUT', message: '结果写入失败；已有文件保留。' } }, null, 2) + '\n', { flag: 'wx' }).catch(() => undefined);
+      const execution = error instanceof DiscoveryError ? error.query_execution ?? queryExecution : queryExecution;
+      await writeFile(join(output, 'failure.json'), JSON.stringify({ status: 'failed', plan: executedPlan, error: error instanceof DiscoveryError ?
+        { code: error.code, message: error.message } : { code: 'OUTPUT', message: '结果写入失败；已有文件保留。' },
+        ...(execution ? { query_execution: execution } : {}) }, null, 2) + '\n', { flag: 'wx' }).catch(() => undefined);
+      if (semantic) await writeFile(join(output, 'semantic-plan.json'), JSON.stringify(semantic, null, 2) + '\n', { flag: 'wx' }).catch(() => undefined);
       if (error instanceof DiscoveryError) throw error;
       throw new DiscoveryError('OUTPUT', '结果写入失败；请检查输出目录，已有文件保留。');
     }

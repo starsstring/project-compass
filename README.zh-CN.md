@@ -1,5 +1,7 @@
 # Project Compass
 
+**仓库状态（2026-10-21）**：外部语义计划实验原型已通过工程审查，并经 [PR #5](https://github.com/starsstring/project-compass/pull/5) 合并进入 `main`。但 `package.json` 版本仍为 `0.2.0`，最新 GitHub 发布仍是 [v0.2.0 Pre-release](https://github.com/starsstring/project-compass/releases/tag/v0.2.0)。**尚未创建 v0.3.0 Tag 或 Release。** 克隆 `main` 获取的是已合并的实验源码，不等于下载新的正式发布版。
+
 0.2.0 增加有限的意图/条件规则与中文分词，适当组合针对性和宽泛查询；模糊输入先澄清、不联网。报告保留原句，并把条件相关文字明确标为尚未验证。这不是通用语义理解，见 [行为与限制](docs/INPUT_PLANNING.md)。
 
 [English](README.md) | 简体中文
@@ -43,7 +45,7 @@ npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".co
 
 ## 当前已实现
 
-可选的[外部语义计划实验入口](docs/SEMANTIC_PLAN.zh-CN.md)接收 `--semantic-plan <json>`，使用短查询和零候选有限回退。JSON 由用户/外部准备，语义未验证；Compass 不生成计划、不调用模型，默认规则输入不变。此 Issue #4 原型待独立验收，不是 0.3.0 发布。
+可选的[外部语义计划实验入口](docs/SEMANTIC_PLAN.zh-CN.md)接收 `--semantic-plan <json>`，使用短查询和零候选有限回退。JSON 由用户/外部准备，语义未验证；Compass 不生成计划、不调用模型，默认规则输入不变。Issue #4 原型已通过工程验收并进入 `main`，但**不是 v0.3.0 发布版本**，也没有内置 LLM 语义规划或真实检索效果改善的充分证明。
 
 1. 输入需求，保留意图推断、条件及未映射要点，通过有限词表与分词生成最多两条检索；模糊输入先澄清，也可指定检索词。
 2. 获取最多五个 GitHub 候选，展示链接、简介、语言、许可证元数据、更新时间和文本关联依据。
@@ -51,6 +53,22 @@ npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".co
 4. 分开标明作者陈述、规则推断、限制和未知；材料没提到某功能，不等于软件没有该功能。
 5. 在材料足够时提出 1–3 个待验证方向，说明已有能力、最小改动、验证动作，以及何时复用现成工具或停止投入；没有候选时可能不生成方向。
 6. 本地保存报告与原始响应，并支持不联网的离线重放。
+
+### 试用已合并的实验入口（可选）
+
+该入口必须由用户或外部工具准备 JSON 语义计划，CLI **不会自动生成计划**。在完成 `npm ci`、`npm run build` 后，运行仓库中已有的公开示例：
+
+```powershell
+node dist/src/cli.js "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？" --semantic-plan examples/semantic-plan.json
+```
+
+运行后终端会显示新生成的目录。把下面路径里的 `REPLACE_WITH_RUN_ID` 换成真实运行号，可以用保存的响应进行**零联网离线重放**；新输出目录不可已存在：
+
+```powershell
+node dist/src/cli.js "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？" --semantic-plan ".compass/discovery/REPLACE_WITH_RUN_ID/semantic-plan.json" --replay ".compass/discovery/REPLACE_WITH_RUN_ID/captures.json" --out ".compass/replay-smoke"
+```
+
+此例是既有公开回归样例，**不是独立用户测试或检索质量证明**。字段、限制和错误处理见 [语义计划使用说明](docs/SEMANTIC_PLAN.zh-CN.md)。
 
 ## 使用场景
 

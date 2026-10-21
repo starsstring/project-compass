@@ -1,0 +1,70 @@
+{
+  "version": 2,
+  "frozen_at_utc": "2026-10-21T10:42:44.644616+00:00",
+  "scope": "offline provenance repair only; no new GitHub Search, README or candidate-page requests",
+  "supersedes": "v1 offline replay/probe instrumentation claims; original live result stays historical with missing contemporaneous guard binding",
+  "baseline_main": "0102201a4246ebc9c2aa704b117f86ec108efe61",
+  "preload": {
+    "path": "validation/issue-6/network-guard.mjs",
+    "source_commit": "51da74ba82005e2b9e5a20a4a1a87ae3ac133fd8",
+    "sha256": "e40634bc17e4f9c5172871e50d7100e68568580a48fab5feaaff7983a9dd5922",
+    "git_blob_sha1": "14ed06fa06457f9f39b1846af63c38d7cf21c660",
+    "bytes": 2305
+  },
+  "retained_inputs": {
+    "captures.json": {
+      "sha256": "fa2328b24ca99673fed07d6a1c700787f4d42530c2ed90b20b58a730ffbf6195",
+      "bytes": 258074
+    },
+    "report.json": {
+      "sha256": "ab43abd95ad288cd9d1838a0266d076ce3f8a8ed26fcf373c8f4eb42061229b0",
+      "bytes": 44118
+    },
+    "report.md": {
+      "sha256": "3ff13e14590fc0d41d24a3a1b5039396e2d7e24ce8bae2d13b9aee571b3fcc08",
+      "bytes": 17067
+    },
+    "semantic-plan.json": {
+      "sha256": "29281bde8812eb92fd9053dda39eb22b5c5f20dc077247eff67fed480a43505b",
+      "bytes": 616
+    }
+  },
+  "launch_requirements": [
+    "Use a detached verifier worktree at the protocol freeze commit; load its tracked preload by absolute path",
+    "Before each process: compare file SHA-256 and Git blob to this protocol and the committed object; fail before launch on mismatch",
+    "After each process: repeat guard and protocol digest checks and record both digests, freeze commit, argv, exits and metrics",
+    "Run only the existing native CLI replay and five offline probes against retained captures; no real discovery rerun",
+    "Verify the guard is active with one blocked fetch and one blocked https.request canary; do not label canary attempts as zero",
+    "Rebuild the unchanged main source offline before replay; record build exit and CLI byte hash"
+  ],
+  "expected_offline_results": {
+    "replay": {
+      "exit_code": 0,
+      "fetch_calls": 0,
+      "other_network_attempts": [],
+      "equalities": [
+        "actual queries",
+        "searches",
+        "candidate order and README records",
+        "requests metadata",
+        "capture arrays",
+        "saved semantic plan"
+      ]
+    },
+    "probes": {
+      "missing_file": 2,
+      "idea_mismatch": 2,
+      "malformed_schema": 2,
+      "existing_output": 4,
+      "clarification": 2
+    },
+    "canary": {
+      "fetch_calls": 1,
+      "other_network_attempts": [
+        "https.request"
+      ],
+      "both_calls_blocked_before_transport": true
+    }
+  },
+  "historical_limit": "No retrospective checksum can prove which preload executed the original live run. Current snapshot equality is not contemporaneous execution attestation. No new live run is authorized by this protocol."
+}

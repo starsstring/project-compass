@@ -1,0 +1,101 @@
+{
+  "protocol_freeze_commit": "d1b72ad55172cb73caa5deba69363ac37a18c115",
+  "preload_binding": {
+    "checked_at_utc": "2026-10-21T10:44:17.582534+00:00",
+    "preload_path": "/workspace/.delivery/project-compass/issue-6-provenance/frozen-verifier/validation/issue-6/network-guard.mjs",
+    "preload_sha256": "e40634bc17e4f9c5172871e50d7100e68568580a48fab5feaaff7983a9dd5922",
+    "preload_git_blob_sha1": "14ed06fa06457f9f39b1846af63c38d7cf21c660",
+    "verifier_commit": "d1b72ad55172cb73caa5deba69363ac37a18c115",
+    "protocol_path": "validation/issue-6/protocol-v2.json",
+    "protocol_sha256": "4638b984c183e3bcd2ed7220a006746fa4164badd5a40921049f256d88c91e97",
+    "protocol_git_blob_sha1": "eb1ef734855dd8e047348b8c4a3b79a9f3b5f39b"
+  },
+  "digest_mismatch_preflight": {
+    "result": "rejected before launching a process",
+    "processes_launched": 0,
+    "error": "preload SHA-256 mismatch before process launch"
+  },
+  "build": {
+    "argv": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+    "started_at_utc": "2026-10-21T10:44:11.758557+00:00",
+    "completed_at_utc": "2026-10-21T10:44:16.086767+00:00",
+    "exit_code": 0,
+    "stdout_file": "provenance-build.txt",
+    "stdout_sha256": "372cba14f3877f9433664af52cfb83064caa64a01bee48b1f8b3eef43c0a0109",
+    "source_commit": "0102201a4246ebc9c2aa704b117f86ec108efe61",
+    "cli_sha256": "01f5150c4ddfd8b5ce913e10c66660fc91674eecbe7ad8f572cdb748a604c401"
+  },
+  "canary": {
+    "argv": [
+      "node",
+      "--import",
+      "/workspace/.delivery/project-compass/issue-6-provenance/frozen-verifier/validation/issue-6/network-guard.mjs",
+      "--input-type=module",
+      "-e",
+      "import https from 'node:https';let blocked=0;try{await fetch('https://api.github.com/rate_limit')}catch{blocked++}try{https.request('https://api.github.com/rate_limit')}catch{blocked++}if(blocked!==2)process.exitCode=1;console.log(JSON.stringify({blocked}));"
+    ],
+    "shell_command": "node --import /workspace/.delivery/project-compass/issue-6-provenance/frozen-verifier/validation/issue-6/network-guard.mjs --input-type=module -e 'import https from '\"'\"'node:https'\"'\"';let blocked=0;try{await fetch('\"'\"'https://api.github.com/rate_limit'\"'\"')}catch{blocked++}try{https.request('\"'\"'https://api.github.com/rate_limit'\"'\"')}catch{blocked++}if(blocked!==2)process.exitCode=1;console.log(JSON.stringify({blocked}));'",
+    "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+    "started_at_utc": "2026-10-21T10:44:16.093467+00:00",
+    "completed_at_utc": "2026-10-21T10:44:16.164235+00:00",
+    "exit_code": 0,
+    "metrics": {
+      "mode": "offline",
+      "started_at": "2026-10-21T10:44:16.152Z",
+      "fetch_calls": 1,
+      "other_network_attempts": [
+        "https.request"
+      ],
+      "requests": [
+        {
+          "url": "https://api.github.com/rate_limit",
+          "status": null,
+          "kind": null,
+          "client_authorization": false
+        }
+      ],
+      "completed_at": "2026-10-21T10:44:16.154Z",
+      "process_exit_code": 0
+    },
+    "preload_provenance": {
+      "status": "frozen_before_execution",
+      "before": {
+        "checked_at_utc": "2026-10-21T10:44:16.092026+00:00",
+        "preload_path": "/workspace/.delivery/project-compass/issue-6-provenance/frozen-verifier/validation/issue-6/network-guard.mjs",
+        "preload_sha256": "e40634bc17e4f9c5172871e50d7100e68568580a48fab5feaaff7983a9dd5922",
+        "preload_git_blob_sha1": "14ed06fa06457f9f39b1846af63c38d7cf21c660",
+        "verifier_commit": "d1b72ad55172cb73caa5deba69363ac37a18c115",
+        "protocol_path": "validation/issue-6/protocol-v2.json",
+        "protocol_sha256": "4638b984c183e3bcd2ed7220a006746fa4164badd5a40921049f256d88c91e97",
+        "protocol_git_blob_sha1": "eb1ef734855dd8e047348b8c4a3b79a9f3b5f39b"
+      },
+      "after": {
+        "checked_at_utc": "2026-10-21T10:44:16.161682+00:00",
+        "preload_path": "/workspace/.delivery/project-compass/issue-6-provenance/frozen-verifier/validation/issue-6/network-guard.mjs",
+        "preload_sha256": "e40634bc17e4f9c5172871e50d7100e68568580a48fab5feaaff7983a9dd5922",
+        "preload_git_blob_sha1": "14ed06fa06457f9f39b1846af63c38d7cf21c660",
+        "verifier_commit": "d1b72ad55172cb73caa5deba69363ac37a18c115",
+        "protocol_path": "validation/issue-6/protocol-v2.json",
+        "protocol_sha256": "4638b984c183e3bcd2ed7220a006746fa4164badd5a40921049f256d88c91e97",
+        "protocol_git_blob_sha1": "eb1ef734855dd8e047348b8c4a3b79a9f3b5f39b"
+      }
+    },
+    "environment_overrides": {
+      "COMPASS_SMOKE_MODE": "offline",
+      "COMPASS_SMOKE_METRICS": "/workspace/.delivery/project-compass/issue-6-provenance/canary-metrics.json"
+    },
+    "source_commit": "0102201a4246ebc9c2aa704b117f86ec108efe61",
+    "cli_sha256": "01f5150c4ddfd8b5ce913e10c66660fc91674eecbe7ad8f572cdb748a604c401",
+    "stdout_sha256": "9c752a2e139f29fadd99a4aa3c3fefa462936bcbd2ea3e5bb32e172afa4055ad",
+    "stderr": "",
+    "interpretation": "Two intentional attempts blocked before transport; not a zero-attempt CLI run."
+  },
+  "new_github_discovery_requests": 0,
+  "retained_artifact_hashes_verified": true,
+  "historical_live_run_preload_attested": false
+}

@@ -1,0 +1,5 @@
+npm notice run project-compass@0.2.0 build
+npm notice run npm run check:types && tsc -p tsconfig.json
+npm notice run project-compass@0.2.0 check:types
+npm notice run node scripts/generate-contract-types.mjs --check
+Contract types match schemas.

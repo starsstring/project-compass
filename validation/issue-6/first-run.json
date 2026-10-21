@@ -1,0 +1,279 @@
+{
+  "mode": "real GitHub reads through existing platform proxy; client adds no Authorization",
+  "baseline_main": "0102201a4246ebc9c2aa704b117f86ec108efe61",
+  "protocol_commit": "82905838377dd97759678d3bfbd6f3776a6a166c",
+  "started_at_utc": "2026-10-21T06:37:31.445321+00:00",
+  "completed_at_utc": "2026-10-21T06:37:34.426066+00:00",
+  "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+  "argv": [
+    "node",
+    "--import",
+    "/workspace/.delivery/project-compass/issue-6/network-guard.mjs",
+    "dist/src/cli.js",
+    "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？",
+    "--semantic-plan",
+    "examples/semantic-plan.json",
+    "--out",
+    ".compass/semantic-example"
+  ],
+  "shell_command": "node --import /workspace/.delivery/project-compass/issue-6/network-guard.mjs dist/src/cli.js '有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？' --semantic-plan examples/semantic-plan.json --out .compass/semantic-example",
+  "environment_overrides": {
+    "NODE_USE_ENV_PROXY": "1",
+    "COMPASS_SMOKE_MODE": "live",
+    "COMPASS_SMOKE_METRICS": "/workspace/.delivery/project-compass/issue-6/live-metrics.json"
+  },
+  "exit_code": 0,
+  "metrics": {
+    "mode": "live",
+    "started_at": "2026-10-21T06:37:31.508Z",
+    "fetch_calls": 6,
+    "other_network_attempts": [],
+    "requests": [
+      {
+        "url": "https://api.github.com/search/repositories?q=point+cloud+viewer+archived%3Afalse+fork%3Afalse&per_page=10",
+        "status": 200,
+        "kind": "search",
+        "client_authorization": false
+      },
+      {
+        "url": "https://api.github.com/repos/potree/potree/readme",
+        "status": 200,
+        "kind": "readme",
+        "client_authorization": false
+      },
+      {
+        "url": "https://api.github.com/repos/cartographer-project/point_cloud_viewer/readme",
+        "status": 200,
+        "kind": "readme",
+        "client_authorization": false
+      },
+      {
+        "url": "https://api.github.com/repos/luolaihua/point-cloud-viewer/readme",
+        "status": 200,
+        "kind": "readme",
+        "client_authorization": false
+      },
+      {
+        "url": "https://api.github.com/repos/xeokit/xeokit-bim-viewer/readme",
+        "status": 200,
+        "kind": "readme",
+        "client_authorization": false
+      },
+      {
+        "url": "https://api.github.com/repos/verma/plasio/readme",
+        "status": 200,
+        "kind": "readme",
+        "client_authorization": false
+      }
+    ],
+    "completed_at": "2026-10-21T06:37:34.408Z",
+    "process_exit_code": 0
+  },
+  "quota_preflight": {
+    "core": {
+      "limit": 15000,
+      "remaining": 14976,
+      "reset": 1792566591,
+      "used": 24
+    },
+    "search": {
+      "limit": 30,
+      "remaining": 30,
+      "reset": 1792564668,
+      "used": 0
+    }
+  },
+  "live-stdout.md": {
+    "local_path": "/workspace/.delivery/project-compass/issue-6/live-stdout.md",
+    "bytes": 17067,
+    "sha256": "3ff13e14590fc0d41d24a3a1b5039396e2d7e24ce8bae2d13b9aee571b3fcc08"
+  },
+  "live-stderr.txt": {
+    "local_path": "/workspace/.delivery/project-compass/issue-6/live-stderr.txt",
+    "bytes": 398,
+    "sha256": "19469a2ab1efea40fb1ac39a8ec781da5fcd2ac94533f88e2619f8f3eea5beaf"
+  },
+  "artifacts": [
+    {
+      "name": "captures.json",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example/captures.json",
+      "bytes": 258074,
+      "sha256": "fa2328b24ca99673fed07d6a1c700787f4d42530c2ed90b20b58a730ffbf6195"
+    },
+    {
+      "name": "report.json",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example/report.json",
+      "bytes": 44118,
+      "sha256": "ab43abd95ad288cd9d1838a0266d076ce3f8a8ed26fcf373c8f4eb42061229b0"
+    },
+    {
+      "name": "report.md",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example/report.md",
+      "bytes": 17067,
+      "sha256": "3ff13e14590fc0d41d24a3a1b5039396e2d7e24ce8bae2d13b9aee571b3fcc08"
+    },
+    {
+      "name": "semantic-plan.json",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example/semantic-plan.json",
+      "bytes": 616,
+      "sha256": "29281bde8812eb92fd9053dda39eb22b5c5f20dc077247eff67fed480a43505b"
+    }
+  ],
+  "report": {
+    "format": "compass-discovery-v1.1",
+    "mode": "live",
+    "status": "complete",
+    "searches": [
+      {
+        "query": "point cloud viewer",
+        "total_count": 553,
+        "incomplete": false,
+        "error": null
+      }
+    ],
+    "query_execution": {
+      "strategy": "semantic_short_fallback",
+      "planned_queries": [
+        "point cloud viewer",
+        "point cloud visualization"
+      ],
+      "attempted_queries": [
+        "point cloud viewer"
+      ],
+      "replay": false,
+      "fallback": {
+        "attempted": false,
+        "reason": "primary_has_candidates"
+      }
+    },
+    "requests": [
+      {
+        "url": "https://api.github.com/search/repositories?q=point+cloud+viewer+archived%3Afalse+fork%3Afalse&per_page=10",
+        "fetched_at": "2026-10-21T06:37:32.361Z",
+        "status": 200,
+        "remaining": "30",
+        "reset": "1792564711",
+        "retry_after": null,
+        "sha256": "09cbf74113408e774de6f9bd0012d38e02782901d85df04d8b14434ae1239f36"
+      },
+      {
+        "url": "https://api.github.com/repos/potree/potree/readme",
+        "fetched_at": "2026-10-21T06:37:32.694Z",
+        "status": 200,
+        "remaining": "14975",
+        "reset": "1792566591",
+        "retry_after": null,
+        "sha256": "8e0877498ca1d014a83491112e0ecdabf0deaf826eeb2ffaff94f84ed9957712"
+      },
+      {
+        "url": "https://api.github.com/repos/cartographer-project/point_cloud_viewer/readme",
+        "fetched_at": "2026-10-21T06:37:33.165Z",
+        "status": 200,
+        "remaining": "14974",
+        "reset": "1792566591",
+        "retry_after": null,
+        "sha256": "af913da409f8b1995ef466f83af38c4ff592d3792a2c731386defb167f354444"
+      },
+      {
+        "url": "https://api.github.com/repos/luolaihua/point-cloud-viewer/readme",
+        "fetched_at": "2026-10-21T06:37:33.618Z",
+        "status": 200,
+        "remaining": "14973",
+        "reset": "1792566591",
+        "retry_after": null,
+        "sha256": "e09dccbb75363953d8f7733b04ed914f99686bfa4dc3f362addf33340498d9b0"
+      },
+      {
+        "url": "https://api.github.com/repos/xeokit/xeokit-bim-viewer/readme",
+        "fetched_at": "2026-10-21T06:37:34.036Z",
+        "status": 200,
+        "remaining": "14972",
+        "reset": "1792566591",
+        "retry_after": null,
+        "sha256": "4d187ee931f234629fdba49f9457639e14bc0199e73530248ffa1f4788a9083b"
+      },
+      {
+        "url": "https://api.github.com/repos/verma/plasio/readme",
+        "fetched_at": "2026-10-21T06:37:34.394Z",
+        "status": 200,
+        "remaining": "14971",
+        "reset": "1792566591",
+        "retry_after": null,
+        "sha256": "3aa30498a98ec2bb8a32cf38f11015c2805f25c7e511a9633ed8830541293738"
+      }
+    ],
+    "actual_queries": [
+      "point cloud viewer"
+    ],
+    "candidates": [
+      {
+        "repository": "potree/potree",
+        "readme_status": "captured",
+        "readme_sha256": "b3bdd6b2ceb7d83d541bae42c7fa446d97844c1a4768ab446e8ba248d78a56e9",
+        "condition_statuses": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ]
+      },
+      {
+        "repository": "cartographer-project/point_cloud_viewer",
+        "readme_status": "captured",
+        "readme_sha256": "b2d67fcbd06cf258ab715bfd91ca12235bf817394638b26162d1e1e4578eda39",
+        "condition_statuses": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ]
+      },
+      {
+        "repository": "luolaihua/point-cloud-viewer",
+        "readme_status": "captured",
+        "readme_sha256": "33a0ff25f9cf3b87a83a7dabf1d8b159ddb503fdd3b4d7768aa642bdb852d9be",
+        "condition_statuses": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ]
+      },
+      {
+        "repository": "xeokit/xeokit-bim-viewer",
+        "readme_status": "captured",
+        "readme_sha256": "186215cc6b0a8e493d2fc2946019e788b9b282b18e1c4b33b4203ab553df385f",
+        "condition_statuses": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ]
+      },
+      {
+        "repository": "verma/plasio",
+        "readme_status": "captured",
+        "readme_sha256": "65594adefec24de98d9a60e492a06e9596cbc08d6ae20c01b09eca1361a53f01",
+        "condition_statuses": [
+          "unknown",
+          "unknown",
+          "unknown",
+          "unknown"
+        ]
+      }
+    ]
+  },
+  "captures_count": 6,
+  "preload_provenance": {
+    "status": "not_contemporaneously_bound",
+    "annotation_recorded_at_utc": "2026-10-21T10:42:44.644616+00:00",
+    "preserved_source_snapshot": {
+      "commit": "51da74ba82005e2b9e5a20a4a1a87ae3ac133fd8",
+      "path": "validation/issue-6/network-guard.mjs",
+      "sha256": "e40634bc17e4f9c5172871e50d7100e68568580a48fab5feaaff7983a9dd5922",
+      "git_blob_sha1": "14ed06fa06457f9f39b1846af63c38d7cf21c660"
+    },
+    "executed_preload_identity_proven": false,
+    "limitation": "This digest was recovered after review, not recorded at launch. It does not prove the original live process loaded these bytes. Previous byte-identical/guard-enforcement assurance is withdrawn for this historical run."
+  }
+}

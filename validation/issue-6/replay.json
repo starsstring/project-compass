@@ -1,0 +1,113 @@
+{
+  "argv": [
+    "node",
+    "--import",
+    "/workspace/.delivery/project-compass/issue-6-provenance/frozen-verifier/validation/issue-6/network-guard.mjs",
+    "dist/src/cli.js",
+    "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？",
+    "--semantic-plan",
+    "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example/semantic-plan.json",
+    "--replay",
+    "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example/captures.json",
+    "--out",
+    "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/issue-6-provenance-v2/replay"
+  ],
+  "shell_command": "node --import /workspace/.delivery/project-compass/issue-6-provenance/frozen-verifier/validation/issue-6/network-guard.mjs dist/src/cli.js '有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？' --semantic-plan /workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example/semantic-plan.json --replay /workspace/.delivery/project-compass/issue-6/clean-main/.compass/semantic-example/captures.json --out /workspace/.delivery/project-compass/issue-6/clean-main/.compass/issue-6-provenance-v2/replay",
+  "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+  "started_at_utc": "2026-10-21T10:44:16.169384+00:00",
+  "completed_at_utc": "2026-10-21T10:44:16.495792+00:00",
+  "exit_code": 0,
+  "metrics": {
+    "mode": "offline",
+    "started_at": "2026-10-21T10:44:16.218Z",
+    "fetch_calls": 0,
+    "other_network_attempts": [],
+    "requests": [],
+    "completed_at": "2026-10-21T10:44:16.483Z",
+    "process_exit_code": 0
+  },
+  "preload_provenance": {
+    "status": "frozen_before_execution",
+    "before": {
+      "checked_at_utc": "2026-10-21T10:44:16.167876+00:00",
+      "preload_path": "/workspace/.delivery/project-compass/issue-6-provenance/frozen-verifier/validation/issue-6/network-guard.mjs",
+      "preload_sha256": "e40634bc17e4f9c5172871e50d7100e68568580a48fab5feaaff7983a9dd5922",
+      "preload_git_blob_sha1": "14ed06fa06457f9f39b1846af63c38d7cf21c660",
+      "verifier_commit": "d1b72ad55172cb73caa5deba69363ac37a18c115",
+      "protocol_path": "validation/issue-6/protocol-v2.json",
+      "protocol_sha256": "4638b984c183e3bcd2ed7220a006746fa4164badd5a40921049f256d88c91e97",
+      "protocol_git_blob_sha1": "eb1ef734855dd8e047348b8c4a3b79a9f3b5f39b"
+    },
+    "after": {
+      "checked_at_utc": "2026-10-21T10:44:16.493557+00:00",
+      "preload_path": "/workspace/.delivery/project-compass/issue-6-provenance/frozen-verifier/validation/issue-6/network-guard.mjs",
+      "preload_sha256": "e40634bc17e4f9c5172871e50d7100e68568580a48fab5feaaff7983a9dd5922",
+      "preload_git_blob_sha1": "14ed06fa06457f9f39b1846af63c38d7cf21c660",
+      "verifier_commit": "d1b72ad55172cb73caa5deba69363ac37a18c115",
+      "protocol_path": "validation/issue-6/protocol-v2.json",
+      "protocol_sha256": "4638b984c183e3bcd2ed7220a006746fa4164badd5a40921049f256d88c91e97",
+      "protocol_git_blob_sha1": "eb1ef734855dd8e047348b8c4a3b79a9f3b5f39b"
+    }
+  },
+  "environment_overrides": {
+    "COMPASS_SMOKE_MODE": "offline",
+    "COMPASS_SMOKE_METRICS": "/workspace/.delivery/project-compass/issue-6-provenance/replay-metrics.json"
+  },
+  "source_commit": "0102201a4246ebc9c2aa704b117f86ec108efe61",
+  "cli_sha256": "01f5150c4ddfd8b5ce913e10c66660fc91674eecbe7ad8f572cdb748a604c401",
+  "stdout_sha256": "40adbafbe327234104266294ae19a1c4a60346ca0e8b78cd9a837a1867d60be9",
+  "stderr": "意图（外部声明，未验证）：寻找已有项目；用户/外部语义计划声明，来源身份与语义均未验证。\n历史响应离线重放：point cloud viewer\n已保存：/workspace/.delivery/project-compass/issue-6/clean-main/.compass/issue-6-provenance-v2/replay/report.md\n/workspace/.delivery/project-compass/issue-6/clean-main/.compass/issue-6-provenance-v2/replay/report.json\n",
+  "comparison_checks": {
+    "actual_queries": true,
+    "searches": true,
+    "candidate_order": true,
+    "candidate_readmes": true,
+    "requests": true,
+    "capture_arrays": true,
+    "saved_semantic_plan": true
+  },
+  "report_status": "complete",
+  "query_execution": {
+    "strategy": "semantic_short_fallback",
+    "planned_queries": [
+      "point cloud viewer"
+    ],
+    "attempted_queries": [
+      "point cloud viewer"
+    ],
+    "replay": true,
+    "fallback": {
+      "attempted": null,
+      "reason": "replay_actual_queries"
+    }
+  },
+  "unknown_conditions_preserved": true,
+  "markdown_fallback_unknown": true,
+  "input_capture_sha256": "fa2328b24ca99673fed07d6a1c700787f4d42530c2ed90b20b58a730ffbf6195",
+  "artifacts": [
+    {
+      "name": "captures.json",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/issue-6-provenance-v2/replay/captures.json",
+      "bytes": 258074,
+      "sha256": "fa2328b24ca99673fed07d6a1c700787f4d42530c2ed90b20b58a730ffbf6195"
+    },
+    {
+      "name": "report.json",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/issue-6-provenance-v2/replay/report.json",
+      "bytes": 44348,
+      "sha256": "be20e6401eceb64d5d1a537ca1758932d17cbe431666d551dfd802a434c67eba"
+    },
+    {
+      "name": "report.md",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/issue-6-provenance-v2/replay/report.md",
+      "bytes": 17304,
+      "sha256": "40adbafbe327234104266294ae19a1c4a60346ca0e8b78cd9a837a1867d60be9"
+    },
+    {
+      "name": "semantic-plan.json",
+      "local_path": "/workspace/.delivery/project-compass/issue-6/clean-main/.compass/issue-6-provenance-v2/replay/semantic-plan.json",
+      "bytes": 616,
+      "sha256": "29281bde8812eb92fd9053dda39eb22b5c5f20dc077247eff67fed480a43505b"
+    }
+  ]
+}

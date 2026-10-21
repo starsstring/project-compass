@@ -1,0 +1,47 @@
+{
+  "baseline_main": "0102201a4246ebc9c2aa704b117f86ec108efe61",
+  "clean_before_install": true,
+  "mode": "Codex fresh detached worktree; same machine, not independent user or GitHub CI",
+  "runtime": {
+    "node": "v24.19.0",
+    "npm": "12.2.0"
+  },
+  "commands": [
+    {
+      "command": "npm ci",
+      "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+      "started_at_utc": "2026-10-21T06:35:49.402656+00:00",
+      "completed_at_utc": "2026-10-21T06:35:50.709822+00:00",
+      "exit_code": 0,
+      "log": "install.txt",
+      "sha256": "6a7de75b54c9614bfa040966983635014d77fce2fdc3dc6204da61b1c0031920"
+    },
+    {
+      "command": "npm run build",
+      "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+      "started_at_utc": "2026-10-21T06:35:50.710325+00:00",
+      "completed_at_utc": "2026-10-21T06:35:54.711708+00:00",
+      "exit_code": 0,
+      "log": "build.txt",
+      "sha256": "372cba14f3877f9433664af52cfb83064caa64a01bee48b1f8b3eef43c0a0109"
+    },
+    {
+      "command": "npm test",
+      "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+      "started_at_utc": "2026-10-21T06:35:54.711855+00:00",
+      "completed_at_utc": "2026-10-21T06:36:08.693674+00:00",
+      "exit_code": 0,
+      "log": "tests.txt",
+      "sha256": "4093737ad49db4b466e3808013709dcb92f20d0952cf940be7f1192a4df41001"
+    },
+    {
+      "command": "npm run check:contracts",
+      "cwd": "/workspace/.delivery/project-compass/issue-6/clean-main",
+      "started_at_utc": "2026-10-21T06:36:08.693942+00:00",
+      "completed_at_utc": "2026-10-21T06:36:12.393206+00:00",
+      "exit_code": 0,
+      "log": "contracts.txt",
+      "sha256": "6dc7a9c8d30bd530ba082f1713b99c2c0f959c6c844e125288e0f365d9af24d0"
+    }
+  ]
+}

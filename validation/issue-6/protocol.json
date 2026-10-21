@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "frozen_at_utc": "2026-10-21T06:34:58.103872+00:00",
+  "issue": 6,
+  "existing_pr": 7,
+  "baseline_main": "0102201a4246ebc9c2aa704b117f86ec108efe61",
+  "initial_docs_head": "ed83ddbf94b5bcdbfe7ddb5c1d96ab25acce8014",
+  "runtime": {
+    "node": "24.19.0",
+    "npm": "12.2.0",
+    "platform": "Linux x64",
+    "environment": "fresh detached worktree in Codex; not an independent human or second machine"
+  },
+  "sample": {
+    "path": "examples/semantic-plan.json",
+    "sha256": "be60d80a031ddc64416fda6b7b3d13a19a0458d49d37383ebfc6f0a62550d131",
+    "idea": "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？",
+    "queries": [
+      "point cloud viewer",
+      "point cloud visualization"
+    ],
+    "classification": "existing published example/regression; not blind or search-quality research"
+  },
+  "validation_commands": [
+    "npm ci",
+    "npm run build",
+    "npm test",
+    "npm run check:contracts"
+  ],
+  "live": {
+    "maximum_search_requests": 2,
+    "maximum_readme_requests": 5,
+    "quota_preflight_requests": 1,
+    "retries": 0,
+    "replacement_samples": 0,
+    "candidate_installs": 0,
+    "candidate_page_gets": 0,
+    "model_calls": 0,
+    "new_credentials": false,
+    "mode": "native CLI, global fetch wrapped only for counting and budget guards; existing platform proxy may inject authentication; no client Authorization header",
+    "args": [
+      "node",
+      "dist/src/cli.js",
+      "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？",
+      "--semantic-plan",
+      "examples/semantic-plan.json",
+      "--out",
+      ".compass/semantic-example"
+    ],
+    "failure_policy": "Stop live execution on error; no retries or extra queries. If quota/transport unavailable use fixed synthetic responses, explicitly labeled, without claiming live verification."
+  },
+  "replay": {
+    "args": [
+      "node",
+      "dist/src/cli.js",
+      "有没有能在浏览器里打开 LAS/LAZ 点云、测量两点距离并查看剖面的工具？",
+      "--semantic-plan",
+      ".compass/semantic-example/semantic-plan.json",
+      "--replay",
+      ".compass/semantic-example/captures.json",
+      "--out",
+      ".compass/semantic-example-replay"
+    ],
+    "network_policy": "fetch, http/https request, net/tls connection guards throw and count any attempted external call; require all zero",
+    "equalities": [
+      "actual queries",
+      "searches",
+      "candidate order and README hashes",
+      "requests metadata",
+      "entire capture arrays"
+    ],
+    "fallback_state": "unknown (null); do not infer historical strategy from captures"
+  },
+  "friction_audit": {
+    "kind": "developer inspection and controlled CLI probes, not independent usability testing",
+    "probes": [
+      "missing semantic file",
+      "idea mismatch",
+      "existing output directory",
+      "published clarification example"
+    ],
+    "network_policy": "all probes block external network",
+    "no_product_changes": true
+  },
+  "publication": {
+    "publish": [
+      "commands, exits, validation stdout, request/source metadata and hashes, artifact inventory, developer friction findings"
+    ],
+    "keep_ignored": [
+      "full third-party captures",
+      "full report JSON/Markdown",
+      "raw live CLI stdout"
+    ],
+    "claim_limits": [
+      "not release approval",
+      "not installation of candidate software",
+      "not new candidate-quality experiment",
+      "not proven semantic fallback gain",
+      "not pure anonymous proxy environment proof"
+    ]
+  }
+}

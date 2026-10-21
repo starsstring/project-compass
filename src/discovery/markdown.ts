@@ -26,7 +26,12 @@ export function renderDiscovery(report: DiscoveryReport): string {
       `排除条件：${semantic.excluded_conditions.map(e).join('；') || '未声明'}。`, '',
       `未确定项：${semantic.unknowns.map(e).join('；') || '未声明；不保证不存在未知项'}。`, '',
       '条件仅供追踪；所有候选的外部条件状态均为 unknown。没有将关键词、否定、计划或 README 缺写转换成满足/不满足，也未按排除条件自动删候选。', '');
-    if (report.query_execution) lines.push(`查询策略：${report.query_execution.strategy}；实际尝试 ${report.query_execution.attempted_queries.length} 条；回退${report.query_execution.fallback.attempted ? '已执行' : '未执行'}；原因：${e(report.query_execution.fallback.reason)}${report.query_execution.replay ? '（仅重放留档实际查询，不重新决定回退）' : ''}。`, '');
+    if (report.query_execution) {
+      const execution = report.query_execution;
+      const fallback = execution.fallback.attempted === null ? '原始回退状态不可证明（未知）'
+        : `回退${execution.fallback.attempted ? '已执行' : '未执行'}`;
+      lines.push(`查询策略：${execution.strategy}；实际尝试 ${execution.attempted_queries.length} 条；${fallback}；原因：${e(execution.fallback.reason)}${execution.replay ? '（仅重放留档实际查询，不重新决定回退）' : ''}。`, '');
+    }
   }
   if (report.plan.understanding && !report.plan.semantic) {
     const understanding = report.plan.understanding;

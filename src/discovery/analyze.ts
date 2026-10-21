@@ -28,7 +28,8 @@ export async function discover(plan: SearchPlan, client: GitHubSearch, limit = 5
   }
   const execution: QueryExecution | undefined = plan.semantic ? {
     strategy: 'semantic_short_fallback', planned_queries: [...plan.queries], attempted_queries: [], replay: client.mode === 'replay',
-    fallback: { attempted: client.mode === 'replay' && plan.queries.length > 1,
+    // Captures preserve requests/responses, not the original query strategy.
+    fallback: { attempted: client.mode === 'replay' ? null : false,
       reason: client.mode === 'replay' ? 'replay_actual_queries' : 'no_alternative' },
   } : undefined;
   const exclusionReason = (repo: Repository): string | null => plan.understanding?.intent !== 'learn'

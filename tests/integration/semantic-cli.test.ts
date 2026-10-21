@@ -30,6 +30,7 @@ test('real CLI pipeline falls back after empty primary and caps 2 Search/5 READM
   const report = json<DiscoveryReport>(join(w.output, 'report.json'));
   assert.deepEqual(report.plan.queries, ['duplicate image finder', 'similar image finder']);
   assert.equal(report.query_execution!.fallback.attempted, true); assert.equal(report.query_execution!.fallback.reason, 'primary_empty');
+  assert.match(readFileSync(join(w.output, 'report.md'), 'utf8'), /回退已执行/u);
   assert.equal(report.candidates.length, 5); assert.ok(report.candidates.every(c => Number(c.full_name.split('-').at(-1)) < 10));
   assert.equal(searches, 2); assert.equal(fake.calls.filter(c => c.url.endsWith('/readme')).length, 5);
   assert.equal(json<unknown[]>(join(w.output, 'captures.json')).length, 7);
@@ -60,6 +61,8 @@ test('primary candidates with unknown conditions never trigger fallback; conditi
   const report = json<DiscoveryReport>(join(w.output, 'report.json'));
   assert.equal(report.searches.length, 1); assert.equal(report.candidates.length, 1);
   assert.equal(report.query_execution!.fallback.reason, 'primary_has_candidates');
+  assert.equal(report.query_execution!.fallback.attempted, false);
+  assert.match(readFileSync(join(w.output, 'report.md'), 'utf8'), /回退未执行/u);
   assert.ok(report.candidates[0]!.external_conditions!.every(c => c.status === 'unknown'));
   assert.notEqual(report.candidates[0]!.analysis.capabilities.find(c => c.key === 'sync')?.state, 'author_mentioned');
 });
@@ -143,14 +146,62 @@ for (const emptyPrimary of [false, true]) test(`semantic replay keeps actual arc
     ? Response.json({ total_count: 0, incomplete_results: false, items: [] }) : fake.fetcher(input, init);
   assert.equal(await runCli(w.args, { ...silent, fetcher }), 0);
   const before = json<DiscoveryReport>(join(w.output, 'report.json')), replayOut = join(w.dir, 'replay');
+  assert.equal(before.query_execution!.fallback.attempted, emptyPrimary);
   const changed = semanticFixture(); changed.core = { object: 'different subject', action: 'converter' }; changed.alternative = null;
   writeFileSync(w.file, JSON.stringify(changed)); let externalCalls = 0;
+  const noNetwork: typeof fetch = async () => { externalCalls++; throw Error('No live network during replay'); };
+  t.mock.method(globalThis, 'fetch', noNetwork);
   assert.equal(await runCli([semanticIdea, '--semantic-plan', w.file, '--replay', join(w.output, 'captures.json'), '--out', replayOut, '--json'],
-    { ...silent, fetcher: async () => { externalCalls++; throw Error('No live network during replay'); } }), 0);
+    { ...silent, fetcher: noNetwork }), 0);
   const after = json<DiscoveryReport>(join(replayOut, 'report.json'));
   assert.equal(externalCalls, 0); assert.deepEqual(after.plan.queries, before.plan.queries);
-  assert.deepEqual(after.candidates.map(c => c.full_name), before.candidates.map(c => c.full_name));
-  assert.deepEqual(after.requests, before.requests); assert.equal(after.query_execution!.fallback.reason, 'replay_actual_queries');
+  assert.deepEqual(after.searches, before.searches);
+  assert.deepEqual(after.candidates.map(c => [c.full_name, c.matched_queries, c.readme]), before.candidates.map(c => [c.full_name, c.matched_queries, c.readme]));
+  assert.deepEqual(after.requests, before.requests);
+  assert.deepEqual(json(join(replayOut, 'captures.json')), json(join(w.output, 'captures.json')));
+  assert.equal(after.format, 'compass-discovery-v1.1');
+  assert.equal(after.query_execution!.replay, true);
+  assert.deepEqual(after.query_execution!.attempted_queries, before.plan.queries);
+  // The original report proves what happened, but captures alone do not carry that provenance.
+  assert.equal(after.query_execution!.fallback.reason, 'replay_actual_queries');
+  assert.equal(after.query_execution!.fallback.attempted, null);
+  const markdown = readFileSync(join(replayOut, 'report.md'), 'utf8');
+  assert.match(markdown, /原始回退状态不可证明（未知）/u);
+  assert.doesNotMatch(markdown, /回退已执行|回退未执行/u);
+});
+
+for (const queries of [['image indexer'], ['image indexer', 'photo comparison']]) test(`ordinary ${queries.length}-query captures replayed with a semantic plan keep historical fallback unknown`, async t => {
+  const w = workspace(t), fake = fakeGitHub({ items: [repository('sample/two', 2), repository('sample/one', 1)] });
+  const args = [semanticIdea, ...queries.flatMap(query => ['--query', query]), '--out', w.output, '--json'];
+  assert.equal(await runCli(args, { ...silent, fetcher: fake.fetcher }), 0);
+  const before = json<DiscoveryReport>(join(w.output, 'report.json'));
+  assert.equal(before.query_execution, undefined); // Ordinary v0.2.0 input is unchanged.
+  assert.deepEqual(before.plan.queries, queries);
+  assert.equal(before.searches.length, queries.length);
+  assert.equal(before.searches[0]!.total_count, 2); // A nonempty primary did not gate the second explicit query.
+  assert.deepEqual(fake.calls.map(c => c.url), before.requests.map(r => r.url));
+  const changed = semanticFixture(); changed.core = { object: 'different subject', action: 'converter' }; changed.alternative = null;
+  writeFileSync(w.file, JSON.stringify(changed));
+  const replayOut = join(w.dir, 'replay'); let externalCalls = 0;
+  const noNetwork: typeof fetch = async () => { externalCalls++; throw Error('No external requests'); };
+  t.mock.method(globalThis, 'fetch', noNetwork);
+  assert.equal(await runCli([semanticIdea, '--semantic-plan', w.file, '--replay', join(w.output, 'captures.json'), '--out', replayOut, '--json'],
+    { ...silent, fetcher: noNetwork }), 0);
+  const after = json<DiscoveryReport>(join(replayOut, 'report.json'));
+  assert.equal(externalCalls, 0);
+  assert.equal(after.format, 'compass-discovery-v1.1');
+  assert.deepEqual(after.plan.queries, queries);
+  assert.deepEqual(after.searches, before.searches);
+  assert.deepEqual(after.candidates.map(c => [c.full_name, c.matched_queries, c.readme]), before.candidates.map(c => [c.full_name, c.matched_queries, c.readme]));
+  assert.deepEqual(after.requests, before.requests);
+  assert.deepEqual(json(join(replayOut, 'captures.json')), json(join(w.output, 'captures.json')));
+  assert.equal(after.query_execution!.replay, true);
+  assert.deepEqual(after.query_execution!.attempted_queries, queries);
+  assert.equal(after.query_execution!.fallback.reason, 'replay_actual_queries');
+  assert.equal(after.query_execution!.fallback.attempted, null);
+  const markdown = readFileSync(join(replayOut, 'report.md'), 'utf8');
+  assert.match(markdown, /原始回退状态不可证明（未知）/u);
+  assert.doesNotMatch(markdown, /回退已执行|回退未执行/u);
 });
 
 test('clarification, bad plan and conflicting modes do not access GitHub or create output', async t => {

@@ -31,7 +31,8 @@ export interface QueryExecution {
   attempted_queries: string[];
   replay: boolean;
   fallback: {
-    attempted: boolean;
+    // null means the captures do not establish the original fallback decision.
+    attempted: boolean | null;
     reason: 'primary_has_candidates' | 'primary_incomplete' | 'primary_failed' | 'primary_empty'
       | 'no_alternative' | 'replay_actual_queries';
   };

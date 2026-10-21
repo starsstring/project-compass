@@ -118,6 +118,15 @@ its newly generated queries are not sent or requested from the archive. Changed
 semantic labels remain unverified current context, not proof of the original
 capture's interpretation. An explicit clarification still returns exit 2.
 
+Capture arrays contain no provenance for the original query strategy. Semantic
+replay therefore reports `query_execution.fallback.attempted: null` with reason
+`replay_actual_queries`, and Markdown states that the original fallback status
+is unknown. This applies to one or two archived searches, including captures
+from an actual semantic fallback: neither the count nor the current plan proves
+the historical decision. In this optional experimental metadata, consumers must
+distinguish `null` (unknown) from `false` (not attempted). Live runs still record
+`true` or `false`; ordinary reports without `--semantic-plan` remain unchanged.
+
 Exit 2 also covers invalid files/conflicting modes; exit 4 covers an existing or
 unwritable destination; exit 5 covers network/partial results. Retain failed
 captures and choose a new directory for a later run. Do not replace credentials

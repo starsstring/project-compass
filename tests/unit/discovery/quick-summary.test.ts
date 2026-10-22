@@ -23,7 +23,7 @@ test('quick summary precedes technical report and cites author-mentioned evidenc
   assert.match(brief, /sample\/markdown-notes/u);
   assert.match(brief, /作者材料提及/u);
   assert.match(brief, /\[E\d+\]\(https:\/\/github\.com\//u);
-  assert.match(brief, /未实测/u);
+  assert.match(brief, /没有安装实测/u);
   assert.match(brief, /建议先做的一件事/u);
   assert.match(brief, /复用或停止条件/u);
   assert.doesNotMatch(brief, /成功率\s*\d+%/u);

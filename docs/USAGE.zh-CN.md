@@ -17,6 +17,18 @@ node dist/src/cli.js --help
 
 `--prepare-ai` 额外导出供独立助手分析的本地资料；`--import-ai "analysis.json"` 与 `--ai-input "ai-input.json"` 一起离线导入结果，导入时不传创意位置参数。
 
+## 可选：本地模型自动语义规划
+
+只输入中文需求，无需准备 JSON：
+
+```sh
+# 先安装 Ollama 并下载本地模型（需要磁盘和内存）
+ollama pull qwen2.5:7b
+npm run compass -- "找一个不上传云端的 Markdown 笔记工具" --local-model qwen2.5:7b
+```
+
+这是显式选择的本地模型模式；基础模式完全不需要模型。找不到 Ollama 或模型报错时，去掉 `--local-model` 可使用规则模式。模型理解未经核实，条件仍 unknown；`--local-model` 不与 `--query`、`--semantic-plan`、`--replay` 混用。详情见[本地模型说明](LOCAL_PLANNER.zh-CN.md)。
+
 ## 离线复查
 
 ```powershell

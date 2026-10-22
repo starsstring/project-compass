@@ -34,6 +34,17 @@ npm run compass -- "我想做一个本地 Markdown 笔记工具"
 
 每次使用新目录，已有结果不会覆盖。参数、离线重放和退出码见 [使用说明](docs/USAGE.zh-CN.md)。
 
+## 可选：本地模型自动理解（无需手写 JSON）
+
+对复杂中文需求，可以**显式选择**已安装的本地 Ollama 模型，Compass 会自动准备内部计划，再按原有预算检索 GitHub：
+
+```sh
+ollama pull qwen2.5:7b
+npm run compass -- "找一个不上传到云端的 Markdown 笔记软件" --local-model qwen2.5:7b
+```
+
+没有安装本地模型时，直接输入想法的基础模式仍然可用。此功能需要先运行 Ollama、消耗本机计算资源；Compass 本身不直接调用付费模型 API，但 Ollama 若配置云端模型，其外发/计费取决于用户配置。语义和硬条件仍未验证。详见[自动语义计划使用说明](docs/LOCAL_PLANNER.zh-CN.md)。内部 JSON 不需要用户填写。
+
 ## 可选 AI 分析
 
 添加 `--prepare-ai`，将已采集材料、编号来源、任务说明和 JSON Schema 导出，供你自行选择的助手分析。Compass 不调用模型、不需要模型 Key，也不会把资料包发送给服务。随后可离线导入助手返回的 JSON；程序检查结构、输入哈希和引用，语义支持与生成者身份仍未核实。

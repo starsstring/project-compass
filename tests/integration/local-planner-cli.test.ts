@@ -73,7 +73,7 @@ test('AI export discloses that local Ollama was called for planning, not for exp
     stdout: () => undefined, stderr: text => { diagnostics += text; },
   }), 0);
   const instructions = readFileSync(join(w.out, 'ai-instructions.md'), 'utf8');
-  assert.match(instructions, /已调用.*本地 Ollama 模型生成检索计划/u);
+  assert.match(instructions, /曾调用.*本地 Ollama 模型生成检索计划/u);
   assert.match(instructions, /导出步骤没有再次调用模型/u);
   assert.doesNotMatch(instructions, /本程序未调用模型/u);
   assert.match(diagnostics, /已调用本地 Ollama 生成检索计划/u);

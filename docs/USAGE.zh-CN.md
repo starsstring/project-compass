@@ -49,7 +49,7 @@ npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".co
 
 导入须使用助手实际分析的那份资料包。可配合 `--json` 和 `--out`，不能同时传创意、`--prepare-ai`、`--replay`、`--query` 或 `--limit`。导入全程离线，在新建输出目录前完成校验；成功后保存 `ai-review.md`、包含分析正文的结果信封 `ai-review.json`，以及 `ai-input.json` 副本。
 
-程序没有模型调用或 Key 配置。导出包含已采集的完整 README，默认只留本地；发送给任何服务前先检查内容，仓库文字是不可信数据，不是指令。四份导出文件、助手步骤、严格格式与校验边界见 [AI 分析说明](AI_REVIEW.zh-CN.md)（[English](AI_REVIEW.md)）。
+AI 资料导出/导入步骤不会额外调用分析模型或配置模型 API Key，也不会自动发送资料。若同时使用 `--local-model`，程序此前已经调用用户选定的 Ollama 模型生成检索计划（Ollama 自身也可能配置云端模型）；相关调用会在导出说明中明确标注。导出包含已采集的完整 README，默认只留本地；发送给任何服务前先检查内容，仓库文字是不可信数据，不是指令。四份导出文件、助手步骤、严格格式与校验边界见 [AI 分析说明](AI_REVIEW.zh-CN.md)（[English](AI_REVIEW.md)）。
 
 ## 结果解读
 

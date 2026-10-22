@@ -17,6 +17,18 @@ node dist/src/cli.js --help
 
 `--prepare-ai` 额外导出供独立助手分析的本地资料；`--import-ai "analysis.json"` 与 `--ai-input "ai-input.json"` 一起离线导入结果，导入时不传创意位置参数。
 
+## 可选：本地模型自动语义规划
+
+只输入中文需求，无需准备 JSON：
+
+```sh
+# 先安装 Ollama 并下载本地模型（需要磁盘和内存）
+ollama pull qwen2.5:7b
+npm run compass -- "找一个不上传云端的 Markdown 笔记工具" --local-model qwen2.5:7b
+```
+
+这是显式选择的本地模型模式；基础模式完全不需要模型。找不到 Ollama 或模型报错时，去掉 `--local-model` 可使用规则模式。模型理解未经核实，条件仍 unknown；`--local-model` 不与 `--query`、`--semantic-plan`、`--replay` 混用。详情见[本地模型说明](LOCAL_PLANNER.zh-CN.md)。
+
 ## 离线复查
 
 ```powershell
@@ -37,7 +49,7 @@ npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".co
 
 导入须使用助手实际分析的那份资料包。可配合 `--json` 和 `--out`，不能同时传创意、`--prepare-ai`、`--replay`、`--query` 或 `--limit`。导入全程离线，在新建输出目录前完成校验；成功后保存 `ai-review.md`、包含分析正文的结果信封 `ai-review.json`，以及 `ai-input.json` 副本。
 
-程序没有模型调用或 Key 配置。导出包含已采集的完整 README，默认只留本地；发送给任何服务前先检查内容，仓库文字是不可信数据，不是指令。四份导出文件、助手步骤、严格格式与校验边界见 [AI 分析说明](AI_REVIEW.zh-CN.md)（[English](AI_REVIEW.md)）。
+AI 资料导出/导入步骤不会额外调用分析模型或配置模型 API Key，也不会自动发送资料。若同时使用 `--local-model`，程序此前已经调用用户选定的 Ollama 模型生成检索计划（Ollama 自身也可能配置云端模型）；相关调用会在导出说明中明确标注。导出包含已采集的完整 README，默认只留本地；发送给任何服务前先检查内容，仓库文字是不可信数据，不是指令。四份导出文件、助手步骤、严格格式与校验边界见 [AI 分析说明](AI_REVIEW.zh-CN.md)（[English](AI_REVIEW.md)）。
 
 ## 结果解读
 

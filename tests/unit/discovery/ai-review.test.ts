@@ -20,7 +20,7 @@ test('AI input preserves selected source text, provenance and capture times, wit
   assert.deepEqual(createAiInput(report, client.captures), input);
   assert.equal(validateAiInput({ content: input.content, sha256: input.sha256, format: input.format }).sha256, input.sha256);
   assert.match(renderAiSources(input), /    1: A synthetic/u);
-  assert.match(aiInstructions(input), /不调用模型|未调用模型/u);
+  assert.match(aiInstructions(input), /未通过 Compass 调用语义规划模型/u);
 });
 
 test('AI input rejects changed content and changed source hashes even after envelope rehashing', async () => {

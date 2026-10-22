@@ -34,9 +34,20 @@ The top of `report.md` now includes a **one-minute reading guide**: up to three 
 
 Each run creates a new directory. Existing output is never overwritten. See the [usage guide](docs/USAGE.md) for options, replay, and exit codes.
 
+## Optional local-model planning (no manual JSON)
+
+For complex ideas, explicitly opt into an **installed local Ollama model**; Compass generates the internal semantic plan automatically before bounded GitHub search:
+
+```sh
+ollama pull qwen2.5:7b
+npm run compass -- "Find an offline Markdown notes tool that does not upload to cloud" --local-model qwen2.5:7b
+```
+
+Normal model-free idea input remains available. This requires a running Ollama and local computing resources; Compass itself does not directly call a paid AI API, but Ollama may use cloud models depending on user configuration. Model interpretation and candidate constraints remain unverified. Read [local planner limits](docs/LOCAL_PLANNER.md). **Users do not write JSON.**
+
 ## Optional AI review
 
-Add `--prepare-ai` to export the captured materials, numbered sources, instructions, and a JSON Schema for an assistant you choose. Compass does not call a model, require a model key, or send this package to a service. You can then import the assistant's JSON offline; Compass checks its structure, input hash, and references, while semantic support and generator identity remain unverified.
+Add `--prepare-ai` to export the captured materials, numbered sources, instructions, and a JSON Schema for an assistant you choose. The export step does not call an additional analysis model, require a model key, or send this package to a service. When combined with `--local-model`, Ollama was already called for search planning, as disclosed in the exported instructions. You can then import the assistant's JSON offline; Compass checks its structure, input hash, and references, while semantic support and generator identity remain unverified.
 
 ```sh
 npm run compass -- "A local Markdown notes tool" --prepare-ai --out ".compass/ai-job"

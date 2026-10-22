@@ -75,12 +75,18 @@ export function renderDiscovery(report: DiscoveryReport): string {
     `报告生成时间：${report.created_at}；模式：${report.mode === 'replay' ? '历史响应离线重放（未重新联网）' : '实时只读检索'}；状态：${report.status === 'partial' ? '部分完成，存在请求失败或检索不完整' : '有限检索已完成'}。`, '',
     `材料采集时间：${report.requests.map(request => request.fetched_at).sort()[0] ?? '未取得材料'} 至 ${report.requests.map(request => request.fetched_at).sort().at(-1) ?? '未取得材料'}。`, '',
     `范围：仅 GitHub 公开、非归档、非 Fork 仓库，每条检索取前 10 项，最多展示 5 个候选。${report.plan.understanding?.intent === 'learn' ? '学习意图保留课程与资源清单；' : '明确课程资料/清单不进入工具候选；'}许可证元数据未知仍可参与竞品比较，任何代码复用须另行核查实际 LICENSE 和依赖条款。排序先核对主要主题文字关联，再比较条件文字线索、针对性检索命中、检索短语、关键词覆盖、命中检索次数和 GitHub best match；Star 不参与排序，排序不是功能验收。`, '',
-    '分析方式：正文结构解析、功能证据提取和条件式比较；未调用语言模型。功能是作者陈述，定位和建议是规则推断，不代表实测效果或竞品覆盖率。', '', '## 检索记录', ''];
+    report.plan.semantic?.source === 'local_model'
+      ? '分析方式：本次语义检索词由本地模型生成，正文证据提取仍使用既有规则；模型理解未验证。功能是作者陈述，建议为规则推断，不代表实测效果或竞品覆盖率。'
+      : '分析方式：正文结构解析、功能证据提取和条件式比较；未调用语言模型。功能是作者陈述，定位和建议是规则推断，不代表实测效果或竞品覆盖率。', '', '## 检索记录', ''];
   for (const search of report.searches) lines.push(`- ${e(search.query)} archived:false fork:false：${search.error ? e(search.error) : `GitHub 返回总数 ${search.total_count}，${search.incomplete ? '结果不完整' : '本次响应未标记不完整'}`}。`);
   if (report.plan.semantic) {
     const semantic = report.plan.semantic.input;
-    lines.push('', '## 外部语义计划（实验入口，语义未验证）', '',
-      `来源：用户/外部提供；未核实生成者。结构哈希：${report.plan.semantic.sha256}。未调用模型。`, '',
+    lines.push('', report.plan.semantic.source === 'local_model'
+      ? '## 本地模型语义计划（实验入口，语义未验证）'
+      : '## 外部语义计划（实验入口，语义未验证）', '',
+      report.plan.semantic.source === 'local_model'
+        ? `来源：本地 Ollama 模型生成（未验证语义）；结构哈希：${report.plan.semantic.sha256}。`
+        : `来源：用户/外部提供；未核实生成者。结构哈希：${report.plan.semantic.sha256}。未调用模型。`, '',
       `意图（外部声明）：${intentLabel(semantic.intent)}；核心：${e(semantic.core ? `${semantic.core.object} + ${semantic.core.action}` : '待澄清')}。`, '',
       `必须条件：${semantic.required_conditions.map(e).join('；') || '未声明'}。`, '',
       `排除条件：${semantic.excluded_conditions.map(e).join('；') || '未声明'}。`, '',

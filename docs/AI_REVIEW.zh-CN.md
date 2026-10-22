@@ -2,7 +2,7 @@
 
 [English](AI_REVIEW.md) | 简体中文 · [使用说明](USAGE.zh-CN.md) · [首页](../README.zh-CN.md)
 
-Compass 可以把已采集的仓库材料导出，供你自行选择的助手分析，再导入结构化结果。这是本地文件流程：Compass 不调用模型、不处理模型 API Key，也不能验证结果由哪个助手生成。检索和规则报告不依赖此步骤。帮助、报错、任务说明及报告文字目前以中文为主。
+Compass 可以把已采集的仓库材料导出，供你自行选择的助手分析，再导入结构化结果。资料导出和导入属于本地文件流程：它们不会额外调用 AI 分析模型或处理模型 API Key，也不能验证结果由哪个助手生成。若同时使用 `--local-model`，Compass 此前已经调用用户选择的 Ollama 模型生成检索计划，导出的说明会标明这一来源；Ollama 本身可能按用户配置调用云端模型。检索和规则报告不依赖此步骤。帮助、报错、任务说明及报告文字目前以中文为主。
 
 ## 1. 导出材料
 
@@ -29,7 +29,7 @@ npm run compass -- "本地 Markdown 笔记工具" --replay ".compass/first-run/c
 
 ## 2. 单独交给助手
 
-发送给任何服务前先检查资料包。它包含你的创意、检索词，以及已采集的完整 README、简介、元数据和时间。Compass 只写入本地文件，不会把这些内容发送给模型服务。
+发送给任何服务前先检查资料包。它包含你的创意、检索词，以及已采集的完整 README、简介、元数据和时间。Compass 只在本地写入这份待分析资料包，不会自动将导出的资料文件发送给 AI 分析服务；如果启用了 `--local-model`，原始创意此前已发送给用户配置的 Ollama 接口用于检索规划。
 
 把 `ai-instructions.md`、`ai-input.json`、`ai-sources.md`、`ai-review.schema.json` 交给你选择的助手，要求按说明和 Schema 返回 UTF-8 JSON，例如保存为 `.compass/returned-analysis.json`。返回文件是 `format: "compass-ai-review-v1"` 的分析对象本身，不是后续导入生成的结果信封。保留原资料包不变。
 

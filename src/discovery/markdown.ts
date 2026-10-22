@@ -7,11 +7,71 @@ export function escapeMarkdown(value: string): string {
     .replace(/[\\`*_{}\[\]()#!|~]/gu, '\\$&');
 }
 
+
+/**
+ * Put a bounded, auditable reading guide before the full discovery report.
+ * No new scoring or claim of task fit is introduced here.
+ */
+function oneMinuteSummary(report: DiscoveryReport, e: typeof escapeMarkdown, href: (url: string) => string): string[] {
+  const preview = report.candidates.slice(0, 3)
+    .map(candidate => `[${e(candidate.full_name)}](${href(candidate.url)})`).join('、');
+  const result = report.candidates.length
+    ? `本次有限范围内有 ${report.candidates.length} 个待核查候选：${preview}。`
+    : '本轮未获得可展示的候选；不能据此认定没有竞品或市场空白。';
+  let evidence: string | undefined;
+  for (const candidate of report.candidates) {
+    for (const capability of candidate.analysis.capabilities) {
+      if (capability.state !== 'author_mentioned') continue;
+      const source = capability.evidence_ids
+        .map(id => candidate.analysis.evidence.find(item => item.id === id))
+        .find(item => item !== undefined);
+      if (!source) continue;
+      evidence = `${e(candidate.full_name)} 的作者材料提及“${e(capability.label)}” [${e(source.id)}](${href(source.url)})；没有安装实测，不能据此认定满足原创意。`;
+      break;
+    }
+    if (evidence) break;
+  }
+  const semantic = report.plan.semantic?.input;
+  const requirement: { text: string; polarity: 'required' | 'excluded' } | undefined = semantic
+    ? semantic.required_conditions[0] !== undefined
+      ? { text: semantic.required_conditions[0], polarity: 'required' }
+      : semantic.excluded_conditions[0] !== undefined
+        ? { text: semantic.excluded_conditions[0], polarity: 'excluded' }
+        : undefined
+    : report.plan.understanding?.requirements[0]
+      ? { text: report.plan.understanding.requirements[0].source,
+          polarity: report.plan.understanding.requirements[0].polarity }
+      : undefined;
+  const unknown = requirement
+    ? requirement.polarity === 'excluded'
+      ? `要求排除的条件“${e(requirement.text)}”尚未核实是否存在；不能凭文字线索自动排除候选。`
+      : `必须满足的条件“${e(requirement.text)}”尚未逐项验收；文字命中不等于功能成立。`
+    : '候选能否完整满足原始需求、平台与使用条件仍未实测；未列出条件也不代表全部满足。';
+  const first = report.candidates.length ? report.directions[0] : undefined;
+  const next = first ? e(first.validation) : report.candidates.length
+    ? '已有候选但缺少足够材料支持具体验证方向；先核对候选 README、实际功能与需求限制。'
+    : '先核对原句与实际检索词；必要时补充一个具体输入、输出或限制，再调查其他来源。';
+  const stop = first ? e(first.stop_if) : report.candidates.length
+    ? '候选的关键能力仍缺少证据时，暂缓判断能否复用或是否应开发；先补充核查。'
+    : '不要因本轮无候选就断言有市场空缺或立即开工。';
+  return [
+    '## 一分钟结论（初步调查，非最终决策)', '',
+    `**检索状态**：${report.status === 'partial' ? '部分完成，结果可能缺失' : '有限检索已完成'}；${report.mode === 'replay' ? '这是离线重放，没有重新联网' : '使用只读 GitHub 响应'}。`, '',
+    `**发现了什么**：${result}`, '',
+    `**可以核对的证据**：${evidence ?? '当前没有找到可引用的“作者明确提及某项能力”证据，不能从仓库标题或相关词推断功能成立。'}`, '',
+    `**还不能确定**：${unknown}`, '',
+    `**建议先做的一件事**：${next}`, '',
+    `**复用或停止条件**：${stop}`, '',
+    '**目前不能下的结论**：找到候选不等于满足需求；没找到也不等于值得开发。本报告不预测成功率、不证明市场机会。', '',
+  ];
+}
+
 export function renderDiscovery(report: DiscoveryReport): string {
   const e = escapeMarkdown;
   const href = (url: string) => url.replace(/[<>()\s]/gu, character =>
     [...Buffer.from(character)].map(byte => `%${byte.toString(16).toUpperCase().padStart(2, '0')}`).join(''));
   const lines = ['# Project Compass：创意竞品初查', '', `创意：${e(report.plan.idea)}`, '',
+    ...oneMinuteSummary(report, e, href),
     `报告生成时间：${report.created_at}；模式：${report.mode === 'replay' ? '历史响应离线重放（未重新联网）' : '实时只读检索'}；状态：${report.status === 'partial' ? '部分完成，存在请求失败或检索不完整' : '有限检索已完成'}。`, '',
     `材料采集时间：${report.requests.map(request => request.fetched_at).sort()[0] ?? '未取得材料'} 至 ${report.requests.map(request => request.fetched_at).sort().at(-1) ?? '未取得材料'}。`, '',
     `范围：仅 GitHub 公开、非归档、非 Fork 仓库，每条检索取前 10 项，最多展示 5 个候选。${report.plan.understanding?.intent === 'learn' ? '学习意图保留课程与资源清单；' : '明确课程资料/清单不进入工具候选；'}许可证元数据未知仍可参与竞品比较，任何代码复用须另行核查实际 LICENSE 和依赖条款。排序先核对主要主题文字关联，再比较条件文字线索、针对性检索命中、检索短语、关键词覆盖、命中检索次数和 GitHub best match；Star 不参与排序，排序不是功能验收。`, '',

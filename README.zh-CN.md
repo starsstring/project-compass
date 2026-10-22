@@ -47,7 +47,7 @@ npm run compass -- "找一个不上传到云端的 Markdown 笔记软件" --loca
 
 ## 可选 AI 分析
 
-添加 `--prepare-ai`，将已采集材料、编号来源、任务说明和 JSON Schema 导出，供你自行选择的助手分析。Compass 不调用模型、不需要模型 Key，也不会把资料包发送给服务。随后可离线导入助手返回的 JSON；程序检查结构、输入哈希和引用，语义支持与生成者身份仍未核实。
+添加 `--prepare-ai`，将已采集材料、编号来源、任务说明和 JSON Schema 导出，供你自行选择的助手分析。**资料导出步骤不会额外调用 AI 分析模型，也不会自动把资料包发送给外部服务。** 如果同时使用 `--local-model`，此前已经调用了用户选择的 Ollama 模型生成检索计划；这一调用也会在导出的说明中明确记录。随后可离线导入助手返回的 JSON；程序检查结构、输入哈希和引用，语义支持与生成者身份仍未核实。
 
 ```powershell
 npm run compass -- "本地 Markdown 笔记工具" --prepare-ai --out ".compass/ai-job"

@@ -30,6 +30,8 @@ The terminal prints the output directory, usually `.compass/discovery/<run-id>/`
 | `report.json` | Structured results for your own scripts |
 | `captures.json` | Original API responses, timestamps, and hashes for offline review |
 
+The top of `report.md` now includes a **one-minute reading guide**: up to three candidate links, a cited author statement when available, unverified conditions, and one concrete validation action. It does **not** decide whether your idea will succeed or prove that any candidate meets all requirements.
+
 Each run creates a new directory. Existing output is never overwritten. See the [usage guide](docs/USAGE.md) for options, replay, and exit codes.
 
 ## Optional AI review

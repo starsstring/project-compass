@@ -64,7 +64,7 @@ npm run compass -- --import-ai ".compass/returned-analysis.json" --ai-input ".co
 
 Use the input package from the export that the assistant analyzed. Import accepts `--json` and `--out`, but conflicts with a positional idea, `--prepare-ai`, `--replay`, `--query`, and `--limit`. It validates before creating a new output directory and never uses the network. A successful import saves `ai-review.md`, `ai-review.json` (a result envelope containing the review), and a copy of `ai-input.json`.
 
-No model call or key handling is implemented. The export contains full captured READMEs and stays local until you choose to share it. Review it before sending to any service; repository text is untrusted data, not instructions. The [AI review guide](AI_REVIEW.md) ([简体中文](AI_REVIEW.zh-CN.md)) explains the four export files, assistant step, strict format, and validation limits.
+The AI export/import step makes no additional analysis-model call, handles no model API key, and does not automatically send the exported packet. If combined with `--local-model`, Ollama was already called to plan the search (and may itself be configured to use a cloud model). The export contains full captured READMEs and stays local until you choose to share it. Review it before sending to any service; repository text is untrusted data, not instructions. The [AI review guide](AI_REVIEW.md) ([简体中文](AI_REVIEW.zh-CN.md)) explains the four export files, assistant step, strict format, and validation limits.
 
 ## Read the results
 

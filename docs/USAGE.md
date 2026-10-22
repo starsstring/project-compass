@@ -31,6 +31,17 @@ node dist/src/cli.js --help
 
 Use `node dist/src/cli.js` directly when piping JSON to another program, so npm's own banners do not enter stdout. JSON uses English field names; explanatory values may be Chinese. Unknown Chinese topics fall back to Chinese word segmentation, with limited English-README coverage. Vague input returns exit 2 and `status: needs_clarification` with `--json`, without network access or a report directory. You can clarify in natural language; an English query is optional. Matching terms do not guarantee relevant results.
 
+## Optional local model: no JSON preparation
+
+Install Ollama and a downloaded local model, then run:
+
+```sh
+ollama pull qwen2.5:7b
+npm run compass -- "Find an offline Markdown notes tool" --local-model qwen2.5:7b
+```
+
+This explicit opt-in generates a validated internal plan on loopback. Basic mode remains model-free. See [local planner](LOCAL_PLANNER.md) for model resources, external transmission caveats in Ollama cloud configurations, invalid plan handling, and replay restrictions.
+
 ## Replay saved responses
 
 After the first example above has saved its responses:

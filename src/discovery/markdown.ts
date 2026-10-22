@@ -79,8 +79,10 @@ export function renderDiscovery(report: DiscoveryReport): string {
   for (const search of report.searches) lines.push(`- ${e(search.query)} archived:false fork:false：${search.error ? e(search.error) : `GitHub 返回总数 ${search.total_count}，${search.incomplete ? '结果不完整' : '本次响应未标记不完整'}`}。`);
   if (report.plan.semantic) {
     const semantic = report.plan.semantic.input;
-    lines.push('', '## 外部语义计划（实验入口，语义未验证）', '',
-      `来源：用户/外部提供；未核实生成者。结构哈希：${report.plan.semantic.sha256}。未调用模型。`, '',
+    lines.push('', '## 语义计划（实验入口，语义未验证）', '',
+      report.plan.semantic.source === 'local_model'
+        ? `来源：本地 Ollama 模型生成（未验证语义）；结构哈希：${report.plan.semantic.sha256}。`
+        : `来源：用户/外部提供；未核实生成者。结构哈希：${report.plan.semantic.sha256}。未调用模型。`, '',
       `意图（外部声明）：${intentLabel(semantic.intent)}；核心：${e(semantic.core ? `${semantic.core.object} + ${semantic.core.action}` : '待澄清')}。`, '',
       `必须条件：${semantic.required_conditions.map(e).join('；') || '未声明'}。`, '',
       `排除条件：${semantic.excluded_conditions.map(e).join('；') || '未声明'}。`, '',

@@ -31,15 +31,29 @@ function oneMinuteSummary(report: DiscoveryReport, e: typeof escapeMarkdown, hre
     }
     if (evidence) break;
   }
-  const condition = report.plan.semantic
-    ? (report.plan.semantic.input.required_conditions[0] ?? report.plan.semantic.input.excluded_conditions[0])
-    : report.plan.understanding?.requirements[0]?.source;
-  const unknown = condition
-    ? `“${e(condition)}”及其他原始约束尚未逐项验收；文字命中不等于功能成立。`
+  const semantic = report.plan.semantic?.input;
+  const requirement: { text: string; polarity: 'required' | 'excluded' } | undefined = semantic
+    ? semantic.required_conditions[0] !== undefined
+      ? { text: semantic.required_conditions[0], polarity: 'required' }
+      : semantic.excluded_conditions[0] !== undefined
+        ? { text: semantic.excluded_conditions[0], polarity: 'excluded' }
+        : undefined
+    : report.plan.understanding?.requirements[0]
+      ? { text: report.plan.understanding.requirements[0].source,
+          polarity: report.plan.understanding.requirements[0].polarity }
+      : undefined;
+  const unknown = requirement
+    ? requirement.polarity === 'excluded'
+      ? `要求排除的条件“${e(requirement.text)}”尚未核实是否存在；不能凭文字线索自动排除候选。`
+      : `必须满足的条件“${e(requirement.text)}”尚未逐项验收；文字命中不等于功能成立。`
     : '候选能否完整满足原始需求、平台与使用条件仍未实测；未列出条件也不代表全部满足。';
   const first = report.candidates.length ? report.directions[0] : undefined;
-  const next = first ? e(first.validation) : '先核对原句与实际检索词；必要时补充一个具体输入、输出或限制，再调查其他来源。';
-  const stop = first ? e(first.stop_if) : '不要因本轮无候选就断言有市场空缺或立即开工。';
+  const next = first ? e(first.validation) : report.candidates.length
+    ? '已有候选但缺少足够材料支持具体验证方向；先核对候选 README、实际功能与需求限制。'
+    : '先核对原句与实际检索词；必要时补充一个具体输入、输出或限制，再调查其他来源。';
+  const stop = first ? e(first.stop_if) : report.candidates.length
+    ? '候选的关键能力仍缺少证据时，暂缓判断能否复用或是否应开发；先补充核查。'
+    : '不要因本轮无候选就断言有市场空缺或立即开工。';
   return [
     '## 一分钟结论（初步调查，非最终决策)', '',
     `**检索状态**：${report.status === 'partial' ? '部分完成，结果可能缺失' : '有限检索已完成'}；${report.mode === 'replay' ? '这是离线重放，没有重新联网' : '使用只读 GitHub 响应'}。`, '',

@@ -46,7 +46,7 @@ export interface SearchPlan {
   // Optional so existing reports and callers remain readable.
   understanding?: InputUnderstanding;
   topic_terms?: string[];
-  semantic?: { source: 'external'; verification: 'unverified'; sha256: string; input: ExternalSemanticPlan };
+  semantic?: { source: 'external' | 'local_model'; verification: 'unverified'; sha256: string; input: ExternalSemanticPlan };
 }
 
 export interface Repository {

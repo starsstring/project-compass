@@ -5,7 +5,7 @@ import { discover } from '../../../src/discovery/analyze.js';
 import { renderDiscovery } from '../../../src/discovery/markdown.js';
 import { planSearch } from '../../../src/discovery/query.js';
 import type { DiscoveryReport } from '../../../src/discovery/model.js';
-import { fakeGitHub } from './fixtures.js';
+import { fakeGitHub, repository } from './fixtures.js';
 
 async function sample(options: Parameters<typeof fakeGitHub>[0] = {}): Promise<DiscoveryReport> {
   return discover(planSearch('我想做一个 Markdown 笔记工具'), new GitHubSearch(fakeGitHub(options).fetcher));
@@ -36,6 +36,44 @@ test('zero results show uncertainty and no invented project or direction', async
   assert.match(brief, /不能据此认定没有竞品/u);
   assert.match(brief, /先核对原句与实际检索词/u);
   assert.doesNotMatch(brief, /sample\/markdown-notes/u);
+});
+
+test('candidates with no evidence or directions never become a no-candidate claim', async () => {
+  const report = await sample({ items: [{ ...repository(), description: null }], readmeStatus: 404 });
+  assert.equal(report.candidates.length, 1);
+  assert.equal(report.directions.length, 0);
+  const brief = quickSection(renderDiscovery(report));
+  assert.match(brief, /已有候选但缺少足够材料/u);
+  assert.match(brief, /候选的关键能力仍缺少证据/u);
+  assert.doesNotMatch(brief, /本轮无候选/u);
+  assert.doesNotMatch(brief, /没有竞品或市场空白/u);
+});
+
+test('excluded-only external condition stays explicitly excluded and unknown', async () => {
+  const base = await sample();
+  const report: DiscoveryReport = { ...base, plan: { ...base.plan, semantic: {
+    source: 'external', verification: 'unverified', sha256: 'f'.repeat(64),
+    input: { version: 1, idea: base.plan.idea, intent: 'find_project',
+      core: { object: 'markdown', action: 'notes' }, required_conditions: [],
+      excluded_conditions: ['上传到云端'], unknowns: [], clarification: null },
+  } } };
+  const brief = quickSection(renderDiscovery(report));
+  assert.match(brief, /要求排除的条件“上传到云端”尚未核实是否存在/u);
+  assert.match(brief, /不能凭文字线索自动排除候选/u);
+  assert.doesNotMatch(brief, /必须满足的条件“上传到云端”/u);
+});
+
+test('rule-derived excluded requirements retain polarity in the short summary', async () => {
+  const base = await sample();
+  const report: DiscoveryReport = {
+    ...base, plan: { ...base.plan, understanding: {
+      ...base.plan.understanding!, requirements: [{
+        key: 'no-cloud', label: '不上传到云端', source: '上传到云端',
+        terms: ['cloud'], polarity: 'excluded',
+      }],
+    } },
+  };
+  assert.match(quickSection(renderDiscovery(report)), /要求排除的条件“上传到云端”/u);
 });
 
 test('partial and replay are visibly distinguished in the first screen', async () => {

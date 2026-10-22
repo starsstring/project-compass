@@ -2,7 +2,7 @@
 
 English | [简体中文](AI_REVIEW.zh-CN.md) · [Usage](USAGE.md) · [Home](../README.md)
 
-Compass can export captured repository materials for an assistant you choose, then import its structured analysis. This is a local file workflow: Compass does not call a model, handle a model API key, or verify which assistant generated the result. Search and rule-based reports still work without this step. CLI help, diagnostics, instructions, and generated report prose currently use Chinese.
+Compass can export captured repository materials for an assistant you choose, then import its structured analysis. The AI export/import stages use local files: they do not make any additional analysis-model call, handle a model API key, or verify which assistant generated the result. When used with `--local-model`, Compass has already called the chosen Ollama model for search planning; the generated instructions record that provenance. Ollama may itself route to a cloud model depending on its configuration. Search and rule-based reports still work without this step. CLI help, diagnostics, instructions, and generated report prose currently use Chinese.
 
 ## 1. Export materials
 
@@ -29,7 +29,7 @@ The usual Chinese/English query rules still apply; unfamiliar Chinese topics nee
 
 ## 2. Ask your assistant separately
 
-Review the package before sharing it with any service. It contains your idea and queries plus captured full READMEs, descriptions, metadata, and timestamps. Compass writes these files locally and does not send them to a model service.
+Review the package before sharing it with any service. It contains your idea and queries plus captured full READMEs, descriptions, metadata, and timestamps. Compass writes this exported review packet locally and does not automatically send these exported files to an analysis-model service. If `--local-model` was selected, the original idea was already sent to the configured Ollama endpoint for search planning.
 
 Give your chosen assistant `ai-instructions.md`, `ai-input.json`, `ai-sources.md`, and `ai-review.schema.json`. Ask it to return a UTF-8 JSON file following those instructions and the schema, for example `.compass/returned-analysis.json`. The returned file is the review object itself, with `format: "compass-ai-review-v1"`; it is not the later import result envelope. Keep the original package unchanged.
 

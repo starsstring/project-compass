@@ -47,7 +47,7 @@ Normal model-free idea input remains available. This requires a running Ollama a
 
 ## Optional AI review
 
-Add `--prepare-ai` to export the captured materials, numbered sources, instructions, and a JSON Schema for an assistant you choose. Compass does not call a model, require a model key, or send this package to a service. You can then import the assistant's JSON offline; Compass checks its structure, input hash, and references, while semantic support and generator identity remain unverified.
+Add `--prepare-ai` to export the captured materials, numbered sources, instructions, and a JSON Schema for an assistant you choose. The export step does not call an additional analysis model, require a model key, or send this package to a service. When combined with `--local-model`, Ollama was already called for search planning, as disclosed in the exported instructions. You can then import the assistant's JSON offline; Compass checks its structure, input hash, and references, while semantic support and generator identity remain unverified.
 
 ```sh
 npm run compass -- "A local Markdown notes tool" --prepare-ai --out ".compass/ai-job"

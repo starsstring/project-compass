@@ -22,7 +22,7 @@ function fixture(t: { after: (f: () => void) => void }) {
   return { dir, out: join(dir, 'report') };
 }
 function respond(plan: unknown = basePlan(), status = 200) {
-  const calls: { url: string; options?: RequestInit }[] = [];
+  const calls: { url: string; options: RequestInit | undefined }[] = [];
   const fetcher: typeof fetch = async (url, options) => {
     calls.push({ url: String(url), options });
     return status === 200

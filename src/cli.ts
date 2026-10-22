@@ -29,7 +29,7 @@ const help = `Project Compass 0.2.0 — GitHub 项目初查（基础模式无模
 --out 必须为尚不存在的目录；默认 .compass/discovery/<唯一运行号>。
 --limit 1–5；--json 输出结构化报告；--help 显示帮助。
 --replay 使用已有响应重新分析，不联网；未指定 --query 时自动使用留档检索词。
---prepare-ai 额外导出资料、编号来源、AI 任务说明和返回格式；不调用模型。
+--prepare-ai 额外导出资料、编号来源、AI 任务说明和返回格式；导出步骤不另外调用分析模型。
 --import-ai 与 --ai-input 离线导入分析；结构/引用通过不代表语义正确或生成者已验证。
 只把生成/指定的检索式发送给 GitHub。最多 2 次搜索 + 5 次 README 请求。
 不自动读取 Token，不直接调用付费 API；本机 Ollama 是否使用云端模型取决于用户配置。不会执行仓库代码。`;
@@ -134,9 +134,9 @@ export async function runCli(args: string[], io: CliIO = {}): Promise<number> {
       if (aiInput) {
         await writeFile(join(output, 'ai-input.json'), serializeAiInput(aiInput), { flag: 'wx' });
         await writeFile(join(output, 'ai-sources.md'), renderAiSources(aiInput), { flag: 'wx' });
-        await writeFile(join(output, 'ai-instructions.md'), aiInstructions(aiInput), { flag: 'wx' });
+        await writeFile(join(output, 'ai-instructions.md'), aiInstructions(aiInput, localModel === undefined ? 'no_model' : 'local_model'), { flag: 'wx' });
         await writeFile(join(output, 'ai-review.schema.json'), aiReviewSchemaJson(), { flag: 'wx' });
-        stderr(`AI 资料已导出：${join(output, 'ai-instructions.md')}；未调用模型或发送资料。\n`);
+        stderr(`AI 资料已导出：${join(output, 'ai-instructions.md')}；${localModel === undefined ? '本次未调用语义规划模型' : '本次已调用本地 Ollama 生成检索计划'}，导出步骤未再次调用分析模型或发送资料。\n`);
       }
       stdout(parsed.values.json ? JSON.stringify(report, null, 2) + '\n' : markdown);
       stderr(`已保存：${join(output, 'report.md')}\n${join(output, 'report.json')}\n`);

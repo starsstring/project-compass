@@ -65,6 +65,37 @@ test('an unconfigured model is never contacted in ordinary default mode', async 
   assert.equal(report.plan.semantic, undefined);
 });
 
+test('AI export discloses that local Ollama was called for planning, not for exported analysis', async t => {
+  const w = fixture(t), ollama = respond(), github = fakeGitHub();
+  let diagnostics = '';
+  assert.equal(await runCli([idea, '--local-model', model, '--prepare-ai', '--out', w.out], {
+    fetcher: github.fetcher, plannerFetcher: ollama.fetcher,
+    stdout: () => undefined, stderr: text => { diagnostics += text; },
+  }), 0);
+  const instructions = readFileSync(join(w.out, 'ai-instructions.md'), 'utf8');
+  assert.match(instructions, /已调用.*本地 Ollama 模型生成检索计划/u);
+  assert.match(instructions, /导出步骤没有再次调用模型/u);
+  assert.doesNotMatch(instructions, /本程序未调用模型/u);
+  assert.match(diagnostics, /已调用本地 Ollama 生成检索计划/u);
+  assert.match(diagnostics, /导出步骤未再次调用分析模型/u);
+  assert.doesNotMatch(diagnostics, /未调用模型或发送资料/u);
+  assert.equal(ollama.calls.length, 1);
+});
+
+test('model-free AI export keeps accurate no-model disclosure', async t => {
+  const w = fixture(t), ollama = respond(), github = fakeGitHub();
+  let diagnostics = '';
+  assert.equal(await runCli([idea, '--prepare-ai', '--out', w.out], {
+    fetcher: github.fetcher, plannerFetcher: ollama.fetcher,
+    stdout: () => undefined, stderr: text => { diagnostics += text; },
+  }), 0);
+  const instructions = readFileSync(join(w.out, 'ai-instructions.md'), 'utf8');
+  assert.match(instructions, /未通过 Compass 调用语义规划模型/u);
+  assert.match(instructions, /导出步骤也没有调用分析模型/u);
+  assert.match(diagnostics, /本次未调用语义规划模型/u);
+  assert.equal(ollama.calls.length, 0);
+});
+
 test('local model and replay or explicit planning modes reject before all networking and file writes', async t => {
   const w = fixture(t), github = fakeGitHub(), ollama = respond();
   for (const extra of [['--replay', join(w.dir, 'missing.json')], ['--query', 'notes'], ['--semantic-plan', 'x.json']]) {
